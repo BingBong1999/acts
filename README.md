@@ -6,8 +6,8 @@
 - **동덕여자대학교** 3학년 2학기 **데이터베이스프로그래밍** 과목에서 수행한 프로젝트입니다.
 - 총 4 명의 팀원으로 구성하여 한 학기동안 진행하였습니다.
 - 해당 README.md 파일은 **요약된 정보**만 기재되어 있습니다. 더 많은 정보를 확인하시려면 아래 첨부된 **pdf 파일 및 mp3 파일 공유 링크를 확인해주시면** 감사하겠습니다.
- 	- https://drive.google.com/file/d/1N9nd2-Lqpyxd5r1XS69SP_j-skS4rHRb/view?usp=sharing (pdf 파일 링크)
-  	- https://drive.google.com/file/d/1CxR71SBd_9CaYRMW5As9XstDMpkDjGSd/view?usp=sharing (pdf 발표 자료 구두 설명 및 프로젝트 시연 영상)
+ 	- https://drive.google.com/file/d/1N9nd2-Lqpyxd5r1XS69SP_j-skS4rHRb/view?usp=sharing **(pdf 파일 링크)**
+  	- https://drive.google.com/file/d/1CxR71SBd_9CaYRMW5As9XstDMpkDjGSd/view?usp=sharing **(pdf 발표 자료 구두 설명 및 프로젝트 시연 영상)**
 
 ## 🚀 프로젝트 개발 배경 및 목적
 

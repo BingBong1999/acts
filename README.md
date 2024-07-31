@@ -16,6 +16,10 @@
 
 ### **[7. 🌗 프로젝트 설정 및 실행 방법](#-프로젝트-설정-및-실행-방법)**
 
+### **[8. 🌘 참고한 Web Page 및 실행 오류 해결 방법](#-참고한-Web-Page-및-실행-오류-해결-방법)**
+
+### **[9. 🌙 프로젝트 설계 이미지](#-프로젝트-설계-이미지)**
+
 ## 🌑 프로젝트 정보
 
 ![image](https://github.com/BingBong1999/somature/assets/142529694/9b7bb2a9-d875-455d-9fc3-b420ad4e1921)
@@ -24,13 +28,9 @@
 
 - 총 4 명의 팀원으로 구성하여 한 학기동안 진행하였습니다.
 
-- 해당 프로젝트에 대한 전반적인 정보는 본 README 파일에 기재되어 있지만,
+- **Commit 내역의 20190942 계정(필자의 학번)과 hello 계정은 모두 본인임을 밝힙니다.**
 
-  **요구사항 분석**, **시스템 구성도**, **데이터베이스 스키마**, **MVC 구조**, **Request 처리 흐름**, **구현 결과** 등이 포함된 **이미지 파일**은 
-
-  아래의 첨부된 PDF 파일과 프로젝트 시연 영상 링크를 통해 확인해 주시기 바랍니다.
-
-- 참고로, **Commit 내역의 20190942 계정(필자의 학번)과 hello 계정은 모두 본인임을 밝힙니다.**
+- 해당 프로젝트에 대한 전반적인 정보는 본 README 파일에 기재되어 있지만, 더 자세한 정보는 아래의 첨부된 PDF 파일과 프로젝트 시연 영상 링크를 통해 확인해 주시기 바랍니다.
 
 - PDF 파일 및 프로젝트 시연 영상 링크:
 
@@ -313,3 +313,59 @@
 
 - **jsp에서 parameter가 안 넘어갈 경우**
 	- https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=kimsu0813&logNo=140201820687
+
+## 🌙 프로젝트 설계 이미지
+
+### 1. 요구사항 분석
+
+![요구사항 분석](https://github.com/user-attachments/assets/84f4cda2-4058-4968-a569-a6ca77222f9e)
+
+### 2. 시스템 구성도
+
+![시스템 구성도](https://github.com/user-attachments/assets/629ac0b8-99a2-4de9-b0d0-736e3c34bb5f)
+
+### 3. 데이터베이스 스키마
+
+![데이터베이스 스키마](https://github.com/user-attachments/assets/1c47c8d5-624c-4a43-88a9-ae6dc777154c)
+
+![데이터베이스 스키마2](https://github.com/user-attachments/assets/a40fcc73-cc0b-4704-ba56-15a41e26fb09)
+
+![데이터베이스 스키마3](https://github.com/user-attachments/assets/5a502403-84dd-4c83-90e6-de35c1925afa)
+
+![데이터베이스 스키마4](https://github.com/user-attachments/assets/7390c925-81a3-4ecd-91fd-a950fa16e112)
+
+### 4. MVC 구조
+
+![MVC 구조](https://github.com/user-attachments/assets/628dedb5-882c-4698-966e-f704007c7dc8)
+
+### 5. Request 처리 흐름
+
+![Request 처리 흐름](https://github.com/user-attachments/assets/2040060e-9770-4f76-8fe4-5908f978c011)
+
+![Request 처리 흐름2](https://github.com/user-attachments/assets/292e6873-115d-4bd3-9b45-10f8d0f08957)
+
+![Request 처리 흐름3](https://github.com/user-attachments/assets/9a9ad456-13c8-4d2a-ab04-98b9cc8f7ab7)
+
+### 6. 구현 결과
+
+![구현 결과](https://github.com/user-attachments/assets/6ad50f1c-050d-4a89-96aa-702828c1fc72)
+
+![구현 결과2](https://github.com/user-attachments/assets/d4adfa3e-9104-4ec4-aba6-7f08d53861ea)
+
+![구현 결과3](https://github.com/user-attachments/assets/84dbe6f9-f1dc-4419-a6db-e425ac03d027)
+
+![구현 결과4](https://github.com/user-attachments/assets/702791b2-be40-4980-8514-8373bfd614e0)
+
+![구현 결과5](https://github.com/user-attachments/assets/7d9a2956-82c9-48e6-a442-f0d0c5b7eb32)
+
+![구현 결과6](https://github.com/user-attachments/assets/07f581f9-ef1f-4235-a524-5404e80bcb0d)
+
+![구현 결과7](https://github.com/user-attachments/assets/957ddedb-835b-49ef-8f82-f4765da509b3)
+
+![구현 결과8](https://github.com/user-attachments/assets/76c4d4fd-ac4b-40c6-a1ab-24c5e50be2cc)
+
+![구현 결과9](https://github.com/user-attachments/assets/20167af5-dcee-4e7d-ac8e-2d9c8ed3026d)
+
+![구현 결과10](https://github.com/user-attachments/assets/b9dc3775-aac2-46a3-9b77-abe2a181099a)
+
+![구현 결과11](https://github.com/user-attachments/assets/e95f9d41-3880-46d3-9204-837c64b0c35d)

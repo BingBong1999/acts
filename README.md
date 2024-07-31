@@ -269,35 +269,35 @@
 
 ## 🌗 프로젝트 설정 및 실행 방법
 
-### 1. Remote acts Repository 를 본인의 Eclipse Local Repository에 Clone 합니다.
+1. Remote acts Repository 를 본인의 Eclipse Local Repository에 Clone 합니다.
 
-### 2. Local Repository의 acts 프로젝트를 Eclipse WorkSpace로 import하고, Java EE View로 확인합니다.
+2. Local Repository의 acts 프로젝트를 Eclipse WorkSpace로 import하고, Java EE View로 확인합니다.
 
-### 3. acts 프로젝트의 Java Build Path에 Apache Tomcat을 설정합니다.
+3. acts 프로젝트의 Java Build Path에 Apache Tomcat을 설정합니다.
 
-### 4. acts 프로젝트의 Dynamic Web Module과 Tomcat 버전을 호환되도록 맞춥니다.
+4. acts 프로젝트의 Dynamic Web Module과 Tomcat 버전을 호환되도록 맞춥니다.
 
-- [Dynamic Web Module과 Tomcat 버전 호환하는 방법](https://dark-cloud-covered-sunshine.tistory.com/27)
+	- [Dynamic Web Module과 Tomcat 버전 호환하는 방법](https://dark-cloud-covered-sunshine.tistory.com/27)
 
-### 5. acts 프로젝트를 Tomcat에 적재합니다.
+5. acts 프로젝트를 Tomcat에 적재합니다.
 
-### 6. 한글 Encoding을 다음과 같은 순서로 설정합니다.
+6. 한글 Encoding을 다음과 같은 순서로 설정합니다.
 
-  - Window -> Preferences -> Editors -> Text Editors -> Spelling -> Encoding -> Other: UTF-8 체크 -> Apply
+	- Window -> Preferences -> Editors -> Text Editors -> Spelling -> Encoding -> Other: UTF-8 체크 -> Apply
 
-  - Window -> Preferences -> General -> Workspace -> Text file encoding -> Other: UTF-8 체크 -> Apply
+	- Window -> Preferences -> General -> Workspace -> Text file encoding -> Other: UTF-8 체크 -> Apply
 
-  - Window -> Preferences -> General -> Content Types -> Java Class File, Text -> Default encoding: UTF-8 입력 -> Update -> Apply and Close
+	- Window -> Preferences -> General -> Content Types -> Java Class File, Text -> Default encoding: UTF-8 입력 -> Update -> Apply and Close
 
-  - Window -> Preferences -> Web -> CSS Files, HTML Files, JSP Files -> Encoding: UTF-8 입력 -> Apply and Close
+	- Window -> Preferences -> Web -> CSS Files, HTML Files, JSP Files -> Encoding: UTF-8 입력 -> Apply and Close
 
-  - Window -> Preferences -> XML -> XML Files -> Encoding: UTF-8 입력 -> Apply and Close
+  	- Window -> Preferences -> XML -> XML Files -> Encoding: UTF-8 입력 -> Apply and Close
 
-  - so-so-market 프로젝트 우클릭 -> Properties -> Resource -> Text file encoding -> Other: UTF-8 체크 -> Apply
+  	- acts 프로젝트 우클릭 -> Properties -> Resource -> Text file encoding -> Other: UTF-8 체크 -> Apply
 
-### 7. 프로젝트 전체실행 버튼을 클릭합니다.
+7. 프로젝트 전체실행 버튼을 클릭합니다.
 
-## 🌘 도움이 되었던 Web Site 모음
+## 🌘 참고한 Web Page 및 실행 오류 해결 방법
 
 - **Error: The import org.apache.commons cannot be resolved**
 	- https://k-gline.tistory.com/3

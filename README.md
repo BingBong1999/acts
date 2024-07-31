@@ -30,6 +30,8 @@
 
   아래의 첨부된 PDF 파일과 프로젝트 시연 영상 링크를 통해 확인해 주시기 바랍니다.
 
+- 참고로, **Commit 내역의 20190942 계정(필자의 학번)과 hello 계정은 모두 본인임을 밝힙니다.**
+
 - PDF 파일 및 프로젝트 시연 영상 링크:
 
 - [acts pdf 파일 링크](https://drive.google.com/file/d/1N9nd2-Lqpyxd5r1XS69SP_j-skS4rHRb/view?usp=sharing)

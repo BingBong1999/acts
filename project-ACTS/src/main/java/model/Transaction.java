@@ -3,6 +3,7 @@ package model;
 import java.util.Date;
 
 public class Transaction {
+
 	private int transId;
 	private Date transDate;
 	private User user;
@@ -11,8 +12,9 @@ public class Transaction {
 	private int postId;
 	private String transTitle;
 	private String transContents;
-	
+
 	public Transaction(int transId, Date transDate, User user, Post post, String transTitle, String transContents) {
+		
 		this.transId = transId;
 		this.transDate = transDate;
 		this.user = user;
@@ -22,13 +24,15 @@ public class Transaction {
 	}
 
 	public Transaction(User user, Post post, String transTitle, String transContents) {
+		
 		this.user = user;
 		this.post = post;
 		this.transTitle = transTitle;
 		this.transContents = transContents;
 	}
-	
+
 	public Transaction(int transId, Date transDate, int userId, int postId, String transTitle, String transContents) {
+		
 		this.transId = transId;
 		this.transDate = transDate;
 		this.userId = userId;
@@ -38,11 +42,12 @@ public class Transaction {
 	}
 
 	public Transaction(int transId, String transTitle, String transContents) {
+		
 		this.transId = transId;
 		this.transTitle = transTitle;
 		this.transContents = transContents;
 	}
-	
+
 	public int getTransId() {
 		return transId;
 	}
@@ -107,16 +112,10 @@ public class Transaction {
 		this.transContents = transContents;
 	}
 
-	
 	@Override
 	public String toString() {
 		return "Transaction [transId=" + transId + ", transDate=" + transDate + ", user=" + user + ", post=" + post
 				+ ", userId=" + userId + ", postId=" + postId + ", transTitle=" + transTitle + ", transContents="
 				+ transContents + "]";
 	}
-
-	
-	
-	
-	
 }

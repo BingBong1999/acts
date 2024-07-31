@@ -159,7 +159,7 @@ ALTER TABLE Transaction
 	ADD CONSTRAINT  XPKTransaction PRIMARY KEY (transId);
 
 ALTER TABLE SearchKeyword
-	ADD (CONSTRAINT °Ë»ö FOREIGN KEY (userId) REFERENCES Account (userId));
+	ADD (CONSTRAINT ê²€ìƒ‰ FOREIGN KEY (userId) REFERENCES Account (userId));
 
 ALTER TABLE MessageRoom
 	ADD (CONSTRAINT R_129 FOREIGN KEY (senderId) REFERENCES Account (userId));
@@ -177,19 +177,19 @@ ALTER TABLE Post
 	ADD (CONSTRAINT R_126 FOREIGN KEY (categoryId) REFERENCES Category (categoryId));
 
 ALTER TABLE PostReveiw
-	ADD (CONSTRAINT ÈÄ±â_ÀÛ¼º FOREIGN KEY (reviewerId) REFERENCES Account (userId));
+	ADD (CONSTRAINT í›„ê¸°_ìž‘ì„± FOREIGN KEY (reviewerId) REFERENCES Account (userId));
 
 ALTER TABLE PostReveiw
 	ADD (CONSTRAINT R_127 FOREIGN KEY (postId) REFERENCES Post (postId));
 
 ALTER TABLE Favorite
-	ADD (CONSTRAINT °ü½É±Û_¼³Á¤ FOREIGN KEY (userId) REFERENCES Account (userId) ON DELETE SET NULL);
+	ADD (CONSTRAINT ê´€ì‹¬ê¸€_ì„¤ì • FOREIGN KEY (userId) REFERENCES Account (userId) ON DELETE SET NULL);
 
 ALTER TABLE Favorite
 	ADD (CONSTRAINT R_124 FOREIGN KEY (postId) REFERENCES Post (postId));
 
 ALTER TABLE Transaction
-	ADD (CONSTRAINT °Å·¡_¿äÃ» FOREIGN KEY (userId) REFERENCES Account (userId));
+	ADD (CONSTRAINT ê±°ëž˜_ìš”ì²­ FOREIGN KEY (userId) REFERENCES Account (userId));
 
 ALTER TABLE Transaction
 	ADD (CONSTRAINT R_125 FOREIGN KEY (postId) REFERENCES Post (postId));

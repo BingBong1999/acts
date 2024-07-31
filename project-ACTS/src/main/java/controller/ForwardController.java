@@ -4,17 +4,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class ForwardController implements Controller {
-    private String forwardUrl;
+	
+	private String forwardUrl;
 
-    public ForwardController(String forwardUrl) {
-        if (forwardUrl == null) {
-            throw new NullPointerException("forwardUrl is null. ÀÌµ¿ÇÒ URLÀ» ÀÔ·ÂÇÏ¼¼¿ä.");
-        }
-        this.forwardUrl = forwardUrl;
-    }
+	public ForwardController(String forwardUrl) {
+		if (forwardUrl == null) {
+			throw new NullPointerException("forwardUrl is null. ï¿½Ìµï¿½ï¿½ï¿½ URLï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
+		}
+		this.forwardUrl = forwardUrl;
+	}
 
-    @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-        return forwardUrl;
-    }
+	@Override
+	public String execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+		return forwardUrl;
+	}
 }

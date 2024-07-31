@@ -3,6 +3,7 @@ package model;
 import java.util.Date;
 
 public class Review {
+	
 	private int reviewId;
 	private Date cTime;
 	private String content;
@@ -11,10 +12,13 @@ public class Review {
 	private int postId;
 	private User user;
 	private Post post;
+
+	public Review() {
 	
-	public Review() { }
+	}
 
 	public Review(int reviewId, Date cTime, String content, int score, int reviewerId, int postId) {
+		
 		this.reviewId = reviewId;
 		this.cTime = cTime;
 		this.content = content;
@@ -24,6 +28,7 @@ public class Review {
 	}
 
 	public Review(String content, int score, int reviewerId, int postId) {
+		
 		this.content = content;
 		this.score = score;
 		this.reviewerId = reviewerId;
@@ -93,6 +98,4 @@ public class Review {
 	public void setPost(Post post) {
 		this.post = post;
 	}
-	
-	
 }

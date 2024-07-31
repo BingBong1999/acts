@@ -4,9 +4,11 @@ public class Category {
 
 	private int categoryId;
 	private String categorName;
+
+	public Category() {
 	
-	public Category() {}
-	
+	}
+
 	public Category(int categoryId, String categorName) {
 		super();
 		this.categoryId = categoryId;
@@ -28,6 +30,4 @@ public class Category {
 	public void setCategorName(String categorName) {
 		this.categorName = categorName;
 	}
-	
-	
 }

@@ -1,20 +1,14 @@
 package model.service;
 
 import java.sql.SQLException;
+
 import java.util.List;
 
-import model.Post;
 import model.User;
 import model.dao.UserDAO;
 
-/**
- * »ç¿ëÀÚ °ü¸® API¸¦ »ç¿ëÇÏ´Â °³¹ßÀÚµéÀÌ Á÷Á¢ Á¢±ÙÇÏ°Ô µÇ´Â Å¬·¡½º.
- * UserDAO¸¦ ÀÌ¿ëÇÏ¿© µ¥ÀÌÅÍº£ÀÌ½º¿¡ µ¥ÀÌÅÍ Á¶ÀÛ ÀÛ¾÷ÀÌ °¡´ÉÇÏµµ·Ï ÇÏ¸ç,
- * µ¥ÀÌÅÍº£ÀÌ½ºÀÇ µ¥ÀÌÅÍµéÀ» ÀÌ¿ëÇÏ¿© ºñÁö´Ï½º ·ÎÁ÷À» ¼öÇàÇÏ´Â ¿ªÇÒÀ» ÇÑ´Ù.
- * ºñÁö´Ï½º ·ÎÁ÷ÀÌ º¹ÀâÇÑ °æ¿ì¿¡´Â ºñÁö´Ï½º ·ÎÁ÷¸¸À» Àü´ãÇÏ´Â Å¬·¡½º¸¦ 
- * º°µµ·Î µÑ ¼ö ÀÖ´Ù.
- */
 public class UserManager {
+	
 	private static UserManager userMan = new UserManager();
 	private UserDAO userDAO;
 
@@ -23,62 +17,58 @@ public class UserManager {
 			userDAO = new UserDAO();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}			
+		}
 	}
-	
+
 	public static UserManager getInstance() {
 		return userMan;
 	}
-	
+
 	public int create(User user) throws SQLException, ExistingUserException {
-		if (userDAO.existingUser(user.getAccountId()) == true) {
-			throw new ExistingUserException(user.getAccountId() + "´Â Á¸ÀçÇÏ´Â ¾ÆÀÌµğÀÔ´Ï´Ù.");
-		}
+		
+		if (userDAO.existingUser(user.getAccountId()) == true)
+			throw new ExistingUserException(user.getAccountId() + "ëŠ” ì¡´ì¬í•˜ëŠ” ì•„ì´ë””ì…ë‹ˆë‹¤.");
+		
 		return userDAO.create(user);
 	}
 
 	public int update(User user) throws SQLException, UserNotFoundException {
 		return userDAO.update(user);
-	}	
+	}
 
 	public int remove(String accountId) throws SQLException, UserNotFoundException {
 		return userDAO.remove(accountId);
 	}
 
-	public User findUser(String accountId)
-		throws SQLException, UserNotFoundException {
-		User user = userDAO.findUser(accountId);
+	public User findUser(String accountId) throws SQLException, UserNotFoundException {
 		
-		if (user == null) {
-			throw new UserNotFoundException(accountId + "´Â Á¸ÀçÇÏÁö ¾Ê´Â ¾ÆÀÌµğÀÔ´Ï´Ù.");
-		}		
+		User user = userDAO.findUser(accountId);
+
+		if (user == null)
+			throw new UserNotFoundException(accountId + "ëŠ” ì¡´ì¬í•˜ì§€ ì•ŠëŠ” ì•„ì´ë””ì…ë‹ˆë‹¤.");
+		
 		return user;
 	}
 
 	public List<User> findUserList() throws SQLException {
-			return userDAO.findUserList();
+		return userDAO.findUserList();
 	}
-	
-//	public List<User> findUserList(int currentPage, int countPerPage)
-//		throws SQLException {
-//		return userDAO.findUserList(currentPage, countPerPage);
-//	}
 
-	public boolean login(String accountId, String password)
-		throws SQLException, UserNotFoundException, PasswordMismatchException {
+	public boolean login(String accountId, String password) throws SQLException, UserNotFoundException, PasswordMismatchException {
+		
 		User user = userDAO.findUser(accountId);
 
-		if (!user.matchPassword(password)) {
-			throw new PasswordMismatchException("ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
-		}
+		if (!user.matchPassword(password))
+			throw new PasswordMismatchException("ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
+		
 		return true;
 	}
 
 	public UserDAO getUserDAO() {
 		return this.userDAO;
 	}
-	
-	public String findAccountIdByUserId (String userId) throws SQLException {
+
+	public String findAccountIdByUserId(String userId) throws SQLException {
 		return userDAO.findAccountIdByUserId(userId);
 	}
 }

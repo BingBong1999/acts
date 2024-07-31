@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import controller.Controller;
 import controller.user.UserSessionUtils;
+
 import model.service.FavoriteManager;
 import model.service.PostManager;
 import model.service.PostNotFoundException;
@@ -22,50 +23,51 @@ import model.Review;
 import model.User;
 
 public class SellerPostInfoController implements Controller {
+	
 	private static final Logger log = LoggerFactory.getLogger(PostInfoController.class);
 
 	@Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {			
-    	
+	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
 		UserManager manager = UserManager.getInstance();
 		PostManager postManager = PostManager.getInstance();
 		ReviewManager reviewManager = ReviewManager.getInstance();
 		FavoriteManager fm = FavoriteManager.getInstance();
 		HttpSession session = request.getSession();
+
+		Post post = null;
+		User user = null;
+		List<Review> reviewList = null;
 		
-    	Post post = null;
-    	User user = null;
-    	List<Review> reviewList = null;
 		int fOrNot;
 		int setting = Integer.parseInt(request.getParameter("setting"));
 		int postId = -1;
 		int userId = -1;
-    	String loginAccountId = UserSessionUtils.getLoginUserId(session);
-    	
-    	if (loginAccountId != null) {
-    		user = manager.findUser(loginAccountId);	
-    		userId = user.getUserId();
-    	}
-    	
-    	String postUserNickName = null;
-    	try {
-    		
-    		post = postManager.findPost(Integer.parseInt(request.getParameter("postId")));	// 게시물 정보 검색
-    		postId = post.getPostId();
-    		System.out.println(post);
-    		log.debug("PostInfo Request : {}", post.getPostId());
-    		
-    		postUserNickName = postManager.getPostUserNickName(Integer.parseInt(request.getParameter("writerId")));
-    		System.out.println("닉네임" + postUserNickName);
-    		postManager.increasePostView(post);
-    		reviewList = reviewManager.findReviewList(post.getPostId());
-    		
-    	} catch (PostNotFoundException e) {				
-    		System.out.println("포스트를 찾지 못함");
-	        return "redirect:/post/postList";
-		}	
-    	
-    	if (fm.findFavoriteByPostIdAndUserId(postId, userId) != null) {
+		
+		String loginAccountId = UserSessionUtils.getLoginUserId(session);
+
+		if (loginAccountId != null) {
+			user = manager.findUser(loginAccountId);
+			userId = user.getUserId();
+		}
+
+		String postUserNickName = null;
+		
+		try {
+
+			post = postManager.findPost(Integer.parseInt(request.getParameter("postId")));
+			postId = post.getPostId();
+			log.debug("PostInfo Request : {}", post.getPostId());
+
+			postUserNickName = postManager.getPostUserNickName(Integer.parseInt(request.getParameter("writerId")));
+			postManager.increasePostView(post);
+			reviewList = reviewManager.findReviewList(post.getPostId());
+
+		} catch (PostNotFoundException e) {
+			return "redirect:/post/postList";
+		}
+
+		if (fm.findFavoriteByPostIdAndUserId(postId, userId) != null) {
 			fOrNot = 1;
 		} else {
 			fOrNot = 0;
@@ -80,14 +82,13 @@ public class SellerPostInfoController implements Controller {
 		} else {
 			setting = -1;
 		}
-		
-		request.setAttribute("fOrNot", fOrNot);
-    	request.setAttribute("user", user);	
-    	request.setAttribute("post", post);		// 사용자 정보 저장
-    	request.setAttribute("nickname", postUserNickName);
-    	request.setAttribute("reviewList", reviewList);
-    	
-		return "/post/sellerPostInfo.jsp";				// 사용자 보기 화면으로 이동
-    }
 
+		request.setAttribute("fOrNot", fOrNot);
+		request.setAttribute("user", user);
+		request.setAttribute("post", post);
+		request.setAttribute("nickname", postUserNickName);
+		request.setAttribute("reviewList", reviewList);
+
+		return "/post/sellerPostInfo.jsp";
+	}
 }

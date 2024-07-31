@@ -3,30 +3,31 @@ package controller.user;
 import javax.servlet.http.HttpSession;
 
 public class UserSessionUtils {
-    public static final String USER_SESSION_KEY = "accountId";
+	
+	public static final String USER_SESSION_KEY = "accountId";
 
-    /* 현재 로그인한 사용자의 ID를 구함 */
-    public static String getLoginUserId(HttpSession session) {
-        String accountId = (String)session.getAttribute(USER_SESSION_KEY);
-     
-        return accountId;
-    }
+	public static String getLoginUserId(HttpSession session) {
+		
+		String accountId = (String) session.getAttribute(USER_SESSION_KEY);
 
-    /* 로그인한 상태인지를 검사 */
-    public static boolean hasLogined(HttpSession session) {
-        if (getLoginUserId(session) != null) {
-            return true;
-        }
-        return false;
-    }
+		return accountId;
+	}
 
-    /* 현재 로그인한 사용자의 ID가 userId인지 검사 */
-    public static boolean isLoginUser(String accountId, HttpSession session) {
-        String loginUser = getLoginUserId(session);
-        System.out.println(loginUser);
-        if (loginUser == null) {
-            return false;
-        }
-        return loginUser.equals(accountId);
-    }
+	public static boolean hasLogined(HttpSession session) {
+		
+		if (getLoginUserId(session) != null)
+			return true;
+		
+		return false;
+	}
+
+	public static boolean isLoginUser(String accountId, HttpSession session) {
+		
+		String loginUser = getLoginUserId(session);
+		
+		if (loginUser == null)
+			return false;
+		
+		return loginUser.equals(accountId);
+	}
 }

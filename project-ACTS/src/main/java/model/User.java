@@ -2,25 +2,25 @@ package model;
 
 import java.util.Date;
 
-/**
- * 사용자 관리를 위해 필요한 도메인 클래스. ACCOUNT 테이블과 대응됨
- */
 public class User {
+
 	private int userId;
 	private String accountId;
 	private String password;
 	private String name;
 	private String email;
 	private String phone;
-	private String regNum; // 주민 번호
+	private String regNum;
 	private Date joinDate;
 	private String nickName;
 
 	public User() {
-	} // 기본 생성자
+	
+	}
 
 	public User(int userId, String accountId, String password, String name, String email, String phone, String regNum,
 			Date joinDate, String nickName) {
+		
 		this.userId = userId;
 		this.accountId = accountId;
 		this.password = password;
@@ -31,9 +31,9 @@ public class User {
 		this.joinDate = joinDate;
 		this.nickName = nickName;
 	}
-	
-	public User(String accountId, String password, String name, String email, String phone, String regNum,
-			Date joinDate, String nickName) {
+
+	public User(String accountId, String password, String name, String email, String phone, String regNum, Date joinDate, String nickName) {
+		
 		this.accountId = accountId;
 		this.password = password;
 		this.name = name;
@@ -43,10 +43,9 @@ public class User {
 		this.joinDate = joinDate;
 		this.nickName = nickName;
 	}
-	
-	// password 뺀 버전 (findUser에 이용)
-	public User(String accountId, String name, String email, String phone, String regNum,
-			Date joinDate, String nickName) {
+
+	public User(String accountId, String name, String email, String phone, String regNum, Date joinDate, String nickName) {
+		
 		this.accountId = accountId;
 		this.name = name;
 		this.email = email;
@@ -56,9 +55,8 @@ public class User {
 		this.nickName = nickName;
 	}
 
-	// joinDate없는 생성자(회원가입용)
-	public User(String accountId, String password, String name, String email, String phone, String regNum,
-			String nickName) {
+	public User(String accountId, String password, String name, String email, String phone, String regNum, String nickName) {
+		
 		this.accountId = accountId;
 		this.password = password;
 		this.name = name;
@@ -67,9 +65,9 @@ public class User {
 		this.regNum = regNum;
 		this.nickName = nickName;
 	}
-	
-	//(user update용)
+
 	public User(String accountId, String password, String name, String email, String phone, String nickName) {
+		
 		this.accountId = accountId;
 		this.password = password;
 		this.name = name;
@@ -77,19 +75,7 @@ public class User {
 		this.phone = phone;
 		this.nickName = nickName;
 	}
-	
-	
 
-	
-//	 public void update(User updateUser) { 
-//		 this.password = updateUser.password;
-//		 this.name = updateUser.name; 
-//		 this.email = updateUser.email; 
-//		 this.phone = updateUser.phone; 
-//		 this.nickName = updateUser.nickName; 
-//	 }
-//	 
-	
 	public int getUserId() {
 		return userId;
 	}
@@ -170,11 +156,12 @@ public class User {
 		this.nickName = nickName;
 	}
 
-	/* 비밀번호 검사 */
 	public boolean matchPassword(String password) {
+		
 		if (password == null) {
 			return false;
 		}
+		
 		return this.password.equals(password);
 	}
 
@@ -184,8 +171,8 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + "accountId=" + accountId + ", password=" + password + ", name=" + name + ", email=" + email
-				+ ", phone=" + phone + ", regNum=" + regNum + ", joinDate=" + joinDate
+		return "User [userId=" + userId + "accountId=" + accountId + ", password=" + password + ", name=" + name
+				+ ", email=" + email + ", phone=" + phone + ", regNum=" + regNum + ", joinDate=" + joinDate
 				+ ", nickName=" + nickName + "]";
 	}
 }

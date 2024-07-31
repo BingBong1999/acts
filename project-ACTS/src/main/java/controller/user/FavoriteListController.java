@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import controller.Controller;
+
 import model.service.FavoriteManager;
 import model.service.PostManager;
 import model.service.UserManager;
@@ -20,36 +21,37 @@ public class FavoriteListController implements Controller {
 
 	@SuppressWarnings("null")
 	@Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {			
-    	
-    	
+	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
 		UserManager manager = UserManager.getInstance();
 		FavoriteManager fm = FavoriteManager.getInstance();
 		PostManager pm = PostManager.getInstance();
-		
 		HttpSession session = request.getSession();
+		
 		String loginAccountId = UserSessionUtils.getLoginUserId(session);
 		List<Favorite> favoriteList = new ArrayList<Favorite>();
 		List<Post> postList = new ArrayList<Post>();
-    	User user = null;
-    	
-    	
-    	try {
-			user = manager.findUser(loginAccountId);	// 사용자 정보 검색
+		User user = null;
+
+		try {
+			
+			user = manager.findUser(loginAccountId);
 			favoriteList = fm.findFavoriteListByUserId(user.getUserId());
 			
-		} catch (UserNotFoundException e) {				
-	        return "redirect:/user/myPage";
+		} catch (UserNotFoundException e) {
+			return "redirect:/user/myPage";
 		}
-    	
-    	for(Favorite data: favoriteList) {
+
+		for (Favorite data : favoriteList) {
+			
 			int postId = data.getPostId();
 			Post post = pm.findPost(postId);
 			postList.add(post);
-		}
 		
-    	request.setAttribute("postList", postList);		// 사용자 정보 저장				
-		return "/user/favoriteList.jsp";				// 사용자 보기 화면으로 이동
-    }
+		}
 
+		request.setAttribute("postList", postList);
+		
+		return "/user/favoriteList.jsp";
+	}
 }

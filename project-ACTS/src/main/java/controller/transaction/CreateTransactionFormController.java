@@ -3,60 +3,50 @@ package controller.transaction;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import controller.Controller;
 import controller.user.UserSessionUtils;
+
 import model.Post;
 import model.User;
 import model.service.PostManager;
 import model.service.UserManager;
 
 public class CreateTransactionFormController implements Controller {
-	
-	private static final Logger log = LoggerFactory.getLogger(CreateTransactionFormController.class);
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
+
 		String curUserId = UserSessionUtils.getLoginUserId(request.getSession());
 		UserManager userManager = UserManager.getInstance();
-
 		String postUserNickName = null;
-		
 		PostManager postManager = PostManager.getInstance();
 		Post post = null;
 		User user = null;
 		int postId;
-		
-		// login check
-		if (!UserSessionUtils.hasLogined(request.getSession())) {
-            return "redirect:/user/login/form";
-        }
-		
+
+		if (!UserSessionUtils.hasLogined(request.getSession()))
+			return "redirect:/user/login/form";
+
 		postId = Integer.parseInt(request.getParameter("postId"));
 		user = userManager.findUser(curUserId);
 		post = postManager.findPost(postId);
 		postUserNickName = postManager.getPostUserNickName(Integer.parseInt(request.getParameter("writerId")));
-		
+
 		request.setAttribute("user", user);
 		request.setAttribute("post", post);
 		request.setAttribute("nickname", postUserNickName);
-		
-		//³ªÁß¿¡ ±¸Çö: ³»°¡ ¾´ ±ÛÀÌ¸é ÁÖ¹® ¸øÇÏµµ·Ï
+
 		int iwriterId = user.getUserId();
-    	if (iwriterId == post.getWriterId()) {
+		
+		if (iwriterId == post.getWriterId()) {
 
 			request.setAttribute("trasactionCreateFailed", true);
-			request.setAttribute("exception", 
-					new IllegalStateException("º»ÀÎÀÇ ±ÛÀº ÁÖ¹®ÇÒ ¼ö ¾ø½À´Ï´Ù."));  
-			
-			// ÇöÀç ·Î±×ÀÎÇÑ »ç¿ëÀÚ°¡ °Ô½Ã±Û ÀÛ¼ºÀÚ º»ÀÎÀÎ °æ¿ì ÁÖ¹®ÇÒ ¼ö ¾øÀ½, »ç¿ëÀÚ º¸±â È­¸éÀ¸·Î ¿À·ù ¸Ş¼¼Áö¸¦ Àü´Ş
-			return "/post/sellerPostInfo.jsp";   // °Ë»öÇÑ °Ô½Ã±Û Á¤º¸¸¦ post update formÀ¸·Î Àü¼Û     
-    	}
- 
-    	return "/post/transactionForm.jsp";
-	}
+			request.setAttribute("exception", new IllegalStateException("ë³¸ì¸ì˜ ê¸€ì€ ì£¼ë¬¸í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤."));
 
+			return "/post/sellerPostInfo.jsp";
+		}
+
+		return "/post/transactionForm.jsp";
+	}
 }

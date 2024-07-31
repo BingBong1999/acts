@@ -1,6 +1,7 @@
 package controller.post;
 
 import java.io.File;
+
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -13,33 +14,37 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.FileUploadBase.SizeLimitExceededException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import controller.Controller;
 import controller.user.UserSessionUtils;
+
 import model.service.UserManager;
 import model.service.PostManager;
 import model.Post;
 import model.User;
 
-public class UpdatePostController implements Controller{
+public class UpdatePostController implements Controller {
+	
 	private static final Logger log = LoggerFactory.getLogger(UpdatePostController.class);
+
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
-		//»ç¿ëÀÚ Á¤º¸ ³Ñ±è
-    	UserManager manager = UserManager.getInstance();
-    	PostManager postManager = PostManager.getInstance();
-    	HttpSession session = request.getSession();
-    	String loginAccountId = UserSessionUtils.getLoginUserId(session);
-    	User user = null;
-    	Post post = null;
-    	
-    	String postUserNickName = null;
-    	
-    	File dir = null;
+
+		UserManager manager = UserManager.getInstance();
+		PostManager postManager = PostManager.getInstance();
 		
-    	String postId = null;
+		HttpSession session = request.getSession();
+		String loginAccountId = UserSessionUtils.getLoginUserId(session);
+		
+		User user = null;
+		Post post = null;
+		String postUserNickName = null;
+		File dir = null;
+		String postId = null;
 		String title = null;
 		String description = null;
 		String categoryId = null;
@@ -47,94 +52,68 @@ public class UpdatePostController implements Controller{
 		String status = null;
 		String price = null;
 		String pType = null;
-		String filename = null; // ÀÌ¹ÌÁö ÆÄÀÏ ÀÌ¸§
+		String filename = null;
 		String writerId = null;
+		
 		boolean check = ServletFileUpload.isMultipartContent(request);
-		// Àü¼ÛµÈ µ¥ÀÌÅÍÀÇ ÀÎÄÚµå Å¸ÀÔÀÌ multipart ÀÎÁö ¿©ºÎ¸¦ Ã¼Å©ÇÑ´Ù.
-		// ¸¸¾à multipart°¡ ¾Æ´Ï¶ó¸é ÆÄÀÏ Àü¼ÛÀ» Ã³¸®ÇÏÁö ¾Ê´Â´Ù.
 
-    	
-    	
-		// ·Î±×ÀÎ ¿©ºÎ È®ÀÎ
-    	if (!UserSessionUtils.hasLogined(request.getSession())) {
-            return "redirect:/user/login/form";		// login form ¿äÃ»À¸·Î redirect
-        }
-    	
-  
-		if (request.getMethod().equals("GET")) {	
-    		int iPostId = Integer.parseInt(request.getParameter("postId"));
-    		log.debug("PostUpdateForm Request : {}, {}", loginAccountId, iPostId);
-    		
-    		user = manager.findUser(loginAccountId);
-    		int iwriterId = user.getUserId();
-    		
-    		post = postManager.findPost(iPostId);
-    		
-			request.setAttribute("user", user);	
+		if (!UserSessionUtils.hasLogined(request.getSession())) {
+			return "redirect:/user/login/form";
+		}
+
+		if (request.getMethod().equals("GET")) {
+			
+			int iPostId = Integer.parseInt(request.getParameter("postId"));
+			log.debug("PostUpdateForm Request : {}, {}", loginAccountId, iPostId);
+
+			user = manager.findUser(loginAccountId);
+			int iwriterId = user.getUserId();
+
+			post = postManager.findPost(iPostId);
+
+			request.setAttribute("user", user);
 			request.setAttribute("post", post);
-	
+
 			if (iwriterId == post.getWriterId()) {
-				 
-				// ÇöÀç ·Î±×ÀÎÇÑ »ç¿ëÀÚ°¡ ¼öÁ¤ ´ë»ó »ç¿ëÀÚÀÎ °æ¿ì -> ¼öÁ¤ °¡´É
-				return "/post/postUpdateForm.jsp";   // °Ë»öÇÑ °Ô½Ã±Û Á¤º¸¸¦ post update formÀ¸·Î Àü¼Û     
+				return "/post/postUpdateForm.jsp";
+			}
+
+			postUserNickName = postManager.getPostUserNickName(post.getWriterId());
 			
-			}    
-			
-			// else ¼öÁ¤ ºÒ°¡´ÉÇÑ °æ¿ì »ç¿ëÀÚ º¸±â È­¸éÀ¸·Î ¿À·ù ¸Ş¼¼Áö¸¦ Àü´Ş
-			postUserNickName = postManager.getPostUserNickName( post.getWriterId());
-			System.out.println("¼öÁ¤½ÇÆĞ: " + postUserNickName);
 			request.setAttribute("nickname", postUserNickName);
 			request.setAttribute("postUpdateFailed", true);
-			request.setAttribute("exception", 
-					new IllegalStateException("Å¸ÀÎÀÇ °Ô½Ã±ÛÀº ¼öÁ¤ÇÒ ¼ö ¾ø½À´Ï´Ù."));      
-		
+			request.setAttribute("exception", new IllegalStateException("íƒ€ì¸ì˜ ê²Œì‹œê¸€ì€ ìˆ˜ì •í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤."));
+
 			return "/post/postInfo.jsp";
 		}
-	
-		
-		//requestÃ³¸®, ÆÄÀÏ Ã³¸®¿Í °ü·ÃµÈ ºÎºĞ
-		if (check) {// ÆÄÀÏ Àü¼ÛÀÌ Æ÷ÇÔµÈ »óÅÂ°¡ ¸Â´Ù¸é
 
-			// ¾Æ·¡¿Í °°ÀÌ ÇÏ¸é Tomcat ³»ºÎ¿¡ º¹»çµÈ ÇÁ·ÎÁ§Æ®ÀÇ Æú´õ ¹Ø¿¡ upload Æú´õ°¡ »ı¼ºµÊ
+		if (check) {
+
 			ServletContext context = request.getServletContext();
 			String path = context.getRealPath("/upload");
 			dir = new File(path);
 
-			// Tomcat ¿ÜºÎÀÇ Æú´õ¿¡ ÀúÀåÇÏ·Á¸é ¾Æ·¡¿Í °°ÀÌ Àı´ë °æ·Î·Î Æú´õ ÀÌ¸§À» ÁöÁ¤ÇÔ
-			// File dir = new File("C:/Temp");
-
 			if (!dir.exists())
 				dir.mkdir();
-			// Àü¼ÛµÈ ÆÄÀÏÀ» ÀúÀåÇÒ ½ÇÁ¦ °æ·Î¸¦ ¸¸µç´Ù.
 
 			try {
 				DiskFileItemFactory factory = new DiskFileItemFactory();
-				// ÆÄÀÏ Àü¼Û¿¡ ´ëÇÑ ±âº»ÀûÀÎ ¼³Á¤ Factory Å¬·¡½º¸¦ »ı¼ºÇÑ´Ù.
 				factory.setSizeThreshold(10 * 1024);
-				// ¸Ş¸ğ¸®¿¡ ÇÑ¹ø¿¡ ÀúÀåÇÒ µ¥ÀÌÅÍÀÇ Å©±â¸¦ ¼³Á¤ÇÑ´Ù.
-				// 10kb ¾¿ ¸Ş¸ğ¸®¿¡ µ¥ÀÌÅÍ¸¦ ÀĞ¾î µéÀÎ´Ù.
 				factory.setRepository(dir);
-				// Àü¼ÛµÈ µ¥ÀÌÅÍÀÇ ³»¿ëÀ» ÀúÀåÇÒ ÀÓ½Ã Æú´õ¸¦ ÁöÁ¤ÇÑ´Ù.
 
 				ServletFileUpload upload = new ServletFileUpload(factory);
-				// Factory Å¬·¡½º¸¦ ÅëÇØ ½ÇÁ¦ ¾÷·Îµå µÇ´Â ³»¿ëÀ» Ã³¸®ÇÒ °´Ã¼¸¦ ¼±¾ğÇÑ´Ù.
 				upload.setSizeMax(10 * 1024 * 1024);
-				// ¾÷·Îµå µÉ ÆÄÀÏÀÇ ÃÖ´ë ¿ë·®À» 10MB±îÁö Àü¼Û Çã¿ëÇÑ´Ù.
 				upload.setHeaderEncoding("utf-8");
-				// ¾÷·Îµå µÇ´Â ³»¿ëÀÇ ÀÎÄÚµùÀ» ¼³Á¤ÇÑ´Ù.
 
 				List<FileItem> items = (List<FileItem>) upload.parseRequest(request);
 
-				// upload °´Ã¼¿¡ Àü¼ÛµÇ¾î ¿Â ¸ğµç µ¥ÀÌÅÍ¸¦ Collection °´Ã¼¿¡ ´ã´Â´Ù.
 				for (int i = 0; i < items.size(); ++i) {
 					FileItem item = (FileItem) items.get(i);
-//              	commons-fileupload¸¦ »ç¿ëÇÏ¿© Àü¼Û¹ŞÀ¸¸é 
-					// ¸ğµç parameter´Â FileItem Å¬·¡½º¿¡ ÇÏ³ª¾¿ ÀúÀåµÈ´Ù.
 
 					String value = item.getString("utf-8");
-					// ³Ñ¾î¿Â °ª¿¡ ´ëÇÑ ÇÑ±Û Ã³¸®¸¦ ÇÑ´Ù.
 
-					if (item.isFormField()) {// ÀÏ¹İ Æû µ¥ÀÌÅÍ¶ó¸é...
+					if (item.isFormField()) {
+						
 						if (item.getFieldName().equals("postId"))
 							postId = value;
 						else if (item.getFieldName().equals("title"))
@@ -153,59 +132,48 @@ public class UpdatePostController implements Controller{
 							pType = value;
 						else if (item.getFieldName().equals("writerId"))
 							writerId = value;
-			
-					} else {// ÆÄÀÏÀÌ¶ó¸é...
-						
-							if (item.getFieldName().equals("image")) {
-								// key °ªÀÌ pictureÀÌ¸é ÆÄÀÏ ÀúÀåÀ» ÇÑ´Ù.
-								filename = item.getName();// ÆÄÀÏ ÀÌ¸§ È¹µæ (ÀÚµ¿ ÇÑ±Û Ã³¸® µÊ)
-								if (filename == null || filename.trim().length() == 0) {
-									int iPostId = Integer.parseInt(postId);
-									filename = postManager.getImgUrl(iPostId);
-									System.out.println("filename: " + filename);
-									continue;
-								}
-								// ÆÄÀÏÀÌ Àü¼ÛµÇ¾î ¿ÀÁö ¾Ê¾Ò´Ù¸é °Ç³Ê ¶Ú´Ù.
-								filename = filename.substring(filename.lastIndexOf("\\") + 1);
-								// ÆÄÀÏ ÀÌ¸§ÀÌ ÆÄÀÏÀÇ ÀüÃ¼ °æ·Î±îÁö Æ÷ÇÔÇÏ±â ¶§¹®¿¡ ÀÌ¸§ ºÎºĞ¸¸ ÃßÃâÇØ¾ß ÇÑ´Ù.
-								// ½ÇÁ¦ C:\Web_Java\aaa.gif¶ó°í ÇÏ¸é aaa.gif¸¸ ÃßÃâÇÏ±â À§ÇÑ ÄÚµåÀÌ´Ù.
-								File file = new File(dir, filename);
-								item.write(file);
-								// ÆÄÀÏÀ» upload °æ·Î¿¡ ½ÇÁ¦·Î ÀúÀåÇÑ´Ù.
-								// FileItem °´Ã¼¸¦ ÅëÇØ ¹Ù·Î Ãâ·Â ÀúÀåÇÒ ¼ö ÀÖ´Ù.
-						
+
+					} else {
+
+						if (item.getFieldName().equals("image")) {
+							
+							filename = item.getName();
+							
+							if (filename == null || filename.trim().length() == 0) {								
+								int iPostId = Integer.parseInt(postId);
+								filename = postManager.getImgUrl(iPostId);
+								continue;
+							}
+							
+							filename = filename.substring(filename.lastIndexOf("\\") + 1);
+							File file = new File(dir, filename);
+							item.write(file);
+						}
 					}
-				}
 				}
 
 			} catch (SizeLimitExceededException e) {
-				// ¾÷·Îµå µÇ´Â ÆÄÀÏÀÇ Å©±â°¡ ÁöÁ¤µÈ ÃÖ´ë Å©±â¸¦ ÃÊ°úÇÒ ¶§ ¹ß»ıÇÏ´Â ¿¹¿ÜÃ³¸®
 				e.printStackTrace();
 			} catch (FileUploadException e) {
-				// ÆÄÀÏ ¾÷·Îµå¿Í °ü·ÃµÇ¾î ¹ß»ıÇÒ ¼ö ÀÖ´Â ¿¹¿Ü Ã³¸®
 				e.printStackTrace();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		
-	 {
 
-			Post updatePost = new Post(Integer.parseInt(postId), title, description, filename,
-					Integer.parseInt(categoryId), status, Integer.parseInt(price), pType, Integer.parseInt(writerId));
-			request.setAttribute("post", updatePost);
+		Post updatePost = new Post(Integer.parseInt(postId), title, description, filename,
+				Integer.parseInt(categoryId), status, Integer.parseInt(price), pType, Integer.parseInt(writerId));
+		request.setAttribute("post", updatePost);
 
-			postUserNickName = postManager.getPostUserNickName(Integer.parseInt(writerId));
-			log.debug("Update Post : {}", updatePost);
-			postManager.increasePostView(updatePost);
-			postManager.update(updatePost);
+		postUserNickName = postManager.getPostUserNickName(Integer.parseInt(writerId));
+		log.debug("Update Post : {}", updatePost);
+		postManager.increasePostView(updatePost);
+		postManager.update(updatePost);
 
-			request.setAttribute("postId", updatePost.getPostId());
-			request.setAttribute("post", updatePost);
-			request.setAttribute("nickname", postUserNickName);
-			return "/post/postInfo.jsp";
+		request.setAttribute("postId", updatePost.getPostId());
+		request.setAttribute("post", updatePost);
+		request.setAttribute("nickname", postUserNickName);
 
-		}
+		return "/post/postInfo.jsp";
 	}
 }
-

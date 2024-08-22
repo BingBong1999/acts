@@ -283,21 +283,21 @@
 
 ### ***메인 화면에서 게시글의 대표 이미지를 사용자에게 보여주는 경우***
 
-- `<c:if test=*"*${empty ****post.getImgUrl()}*"*>` **JSTL** 코드를 사용하여 이미지 주소가 비어있는 경우를 식별하고, 
-`<img src=*"*<c:url value='/images/noImage.png'/>*"* class=*"*listImg*"*>` 코드를 사용하여 기본 이미지로 게시글 대표 이미지를 지정합니다.
+- `<c:if test="${empty post.getImgUrl()}">` **JSTL** 코드를 사용하여 이미지 주소가 비어있는 경우를 식별하고, 
+`<img src="<c:url value='/images/noImage.png'/>" class="listImg">` 코드를 사용하여 기본 이미지로 게시글 대표 이미지를 지정합니다.
 
-- `<c:if test=*"*${not empty ****post.getImgUrl()}*"*>` **JSTL** 코드를 사용하여 이미지 주소가 비어있지 않은 경우를 식별하고, 
-`<img src=*"*${pageContext.request.contextPath}*/*upload*/*${post.getImgUrl()}*"* class=*"*listImg*"*>` 코드를 사용하여 해당 이미지를 게시글의 대표 이미지로 지정합니다.
+- `<c:if test="${not empty post.getImgUrl()}">` **JSTL** 코드를 사용하여 이미지 주소가 비어있지 않은 경우를 식별하고, 
+`<img src="${pageContext.request.contextPath}/upload/${post.getImgUrl()}" class="listImg">` 코드를 사용하여 해당 이미지를 게시글의 대표 이미지로 지정합니다.
 
 ---
 
 ### ***사용자가 게시글을 보고 좋아요 기능을 활용하고자 할 경우***
 
-- `<c:if test=*"*${empty ****user.userId}*"*>` **JSTL** 코드를 사용하여 **현재 사용자가 로그인하지 않은 사용자**임을 식별하고 ‘좋아요’ 버튼을 표시합니다. 사용자가 버튼을 클릭하면, **로그인 양식 페이지**로 화면을 전환합니다.
+- `<c:if test="${empty user.userId}">` **JSTL** 코드를 사용하여 **현재 사용자가 로그인하지 않은 사용자**임을 식별하고 ‘좋아요’ 버튼을 표시합니다. 사용자가 버튼을 클릭하면, **로그인 양식 페이지**로 화면을 전환합니다.
 
-- `<c:if test=*"*${fOrNot eq ****0 and not empty ****user.userId}*"*>` **JSTL** 코드를 사용하여 **현재 로그인한 사용자가 게시글에 ‘좋아요’ 버튼을 누르지 않은 경우**를 식별하고 ‘좋아요’ 버튼을 표시합니다. 사용자가 버튼을 클릭하면, 관련 데이터를 생성하도록 **Controller**에 **POST** 요청을 보냅니다.
+- `<c:if test="${fOrNot eq 0 and not empty user.userId}">` **JSTL** 코드를 사용하여 **현재 로그인한 사용자가 게시글에 ‘좋아요’ 버튼을 누르지 않은 경우**를 식별하고 ‘좋아요’ 버튼을 표시합니다. 사용자가 버튼을 클릭하면, 관련 데이터를 생성하도록 **Controller**에 **POST** 요청을 보냅니다.
 
-- `<c:if test=*"*${fOrNot eq ****1}*"*>` **JSTL** 코드를 사용하여 **현재 로그인한 사용자가 게시글에 ‘좋아요’ 버튼을 이미 누른 경우**를 식별하고 ‘좋아요 해제’ 버튼을 표시합니다. 사용자가 버튼을 클릭하면, 관련 데이터를 삭제하도록 **Controller**에 **POST** 요청을 보냅니다.
+- `<c:if test="${fOrNot eq 1}">` **JSTL** 코드를 사용하여 **현재 로그인한 사용자가 게시글에 ‘좋아요’ 버튼을 이미 누른 경우**를 식별하고 ‘좋아요 해제’ 버튼을 표시합니다. 사용자가 버튼을 클릭하면, 관련 데이터를 삭제하도록 **Controller**에 **POST** 요청을 보냅니다.
 
 ## 🌗 프로젝트 설정 및 실행 방법
 

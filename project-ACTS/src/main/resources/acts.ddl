@@ -1,10 +1,18 @@
 
-DROP SEQUENCE id_seq;
+/* 시퀀스 삭제 */
+DROP SEQUENCE USER_ID_SEQ;
 
-CREATE SEQUENCE id_seq
+CREATE SEQUENCE USER_ID_SEQ
+	INCREMENT BY 1
+	START WITH 1;
+	
+DROP SEQUENCE POST_ID_SEQ;
+
+CREATE SEQUENCE POST_ID_SEQ
 	INCREMENT BY 1
 	START WITH 1;
 
+/* 테이블 삭제 */
 DROP TABLE PostReview CASCADE CONSTRAINTS PURGE;
 
 DROP TABLE SearchKeyword CASCADE CONSTRAINTS PURGE;
@@ -23,6 +31,11 @@ DROP TABLE MessageRoom CASCADE CONSTRAINTS PURGE;
 
 DROP TABLE Account CASCADE CONSTRAINTS PURGE;
 
+
+
+
+
+/* 사용자 계정 테이블 생성 */
 CREATE TABLE Account
 (
 	userId               INT NOT NULL ,
@@ -36,12 +49,15 @@ CREATE TABLE Account
 	nickName             VARCHAR2(32) NOT NULL 
 );
 
-CREATE UNIQUE INDEX XPKAccount ON Account
-(userId   ASC);
+CREATE UNIQUE INDEX IDXAccount ON Account (userId ASC);
 
-ALTER TABLE Account
-	ADD CONSTRAINT  XPKAccount PRIMARY KEY (userId);
+ALTER TABLE Account ADD CONSTRAINT XPKAccount PRIMARY KEY (userId);
 
+
+
+
+
+/* 검색 키워드 테이블 생성 */
 CREATE TABLE SearchKeyword
 (
 	createdTime          DATE DEFAULT  SYSDATE  NOT NULL ,
@@ -49,24 +65,38 @@ CREATE TABLE SearchKeyword
 	userId               INT NOT NULL 
 );
 
-CREATE UNIQUE INDEX XPKSearchKeyword ON SearchKeyword
-(userId   ASC);
+CREATE UNIQUE INDEX IDXSearchKeyword ON SearchKeyword (userId ASC);
 
-ALTER TABLE SearchKeyword
-	ADD CONSTRAINT  XPKSearchKeyword PRIMARY KEY (userId);
+ALTER TABLE SearchKeyword ADD CONSTRAINT XPKSearchKeyword PRIMARY KEY (userId);
 
+
+
+
+
+/* 카테고리 테이블 생성 */
 CREATE TABLE Category
 (
 	categoryId           INT NOT NULL ,
 	categoryName         VARCHAR2(100) NOT NULL 
 );
 
-CREATE UNIQUE INDEX XPKCategory ON Category
-(categoryId   ASC);
+CREATE UNIQUE INDEX IDXCategory ON Category (categoryId ASC);
 
-ALTER TABLE Category
-	ADD CONSTRAINT  XPKCategory PRIMARY KEY (categoryId);
+ALTER TABLE Category ADD CONSTRAINT XPKCategory PRIMARY KEY (categoryId);
 
+INSERT INTO Category (categoryId, categoryName) VALUES (1, '디자인');
+
+INSERT INTO Category (categoryId, categoryName) VALUES (2, 'IT');
+
+INSERT INTO Category (categoryId, categoryName) VALUES (3, '문서');
+
+INSERT INTO Category (categoryId, categoryName) VALUES (4, '기타');
+
+
+
+
+
+/* 메세지 룸 테이블 생성 */
 CREATE TABLE MessageRoom
 (
 	roomId               INT NOT NULL ,
@@ -74,12 +104,15 @@ CREATE TABLE MessageRoom
 	receiverId           INT NOT NULL 
 );
 
-CREATE UNIQUE INDEX XPKMessageRoom ON MessageRoom
-(roomId   ASC);
+CREATE UNIQUE INDEX IDXMessageRoom ON MessageRoom (roomId ASC);
 
-ALTER TABLE MessageRoom
-	ADD CONSTRAINT  XPKMessageRoom PRIMARY KEY (roomId);
+ALTER TABLE MessageRoom ADD CONSTRAINT XPKMessageRoom PRIMARY KEY (roomId);
 
+
+
+
+
+/* 메세지 테이블 생성 */
 CREATE TABLE Message
 (
 	messageId            INT NOT NULL ,
@@ -88,12 +121,16 @@ CREATE TABLE Message
 	roomId               INT NOT NULL 
 );
 
-CREATE UNIQUE INDEX XPKMessage ON Message
-(messageId   ASC);
+CREATE UNIQUE INDEX IDXMessage ON Message (messageId ASC);
 
 ALTER TABLE Message
 	ADD CONSTRAINT  XPKMessage PRIMARY KEY (messageId);
 
+	
+	
+	
+
+/* 게시글 테이블 생성 */
 CREATE TABLE Post
 (
 	postId               INT NOT NULL ,
@@ -109,12 +146,15 @@ CREATE TABLE Post
 	categoryId           INT NOT NULL 
 );
 
-CREATE UNIQUE INDEX XPKPost ON Post
-(postId   ASC);
+CREATE UNIQUE INDEX IDXPost ON Post (postId ASC);
 
-ALTER TABLE Post
-	ADD CONSTRAINT  XPKPost PRIMARY KEY (postId);
+ALTER TABLE Post ADD CONSTRAINT XPKPost PRIMARY KEY (postId);
 
+	
+	
+	
+	
+/* 게시글 리뷰 테이블 생성 */
 CREATE TABLE PostReview
 (
 	reviewId             INT NOT NULL ,
@@ -125,12 +165,15 @@ CREATE TABLE PostReview
 	postId               INT NOT NULL 
 );
 
-CREATE UNIQUE INDEX XPKPostReview ON PostReview
-(reviewId   ASC);
+CREATE UNIQUE INDEX IDXPostReview ON PostReview (reviewId ASC);
 
-ALTER TABLE PostReview
-	ADD CONSTRAINT  XPKPostReview PRIMARY KEY (reviewId);
+ALTER TABLE PostReview ADD CONSTRAINT  XPKPostReview PRIMARY KEY (reviewId);
 
+	
+	
+	
+	
+/* 좋아요 테이블 생성 */
 CREATE TABLE Favorite
 (
 	favorId              INT NOT NULL ,
@@ -138,12 +181,15 @@ CREATE TABLE Favorite
 	postId               INT NOT NULL 
 );
 
-CREATE UNIQUE INDEX XPKFavorite ON Favorite
-(favorId   ASC);
+CREATE UNIQUE INDEX IDXFavorite ON Favorite (favorId ASC);
 
-ALTER TABLE Favorite
-	ADD CONSTRAINT  XPKFavorite PRIMARY KEY (favorId);
+ALTER TABLE Favorite ADD CONSTRAINT XPKFavorite PRIMARY KEY (favorId);
 
+	
+	
+	
+	
+/* 거래 테이블 생성 */
 CREATE TABLE Transaction
 (
 	transId              INT NOT NULL ,
@@ -152,44 +198,47 @@ CREATE TABLE Transaction
 	postId               INT NOT NULL 
 );
 
-CREATE UNIQUE INDEX XPKTransaction ON Transaction
-(transId   ASC);
+CREATE UNIQUE INDEX IDXTransaction ON Transaction (transId ASC);
 
-ALTER TABLE Transaction
-	ADD CONSTRAINT  XPKTransaction PRIMARY KEY (transId);
+ALTER TABLE Transaction ADD CONSTRAINT XPKTransaction PRIMARY KEY (transId);
 
+
+
+
+
+/* 외래 키 제약 생성 */
 ALTER TABLE SearchKeyword
-	ADD (CONSTRAINT 검색 FOREIGN KEY (userId) REFERENCES Account (userId));
+	ADD (CONSTRAINT FK_USERID_SearchKeyword FOREIGN KEY (userId) REFERENCES Account (userId));
 
 ALTER TABLE MessageRoom
-	ADD (CONSTRAINT R_129 FOREIGN KEY (senderId) REFERENCES Account (userId));
+	ADD (CONSTRAINT FK_SENDERID_MessageRoom FOREIGN KEY (senderId) REFERENCES Account (userId));
 
 ALTER TABLE MessageRoom
-	ADD (CONSTRAINT R_130 FOREIGN KEY (receiverId) REFERENCES Account (userId));
+	ADD (CONSTRAINT FK_RECEIVERID_MessageRoom FOREIGN KEY (receiverId) REFERENCES Account (userId));
 
 ALTER TABLE Message
-	ADD (CONSTRAINT R_131 FOREIGN KEY (roomId) REFERENCES MessageRoom (roomId));
+	ADD (CONSTRAINT FK_ROOMID_Message FOREIGN KEY (roomId) REFERENCES MessageRoom (roomId));
 
 ALTER TABLE Post
-	ADD (CONSTRAINT R_123 FOREIGN KEY (writerId) REFERENCES Account (userId));
+	ADD (CONSTRAINT FK_WRITERID_Post FOREIGN KEY (writerId) REFERENCES Account (userId));
 
 ALTER TABLE Post
-	ADD (CONSTRAINT R_126 FOREIGN KEY (categoryId) REFERENCES Category (categoryId));
+	ADD (CONSTRAINT FK_CATEGORYID_Post FOREIGN KEY (categoryId) REFERENCES Category (categoryId));
 
 ALTER TABLE PostReview
-	ADD (CONSTRAINT 후기_작성 FOREIGN KEY (reviewerId) REFERENCES Account (userId));
+	ADD (CONSTRAINT FK_REVIEWERID_PostReview FOREIGN KEY (reviewerId) REFERENCES Account (userId));
 
 ALTER TABLE PostReview
-	ADD (CONSTRAINT R_127 FOREIGN KEY (postId) REFERENCES Post (postId));
+	ADD (CONSTRAINT FK_POSTID_PostReview FOREIGN KEY (postId) REFERENCES Post (postId));
 
 ALTER TABLE Favorite
-	ADD (CONSTRAINT 관심글_설정 FOREIGN KEY (userId) REFERENCES Account (userId) ON DELETE SET NULL);
+	ADD (CONSTRAINT FK_USERID_Favorite FOREIGN KEY (userId) REFERENCES Account (userId) ON DELETE SET NULL);
 
 ALTER TABLE Favorite
-	ADD (CONSTRAINT R_124 FOREIGN KEY (postId) REFERENCES Post (postId));
+	ADD (CONSTRAINT FK_POSTID_Favorite FOREIGN KEY (postId) REFERENCES Post (postId));
 
 ALTER TABLE Transaction
-	ADD (CONSTRAINT 거래_요청 FOREIGN KEY (userId) REFERENCES Account (userId));
+	ADD (CONSTRAINT FK_USERID_Transaction FOREIGN KEY (userId) REFERENCES Account (userId));
 
 ALTER TABLE Transaction
-	ADD (CONSTRAINT R_125 FOREIGN KEY (postId) REFERENCES Post (postId));
+	ADD (CONSTRAINT FK_POSTID_Transaction FOREIGN KEY (postId) REFERENCES Post (postId));

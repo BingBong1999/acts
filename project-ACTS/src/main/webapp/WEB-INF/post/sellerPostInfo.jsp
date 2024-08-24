@@ -133,8 +133,7 @@ List<Review> reviewList = (List<Review>) request.getAttribute("reviewList");
 			<button type="submit">좋아요</button>
 		</form>
 	</c:if>
-
-	<c:if test="${fOrNot eq 0 and not empty user.userId}">
+	<c:if test="${isLiked eq false and not empty user.userId}">
 		<form method="POST" action="<c:url value='/post/sellerPostInfo' />">
 			<input type="hidden" name="postId" value='${post.postId}'> <input
 				type="hidden" name="userId" value='${user.userId}'> <input
@@ -145,7 +144,7 @@ List<Review> reviewList = (List<Review>) request.getAttribute("reviewList");
 		</form>
 	</c:if>
 
-	<c:if test="${fOrNot eq 1}">
+	<c:if test="${isLiked eq true}">
 		<form method="POST" action="<c:url value='/post/sellerPostInfo' />">
 			<input type="hidden" name="postId" value='${post.postId}'> <input
 				type="hidden" name="userId" value='${user.userId}'> <input
@@ -156,5 +155,6 @@ List<Review> reviewList = (List<Review>) request.getAttribute("reviewList");
 			<button type="submit">좋아요 해제</button>
 		</form>
 	</c:if>
+
 </body>
 </html>

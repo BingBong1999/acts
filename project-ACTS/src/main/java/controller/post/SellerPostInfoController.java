@@ -39,7 +39,7 @@ public class SellerPostInfoController implements Controller {
 		User user = null;
 		List<Review> reviewList = null;
 		
-		int fOrNot;
+		boolean isLiked;
 		int setting = Integer.parseInt(request.getParameter("setting"));
 		int postId = -1;
 		int userId = -1;
@@ -68,22 +68,22 @@ public class SellerPostInfoController implements Controller {
 		}
 
 		if (fm.findFavoriteByPostIdAndUserId(postId, userId) != null) {
-			fOrNot = 1;
+			isLiked = true;
 		} else {
-			fOrNot = 0;
+			isLiked = false;
 		}
 
 		if (setting == 1) {
 			fm.create(new Favorite(postId, userId));
-			fOrNot = 1;
+			isLiked = true;
 		} else if (setting == 0) {
 			fm.removeByPostIdAndUserId(postId, userId);
-			fOrNot = 0;
+			isLiked = false;
 		} else {
 			setting = -1;
 		}
 
-		request.setAttribute("fOrNot", fOrNot);
+		request.setAttribute("isLiked", isLiked);
 		request.setAttribute("user", user);
 		request.setAttribute("post", post);
 		request.setAttribute("nickname", postUserNickName);

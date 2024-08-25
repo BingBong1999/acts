@@ -10,6 +10,7 @@ public class Post {
 	private String imgUrl;
 	private Date cTime;
 	private int categoryId;
+	private String category;
 	private int views;
 	private String status;
 	private int price;
@@ -123,6 +124,14 @@ public class Post {
 	public void setCategoryId(int categoryId) {
 		this.categoryId = categoryId;
 	}
+	
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
 
 	public int getViews() {
 		return views;
@@ -178,4 +187,6 @@ public class Post {
 				+ cTime + ", categoryId=" + categoryId + ", views=" + views + ", status=" + status + ", price=" + price
 				+ ", pType=" + pType + ", writerId=" + writerId + ", thumbImg=" + thumbImg + "]";
 	}
+
+	
 }

@@ -48,7 +48,12 @@ public class PostManager {
 	}
 
 	public List<Post> findPostList() throws SQLException {
-		return postDAO.findPostList();
+		List<Post> posts = postDAO.findPostList();
+		
+        for (Post post : posts) {
+            post.setCategory(findCategoryName(post.getPostId()));
+        }
+        return posts;
 	}
 
 	public List<Post> findPostListUseCategory(String cName) throws SQLException {
@@ -77,4 +82,14 @@ public class PostManager {
 	public List<Post> findMyPostList(int userId) throws SQLException {
 		return postDAO.findMyPostList(userId);
 	}
+	
+	 public String findCategoryName(int categoryId) {
+	        switch (categoryId) {
+	            case 0: return "디자인";
+	            case 1: return "IT";
+	            case 3: return "문서";
+	            case 4: return "기타";
+	            default: return "기타";
+	        }
+	    }
 }

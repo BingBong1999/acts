@@ -3,7 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	Transaction transaction = (Transaction)request.getAttribute("transaction");
-	List<TransComment> commentList = (List<TransComment>)request.getAttribute("commentList");
+	//List<TransComment> commentList = (List<TransComment>)request.getAttribute("commentList");
 	
 	out.print(transaction.getTransId());
 %>

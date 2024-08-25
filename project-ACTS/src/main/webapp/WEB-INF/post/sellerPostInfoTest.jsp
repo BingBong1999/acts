@@ -172,6 +172,7 @@ h4, h5 {
 </style>
 </head>
 <body>
+	<%@include file="/WEB-INF/navbarTest.jsp"%>
 	<div class="container mt-5">
 
 		<div class="card">

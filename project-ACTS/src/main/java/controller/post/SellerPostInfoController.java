@@ -39,7 +39,7 @@ public class SellerPostInfoController implements Controller {
 		User user = null;
 		List<Review> reviewList = null;
 		
-		boolean isLiked;
+		boolean isLiked = false;
 		int setting = Integer.parseInt(request.getParameter("setting"));
 		int postId = -1;
 		int userId = -1;
@@ -81,6 +81,7 @@ public class SellerPostInfoController implements Controller {
 			isLiked = false;
 		} else {
 			setting = -1;
+			isLiked = false;
 		}
 
 		request.setAttribute("isLiked", isLiked);
@@ -89,6 +90,6 @@ public class SellerPostInfoController implements Controller {
 		request.setAttribute("nickname", postUserNickName);
 		request.setAttribute("reviewList", reviewList);
 
-		return "/post/sellerPostInfo.jsp";
+		return "/post/sellerPostInfoTest.jsp";
 	}
 }

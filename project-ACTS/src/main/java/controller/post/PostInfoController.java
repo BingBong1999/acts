@@ -88,6 +88,6 @@ public class PostInfoController implements Controller {
 		request.setAttribute("nickname", postUserNickName);
 		request.setAttribute("reviewList", reviewList);
 
-		return "/post/postInfo.jsp";
+		return "/post/postInfoTest.jsp";
 	}
 }

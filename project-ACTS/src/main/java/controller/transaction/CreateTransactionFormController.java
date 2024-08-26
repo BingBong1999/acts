@@ -29,7 +29,7 @@ public class CreateTransactionFormController implements Controller {
 			return "redirect:/user/login/form";
 
 		postId = Integer.parseInt(request.getParameter("postId"));
-		user = userManager.findUser(curUserId);
+		user = userManager.findUserByUserId(curUserId);
 		post = postManager.findPost(postId);
 		postUserNickName = postManager.getPostUserNickName(Integer.parseInt(request.getParameter("writerId")));
 
@@ -37,7 +37,7 @@ public class CreateTransactionFormController implements Controller {
 		request.setAttribute("post", post);
 		request.setAttribute("nickname", postUserNickName);
 
-		int iwriterId = user.getUserId();
+		int iwriterId = Integer.parseInt(user.getId());
 		
 		if (iwriterId == post.getWriterId()) {
 

@@ -23,7 +23,7 @@ public class MyPageController implements Controller {
 		User user = null;
 
 		try {
-			user = manager.findUser(loginAccountId);
+			user = manager.findUserByUserId(loginAccountId);
 		} catch (UserNotFoundException e) {
 			return "redirect:/user/login";
 		}

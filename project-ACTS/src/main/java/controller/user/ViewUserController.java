@@ -19,7 +19,7 @@ public class ViewUserController implements Controller {
 		User user = null;
 		
 		try {
-			user = manager.findUser(userId);
+			user = manager.findUserByUserId(userId);
 		} catch (UserNotFoundException e) {
 			return "redirect:/user/view";
 		}

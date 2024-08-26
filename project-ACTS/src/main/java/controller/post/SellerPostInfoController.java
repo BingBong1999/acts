@@ -11,11 +11,12 @@ import org.slf4j.LoggerFactory;
 
 import controller.Controller;
 import controller.user.UserSessionUtils;
+
 import exception.PostNotFoundException;
+
 import model.service.FavoriteManager;
 import model.service.PostManager;
 import model.service.ReviewManager;
-import model.service.UserManager;
 import model.Favorite;
 import model.Post;
 import model.Review;
@@ -28,7 +29,6 @@ public class SellerPostInfoController implements Controller {
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		UserManager manager = UserManager.getInstance();
 		PostManager postManager = PostManager.getInstance();
 		ReviewManager reviewManager = ReviewManager.getInstance();
 		FavoriteManager fm = FavoriteManager.getInstance();
@@ -42,15 +42,10 @@ public class SellerPostInfoController implements Controller {
 		boolean isLiked = false;
 		int likeRequest = Integer.parseInt(request.getParameter("likeRequest"));
 		int postId = -1;
-		int userId = -1;
 		
-		String loginAccountId = UserSessionUtils.getLoginUserId(session);
+		String userId = UserSessionUtils.getLoginUserId(session);
 
-		if (loginAccountId != null) {
-			user = manager.findUser(loginAccountId);
-			userId = user.getUserId();
-		}
-
+		
 		String postUserNickName = null;
 		
 		try {
@@ -71,13 +66,13 @@ public class SellerPostInfoController implements Controller {
 		if ( UserSessionUtils.hasLogined(session) ) {
 			
 			if (likeRequest == 1) {
-			    fm.create(new Favorite(postId, userId));
+			    fm.create(new Favorite(postId, Integer.parseInt(userId)));
 			    isLiked = true;
 			} else if (likeRequest == 0) {
-			    fm.removeByPostIdAndUserId(postId, userId);
+			    fm.removeByPostIdAndUserId(postId, Integer.parseInt(userId));
 			    isLiked = false;
 			} else {
-				isLiked = fm.findFavoriteByPostIdAndUserId(postId, userId) != null;
+				isLiked = fm.findFavoriteByPostIdAndUserId(postId, Integer.parseInt(userId)) != null;
 			}
 			
 		} else {

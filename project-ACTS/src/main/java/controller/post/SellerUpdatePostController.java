@@ -34,10 +34,10 @@ public class SellerUpdatePostController implements Controller {
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
 
-		UserManager manager = UserManager.getInstance();
+		UserManager userManager = UserManager.getInstance();
 		PostManager postManager = PostManager.getInstance();
 		HttpSession session = request.getSession();
-		String loginAccountId = UserSessionUtils.getLoginUserId(session);
+		String userId = UserSessionUtils.getLoginUserId(session);
 		
 		User user = null;
 		Post post = null;
@@ -62,17 +62,15 @@ public class SellerUpdatePostController implements Controller {
 
 		if (request.getMethod().equals("GET")) {
 			int iPostId = Integer.parseInt(request.getParameter("postId"));
-			log.debug("PostUpdateForm Request : {}, {}", loginAccountId, iPostId);
+			log.debug("PostUpdateForm Request : {}, {}", userId, iPostId);
 
-			user = manager.findUser(loginAccountId);
-			int iwriterId = user.getUserId();
-
+			user = userManager.findUserByUserId(userId);
 			post = postManager.findPost(iPostId);
 
 			request.setAttribute("user", user);
 			request.setAttribute("post", post);
 
-			if (iwriterId == post.getWriterId()) {
+			if (Integer.parseInt(userId) == post.getWriterId()) {
 				return "/post/postUpdateForm.jsp";
 			}
 

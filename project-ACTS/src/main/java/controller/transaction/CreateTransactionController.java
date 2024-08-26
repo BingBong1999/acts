@@ -30,7 +30,7 @@ public class CreateTransactionController implements Controller {
 		String transContents;
 
 		postId = Integer.parseInt(request.getParameter("postId"));
-		user = userManager.findUser(curUserId);
+		user = userManager.findUserByUserId(curUserId);
 		post = postManager.findPost(postId);
 		postUserNickName = postManager.getPostUserNickName(Integer.parseInt(request.getParameter("writerId")));
 

@@ -7,7 +7,6 @@ import java.util.List;
 import exception.PostNotFoundException;
 import exception.UserNotFoundException;
 import model.Post;
-import model.User;
 import model.dao.PostDAO;
 
 public class PostManager {
@@ -55,7 +54,6 @@ public class PostManager {
 
 		for (Post post : posts) {
 			post.setCategory(findCategoryName(post.getPostId()));
-			post.setWriter(findWriterName(post.getWriterId()));
 		}
 		return posts;
 	}
@@ -102,14 +100,7 @@ public class PostManager {
 		}
 	}
 	
-	public String findWriterName(int writerId) throws SQLException, UserNotFoundException {
-		
-		UserManager userManager = UserManager.getInstance();
-		
-		User user = userManager.findUserByUserId(writerId);
-		
-		return user.getNickName();
-	}
+	
 	
 	
 }

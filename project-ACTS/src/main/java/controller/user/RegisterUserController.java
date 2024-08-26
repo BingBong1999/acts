@@ -19,13 +19,9 @@ public class RegisterUserController implements Controller {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
     
        	User user = new User(
-			request.getParameter("accountId"),
+			request.getParameter("id"),
 			request.getParameter("password"),
-			request.getParameter("name"),
-			request.getParameter("email"),
-			request.getParameter("phone"),
-			request.getParameter("regNum"),
-			request.getParameter("nickName"));
+			request.getParameter("email"));
 		
         log.debug("Create User : {}", user);
 

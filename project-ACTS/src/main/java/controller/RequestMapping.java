@@ -28,7 +28,6 @@ public class RequestMapping {
 		mappings.put("/user/logout", new LogoutController());
 		mappings.put("/user/view", new ViewUserController());
 		mappings.put("/comm/buyerPage", new BuyerPostListController());
-		mappings.put("/user/list", new ListUserController());
 		mappings.put("/user/register/form", new ForwardController("/user/registerForm.jsp"));
 		mappings.put("/user/register", new RegisterUserController());
 		mappings.put("/user/myInfo", new MyInfoController());

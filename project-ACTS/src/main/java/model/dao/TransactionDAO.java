@@ -19,7 +19,7 @@ public class TransactionDAO {
 	public int create(Transaction transaction) throws SQLException {
 
 		String sql = "INSERT INTO TRANSACTION VALUES (trans_id_seq.nextval, ?, ?, DEFAULT, ?, ?)";
-		Object[] param = new Object[] { transaction.getUser().getUserId(), transaction.getPost().getPostId(),
+		Object[] param = new Object[] { transaction.getUser().getId(), transaction.getPost().getPostId(),
 				transaction.getTransTitle(), transaction.getTransContents() };
 		
 		jdbcUtil.setSqlAndParameters(sql, param);

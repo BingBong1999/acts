@@ -29,7 +29,7 @@ public class UpdateUserController implements Controller {
 
 			log.debug("UpdateForm Request : {}", updateId);
 
-			User user = userManager.findUser(updateId);
+			User user = userManager.findUserByUserId(updateId);
 			request.setAttribute("user", user);
 
 			if (UserSessionUtils.isLoginUser(updateId, session) || UserSessionUtils.isLoginUser("admin", session))
@@ -41,9 +41,7 @@ public class UpdateUserController implements Controller {
 			return "/user/view.jsp";
 		}
 
-		User updateUser = new User(request.getParameter("accountId"), request.getParameter("password"),
-				request.getParameter("name"), request.getParameter("email"), request.getParameter("phone"),
-				request.getParameter("nickName"));
+		User updateUser = new User(request.getParameter("id"), request.getParameter("password"), request.getParameter("email"));
 
 		log.debug("Update User : {}", updateUser);
 

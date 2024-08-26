@@ -26,14 +26,14 @@ public class UploadReviewController implements Controller {
 
 		String curUserId = UserSessionUtils.getLoginUserId(request.getSession());
 		UserManager userManager = UserManager.getInstance();
-		User user = userManager.findUser(curUserId);
+		User user = userManager.findUserByUserId(curUserId);
 
 		PostManager postManager = PostManager.getInstance();
 		int postId = Integer.parseInt(request.getParameter("postId"));
 		Post post = postManager.findPost(postId);
 
 		Review review = new Review(request.getParameter("content"), Integer.parseInt(request.getParameter("score")),
-				user.getUserId(), post.getPostId());
+				Integer.parseInt(user.getId()), post.getPostId());
 
 		log.debug("Create Review : {}", review);
 

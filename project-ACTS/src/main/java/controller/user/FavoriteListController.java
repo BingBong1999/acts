@@ -34,8 +34,8 @@ public class FavoriteListController implements Controller {
 
 		try {
 			
-			user = manager.findUser(loginAccountId);
-			favoriteList = fm.findFavoriteListByUserId(user.getUserId());
+			user = manager.findUserByUserId(loginAccountId);
+			favoriteList = fm.findFavoriteListByUserId(Integer.parseInt(user.getId()));
 			
 		} catch (UserNotFoundException e) {
 			return "redirect:/user/myPage";

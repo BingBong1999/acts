@@ -11,7 +11,6 @@ import controller.Controller;
 import controller.user.UserSessionUtils;
 
 import model.Post;
-import model.dao.UserDAO;
 import model.service.PostManager;
 
 public class DeletePostController implements Controller {
@@ -20,30 +19,27 @@ public class DeletePostController implements Controller {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
-		String deletePostId = request.getParameter("postId");
-		String deletePostWriterId = request.getParameter("writerId");
-		log.debug("Delete Post : {}", deletePostId);
+
+		String postId = request.getParameter("postId");
+		String writerId = request.getParameter("writerId");
+		log.debug("Delete Post : {}", postId);
 
 		PostManager manager = PostManager.getInstance();
 		HttpSession session = request.getSession();
-		UserDAO userDao = new UserDAO();
-
-		String deletePostWriterAccountId = userDao.findAccountIdByUserId(deletePostWriterId);
 
 		if (!UserSessionUtils.hasLogined(session)) {
 			return "redirect:/user/login/form";
 		}
 
-		if (UserSessionUtils.isLoginUser(deletePostWriterAccountId, session)) {
-			manager.remove(Integer.parseInt(deletePostId));
+		if (UserSessionUtils.isLoginUser(writerId, session)) {
+			manager.remove(Integer.parseInt(postId));
 			return "redirect:/comm/main";
 		}
 
-		Post post = manager.findPost(Integer.parseInt(deletePostId));
+		Post post = manager.findPost(Integer.parseInt(postId));
 		request.setAttribute("post", post);
 		request.setAttribute("deleteFailed", true);
-		
+
 		String msg = (UserSessionUtils.isLoginUser("admin", session)) ? "시스템 관리자 게시글은 삭제할 수 없습니다."
 				: "타인의 정보는 삭제할 수 없습니다.";
 		request.setAttribute("exception", new IllegalStateException(msg));

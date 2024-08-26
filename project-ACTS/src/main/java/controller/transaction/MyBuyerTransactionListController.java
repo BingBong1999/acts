@@ -22,7 +22,7 @@ public class MyBuyerTransactionListController implements Controller {
 		TransactionManager transactionMan = TransactionManager.getInstance();
 
 		String userId1 = UserSessionUtils.getLoginUserId(session);
-		int userId = manager.findUser(userId1).getUserId();
+		int userId = Integer.parseInt(manager.findUserByUserId(userId1).getId());
 		List<Transaction> transactionList;
 
 		transactionList = transactionMan.findMyTransactionList(userId);

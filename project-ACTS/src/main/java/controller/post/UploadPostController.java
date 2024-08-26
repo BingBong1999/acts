@@ -34,7 +34,7 @@ public class UploadPostController implements Controller {
 
 		String curUserId = UserSessionUtils.getLoginUserId(request.getSession());
 		UserManager userManager = UserManager.getInstance();
-		User user = userManager.findUser(curUserId);
+		User user = userManager.findUserByUserId(curUserId);
 
 		File dir = null;
 		String title = null;
@@ -117,7 +117,7 @@ public class UploadPostController implements Controller {
 		log.debug("Create title : {}", title);
 		
 		Post prod = new Post(title, description, filename, Integer.parseInt(categoryId), status,
-				Integer.parseInt(price), pType, user.getUserId());
+				Integer.parseInt(price), pType, Integer.parseInt(user.getId()));
 		request.setAttribute("post", prod);
 
 		log.debug("Create ProductForm : {}", prod);

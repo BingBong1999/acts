@@ -2,33 +2,31 @@ package model.service;
 
 import java.sql.SQLException;
 
-import java.util.List;
+import exception.ExistingUserException;
+import exception.PasswordMismatchException;
+import exception.UserNotFoundException;
 
 import model.User;
 import model.dao.UserDAO;
 
 public class UserManager {
-	
-	private static UserManager userMan = new UserManager();
+
+	private static UserManager userManager = new UserManager();
 	private UserDAO userDAO;
 
 	private UserManager() {
-		try {
-			userDAO = new UserDAO();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		userDAO = new UserDAO();
 	}
 
 	public static UserManager getInstance() {
-		return userMan;
+		return userManager;
 	}
 
-	public int create(User user) throws SQLException, ExistingUserException {
-		
-		if (userDAO.existingUser(user.getAccountId()) == true)
-			throw new ExistingUserException(user.getAccountId() + "는 존재하는 아이디입니다.");
-		
+	public int create(User user) throws SQLException, ExistingUserException, UserNotFoundException {
+
+		if (findUserByUserId(user.getId()) != null)
+			throw new ExistingUserException(user.getId() + "는 존재하는 아이디입니다.");
+
 		return userDAO.create(user);
 	}
 
@@ -36,48 +34,38 @@ public class UserManager {
 		return userDAO.update(user);
 	}
 
-	public int remove(String accountId) throws SQLException, UserNotFoundException {
-		return userDAO.remove(accountId);
+	public int delete(String id) throws SQLException, UserNotFoundException {
+		return userDAO.delete(id);
 	}
 
-	public User findUser(String accountId) throws SQLException, UserNotFoundException {
-		
-		User user = userDAO.findUser(accountId);
+	public User findUserByUserId(String id) throws SQLException, UserNotFoundException {
+
+		User user = userDAO.findUserByUserId(id);
 
 		if (user == null)
-			throw new UserNotFoundException(accountId + "는 존재하지 않는 아이디입니다.");
-		
-		return user;
-	}
-	
-	public User findUserByUserId(int userId) throws UserNotFoundException, SQLException {
-		User user = userDAO.findUserByUserId(userId);
+			throw new UserNotFoundException(id + "는 존재하지 않는 아이디입니다.");
 
-		if (user == null)
-			throw new UserNotFoundException(userId + "는 존재하지 않는 아이디입니다.");
-		
 		return user;
 	}
 
-	public List<User> findUserList() throws SQLException {
-		return userDAO.findUserList();
-	}
+	public boolean login(String id, String password)
+			throws SQLException, UserNotFoundException, PasswordMismatchException {
 
-	public boolean login(String accountId, String password) throws SQLException, UserNotFoundException, PasswordMismatchException {
-		
-		User user = userDAO.findUser(accountId);
-
-		if (!user.matchPassword(password))
+		if (!isMatchPassword(id, password))
 			throw new PasswordMismatchException("비밀번호가 일치하지 않습니다.");
-		
+
 		return true;
 	}
 
-	public UserDAO getUserDAO() {
-		return this.userDAO;
+	public boolean isMatchPassword(String id, String password) throws SQLException {
+
+		User user = userDAO.findUserByUserId(id);
+
+		if (password == null) {
+			return false;
+		}
+
+		return user.getPassword().equals(password);
 	}
 
-	public String findAccountIdByUserId(String userId) throws SQLException {
-		return userDAO.findAccountIdByUserId(userId);
-	}
 }

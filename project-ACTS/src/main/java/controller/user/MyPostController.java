@@ -22,7 +22,7 @@ public class MyPostController implements Controller {
 		HttpSession session = request.getSession();
 
 		String userId1 = UserSessionUtils.getLoginUserId(session);
-		int userId = userManager.findUser(userId1).getUserId();
+		int userId = Integer.parseInt(userManager.findUserByUserId(userId1).getId());
 
 		List<Post> postList = postManager.findMyPostList(userId);
 

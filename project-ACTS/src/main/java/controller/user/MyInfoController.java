@@ -20,7 +20,7 @@ public class MyInfoController implements Controller {
 		User user = null;	
     
     	try {
-			user = manager.findUser(loginAccountId);
+			user = manager.findUserByUserId(loginAccountId);
 		} catch (UserNotFoundException e) {				
 	        return "redirect:/user/login";
 		}	

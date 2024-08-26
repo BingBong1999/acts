@@ -28,7 +28,7 @@ public class DeleteUserController implements Controller {
 		if ((UserSessionUtils.isLoginUser("admin", session) && !deleteId.equals("admin"))
 				|| (!UserSessionUtils.isLoginUser("admin", session) && UserSessionUtils.isLoginUser(deleteId, session))) {
 			
-			manager.remove(deleteId);
+			manager.delete(deleteId);
 			
 			if (UserSessionUtils.isLoginUser("admin", session))
 				return "redirect:/comm/main";
@@ -36,7 +36,7 @@ public class DeleteUserController implements Controller {
 				return "redirect:/user/logout";
 		}
 
-		User user = manager.findUser(deleteId);
+		User user = manager.findUserByUserId(deleteId);
 		
 		request.setAttribute("user", user);
 		request.setAttribute("deleteFailed", true);

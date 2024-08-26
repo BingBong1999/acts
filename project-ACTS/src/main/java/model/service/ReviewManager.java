@@ -45,7 +45,7 @@ public class ReviewManager {
 		List<Review> reviewList = reviewDAO.findReviewList(postId);
 
 		for (Review review : reviewList) {
-			User user = userDAO.findUserByPrimaryKey(review.getReviewerId());
+			User user = userDAO.findUserByUserId(Integer.toString(review.getReviewerId()));
 			review.setUser(user);
 		}
 

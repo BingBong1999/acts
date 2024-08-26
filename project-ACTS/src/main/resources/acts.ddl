@@ -1,10 +1,5 @@
 
 /* 시퀀스 삭제 */
-DROP SEQUENCE USER_ID_SEQ;
-
-CREATE SEQUENCE USER_ID_SEQ
-	INCREMENT BY 1
-	START WITH 1;
 	
 DROP SEQUENCE POST_ID_SEQ;
 
@@ -38,20 +33,14 @@ DROP TABLE Account CASCADE CONSTRAINTS PURGE;
 /* 사용자 계정 테이블 생성 */
 CREATE TABLE Account
 (
-	userId               INT NOT NULL ,
-	phoneNumber          VARCHAR2(15) NOT NULL ,
-	emailAddress         VARCHAR2(100) NOT NULL ,
-	userName             VARCHAR2(20) NOT NULL ,
-	registrationNumber   VARCHAR2(14) NOT NULL ,
-	password             VARCHAR2(30) NOT NULL ,
-	joinDate             DATE DEFAULT  SYSDATE  NOT NULL ,
-	accountId            VARCHAR2(30) NOT NULL ,
-	nickName             VARCHAR2(32) NOT NULL 
+	ID               INT NOT NULL ,
+	PASSWORD          VARCHAR2(15) NOT NULL ,
+	EMAIL         VARCHAR2(100) NOT NULL ,
 );
 
-CREATE UNIQUE INDEX IDXAccount ON Account (userId ASC);
+CREATE UNIQUE INDEX IDXAccount ON Account (ID ASC);
 
-ALTER TABLE Account ADD CONSTRAINT XPKAccount PRIMARY KEY (userId);
+ALTER TABLE Account ADD CONSTRAINT XPKAccount PRIMARY KEY (ID);
 
 
 
@@ -208,37 +197,37 @@ ALTER TABLE Transaction ADD CONSTRAINT XPKTransaction PRIMARY KEY (transId);
 
 /* 외래 키 제약 생성 */
 ALTER TABLE SearchKeyword
-	ADD (CONSTRAINT FK_USERID_SearchKeyword FOREIGN KEY (userId) REFERENCES Account (userId));
+	ADD (CONSTRAINT FK_USERID_SearchKeyword FOREIGN KEY (userId) REFERENCES Account (ID));
 
 ALTER TABLE MessageRoom
-	ADD (CONSTRAINT FK_SENDERID_MessageRoom FOREIGN KEY (senderId) REFERENCES Account (userId));
+	ADD (CONSTRAINT FK_SENDERID_MessageRoom FOREIGN KEY (senderId) REFERENCES Account (ID));
 
 ALTER TABLE MessageRoom
-	ADD (CONSTRAINT FK_RECEIVERID_MessageRoom FOREIGN KEY (receiverId) REFERENCES Account (userId));
+	ADD (CONSTRAINT FK_RECEIVERID_MessageRoom FOREIGN KEY (receiverId) REFERENCES Account (ID));
 
 ALTER TABLE Message
 	ADD (CONSTRAINT FK_ROOMID_Message FOREIGN KEY (roomId) REFERENCES MessageRoom (roomId));
 
 ALTER TABLE Post
-	ADD (CONSTRAINT FK_WRITERID_Post FOREIGN KEY (writerId) REFERENCES Account (userId));
+	ADD (CONSTRAINT FK_WRITERID_Post FOREIGN KEY (writerId) REFERENCES Account (ID));
 
 ALTER TABLE Post
 	ADD (CONSTRAINT FK_CATEGORYID_Post FOREIGN KEY (categoryId) REFERENCES Category (categoryId));
 
 ALTER TABLE PostReview
-	ADD (CONSTRAINT FK_REVIEWERID_PostReview FOREIGN KEY (reviewerId) REFERENCES Account (userId));
+	ADD (CONSTRAINT FK_REVIEWERID_PostReview FOREIGN KEY (reviewerId) REFERENCES Account (ID));
 
 ALTER TABLE PostReview
 	ADD (CONSTRAINT FK_POSTID_PostReview FOREIGN KEY (postId) REFERENCES Post (postId));
 
 ALTER TABLE Favorite
-	ADD (CONSTRAINT FK_USERID_Favorite FOREIGN KEY (userId) REFERENCES Account (userId) ON DELETE SET NULL);
+	ADD (CONSTRAINT FK_USERID_Favorite FOREIGN KEY (userId) REFERENCES Account (ID) ON DELETE SET NULL);
 
 ALTER TABLE Favorite
 	ADD (CONSTRAINT FK_POSTID_Favorite FOREIGN KEY (postId) REFERENCES Post (postId));
 
 ALTER TABLE Transaction
-	ADD (CONSTRAINT FK_USERID_Transaction FOREIGN KEY (userId) REFERENCES Account (userId));
+	ADD (CONSTRAINT FK_USERID_Transaction FOREIGN KEY (userId) REFERENCES Account (ID));
 
 ALTER TABLE Transaction
 	ADD (CONSTRAINT FK_POSTID_Transaction FOREIGN KEY (postId) REFERENCES Post (postId));

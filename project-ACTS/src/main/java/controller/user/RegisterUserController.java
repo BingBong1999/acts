@@ -27,8 +27,8 @@ public class RegisterUserController implements Controller {
 
 		try {
 			
-			UserManager manager = UserManager.getInstance();
-			manager.create(user);
+			UserManager userManager = UserManager.getInstance();
+			userManager.create(user);
 			
 	        return "redirect:/comm/main";
 	        
@@ -38,7 +38,7 @@ public class RegisterUserController implements Controller {
 			request.setAttribute("exception", e);
 			request.setAttribute("user", user);
 			
-			return "/user/registerForm.jsp";
+			return "/user/join.jsp";
 		}
     }
 }

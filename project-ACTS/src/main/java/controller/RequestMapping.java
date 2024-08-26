@@ -33,7 +33,6 @@ public class RequestMapping {
 		mappings.put("/user/update", new UpdateUserController());
 		mappings.put("/user/myPost", new MyPostController());
 		mappings.put("/user/myPage/myBuyerTransaction", new ReadTransactionListController());
-		mappings.put("/user/myPage/mySellerTransaction", new MySellerTransactionListController());
 		mappings.put("/user/followingList", new FavoriteListController());
 		mappings.put("/user/delete", new DeleteUserController());
 		mappings.put("/post/upload/form", new UploadPostFormController());

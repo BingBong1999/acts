@@ -1,6 +1,7 @@
 <%@page contentType="text/html; charset=utf-8"%>
 <%@page import="model.*"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@page import="java.util.*"%>
 <%
 
 Post post = (Post) request.getAttribute("post");

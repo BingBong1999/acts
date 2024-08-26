@@ -1,4 +1,4 @@
-package model.service;
+package exception;
 
 public class UserNotFoundException extends Exception {
 

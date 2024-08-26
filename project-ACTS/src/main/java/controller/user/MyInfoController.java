@@ -5,9 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import controller.Controller;
-
+import exception.UserNotFoundException;
 import model.service.UserManager;
-import model.service.UserNotFoundException;
 import model.User;
 
 public class MyInfoController implements Controller {

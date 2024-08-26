@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import java.util.List;
 
+import exception.PostNotFoundException;
 import model.Favorite;
 import model.dao.FavoriteDAO;
 

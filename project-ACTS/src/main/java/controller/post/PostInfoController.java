@@ -11,10 +11,9 @@ import org.slf4j.LoggerFactory;
 
 import controller.Controller;
 import controller.user.UserSessionUtils;
-
+import exception.PostNotFoundException;
 import model.service.FavoriteManager;
 import model.service.PostManager;
-import model.service.PostNotFoundException;
 import model.service.ReviewManager;
 import model.service.UserManager;
 import model.Favorite;

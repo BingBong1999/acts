@@ -7,9 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import controller.Controller;
-
+import exception.ExistingUserException;
 import model.User;
-import model.service.ExistingUserException;
 import model.service.UserManager;
 
 public class RegisterUserController implements Controller {

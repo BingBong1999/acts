@@ -8,11 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import controller.Controller;
-
+import exception.UserNotFoundException;
 import model.service.FavoriteManager;
 import model.service.PostManager;
 import model.service.UserManager;
-import model.service.UserNotFoundException;
 import model.Favorite;
 import model.Post;
 import model.User;

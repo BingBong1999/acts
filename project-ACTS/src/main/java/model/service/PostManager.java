@@ -4,6 +4,8 @@ import java.sql.SQLException;
 
 import java.util.List;
 
+import exception.PostNotFoundException;
+import exception.UserNotFoundException;
 import model.Post;
 import model.User;
 import model.dao.PostDAO;

@@ -4,9 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import controller.Controller;
-
+import exception.UserNotFoundException;
 import model.service.UserManager;
-import model.service.UserNotFoundException;
 import model.User;
 
 public class ViewUserController implements Controller {

@@ -40,7 +40,7 @@
 		<a href="<c:url value='/post/sellerPostInfo'>
 						<c:param name='postId' value='${post.postId}'/>
 					   	<c:param name='writerId' value ='${post.writerId}' />
-					   	<c:param name='setting' value = '-1' /> 
+					   	<c:param name='likeRequest' value = '-1' /> 
 				 </c:url>">
 						<c:if test="${empty post.getImgUrl()}">
 							<img src="<c:url value='/images/noImage.png' />" class="listImg">

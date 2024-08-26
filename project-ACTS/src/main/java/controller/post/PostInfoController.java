@@ -40,7 +40,7 @@ public class PostInfoController implements Controller {
 		List<Review> reviewList = null;
 
 		int fOrNot;
-		int setting = Integer.parseInt(request.getParameter("setting"));
+		int likeRequest = Integer.parseInt(request.getParameter("likeRequest"));
 		int postId = -1;
 		int userId = -1;
 
@@ -72,14 +72,14 @@ public class PostInfoController implements Controller {
 			fOrNot = 0;
 		}
 
-		if (setting == 1) {
+		if (likeRequest == 1) {
 			fm.create(new Favorite(postId, userId));
 			fOrNot = 1;
-		} else if (setting == 0) {
+		} else if (likeRequest == 0) {
 			fm.removeByPostIdAndUserId(postId, userId);
 			fOrNot = 0;
 		} else {
-			setting = -1;
+			likeRequest = -1;
 		}
 
 		request.setAttribute("fOrNot", fOrNot);

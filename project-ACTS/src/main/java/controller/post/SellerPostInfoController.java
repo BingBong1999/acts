@@ -91,6 +91,6 @@ public class SellerPostInfoController implements Controller {
 		request.setAttribute("nickname", postUserNickName);
 		request.setAttribute("reviewList", reviewList);
 
-		return "/post/sellerPostInfoTest.jsp";
+		return "/post/sellerPostInfo.jsp";
 	}
 }

@@ -16,6 +16,7 @@ public class Post {
 	private int price;
 	private String pType;
 	private int writerId;
+	private String writer;
 	private String thumbImg;
 
 	public Post() {
@@ -171,6 +172,14 @@ public class Post {
 
 	public void setWriterId(int writerId) {
 		this.writerId = writerId;
+	}
+	
+	public String getWriter() {
+		return writer;
+	}
+
+	public void setWriter(String writer) {
+		this.writer = writer;
 	}
 
 	public String getThumbImg() {

@@ -49,6 +49,15 @@ public class UserManager {
 		
 		return user;
 	}
+	
+	public User findUserByUserId(int userId) throws UserNotFoundException, SQLException {
+		User user = userDAO.findUserByUserId(userId);
+
+		if (user == null)
+			throw new UserNotFoundException(userId + "는 존재하지 않는 아이디입니다.");
+		
+		return user;
+	}
 
 	public List<User> findUserList() throws SQLException {
 		return userDAO.findUserList();

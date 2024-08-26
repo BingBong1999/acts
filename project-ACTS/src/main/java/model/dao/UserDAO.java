@@ -105,6 +105,33 @@ public class UserDAO {
 		
 		return null;
 	}
+	
+	public User findUserByUserId(int userId) throws SQLException {
+		
+		String sql = "SELECT userId, phoneNumber, emailAddress, userName, registrationNumber, password, accountId, joinDate, nickName "
+				+ "FROM ACCOUNT " + "WHERE userId=? ";
+		jdbcUtil.setSqlAndParameters(sql, new Object[] { userId });
+
+		try {
+			
+			ResultSet rs = jdbcUtil.executeQuery();
+			
+			if (rs.next()) {
+				User user = new User(userId, rs.getString("accountId"), rs.getString("password"), rs.getString("userName"),
+						rs.getString("emailAddress"), rs.getString("phoneNumber"), rs.getString("registrationNumber"),
+						rs.getDate("joinDate"), rs.getString("nickName"));
+				
+				return user;
+			}
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			jdbcUtil.close();
+		}
+		
+		return null;
+	}
 
 	public User findUserByPrimaryKey(int userId) throws SQLException {
 		

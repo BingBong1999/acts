@@ -17,9 +17,15 @@ List<Post> postList = (List<Post>)request.getAttribute("postList");
         body {
             font-family: 'Noto Sans KR', sans-serif;
         }
+        .card-img-container {
+		    padding: 15px;
+		}
         .card-img-top {
-            height: 200px;
-            object-fit: cover;
+		    width: 100%;
+		    height: auto;
+		    object-fit: cover;
+		    display: block;
+		    margin: 0 auto;
         }
         .card {
             margin-bottom: 30px;
@@ -57,16 +63,18 @@ List<Post> postList = (List<Post>)request.getAttribute("postList");
     <div class="container mt-4">
         <div class="row">
             <c:forEach var="post" items="${postList}">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="card">
-                        <img src="${post.imgUrl}" class="card-img-top" alt="${post.title}">
+                    	<div class="card-img-container">
+        					<img src="${pageContext.request.contextPath}/upload/${post.getImgUrl()}" class="card-img-top">
+    					</div>
                         <div class="card-body">
                             <h5 class="card-title">
                                 ${post.title}
-                                <span class="category-badge badge badge-info">${post.categoryId}</span>
+                                <span class="category-badge badge badge-info">${post.category}</span>
                             </h5>
                             <p class="price">${post.price}원</p>
-                            <p class="author">작성자: ${post.writerId}</p>
+                            <p class="author">작성자: ${post.writer}</p>
                             <a href="<c:url value='/post/${post.postId}' />" class="btn btn-primary">상세보기</a>
                         </div>
                     </div>

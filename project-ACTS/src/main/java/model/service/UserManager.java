@@ -24,7 +24,9 @@ public class UserManager {
 
 	public int create(User user) throws SQLException, ExistingUserException, UserNotFoundException {
 
-		if (findUserByUserId(user.getId()) != null)
+		User duplicatedUser = userDAO.findUserByUserId(user.getId());
+		
+		if (duplicatedUser != null)
 			throw new ExistingUserException(user.getId() + "는 존재하는 아이디입니다.");
 
 		return userDAO.create(user);

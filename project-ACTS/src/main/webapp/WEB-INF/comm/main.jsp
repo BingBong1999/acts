@@ -84,7 +84,7 @@ List<Post> postList = (List<Post>)request.getAttribute("postList");
 
     <!-- 상단에 플러스 버튼 추가 -->
     <div class="container-relative">
-        <a href="<c:url value='/post/newPostForm' />" class="add-post-btn">+</a>
+        <a href="<c:url value='/post/upload/form' />" class="add-post-btn">+</a>
     </div>
 
     <div class="container mt-4">

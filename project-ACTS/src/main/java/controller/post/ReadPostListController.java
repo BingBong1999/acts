@@ -10,7 +10,7 @@ import controller.Controller;
 import model.Post;
 import model.service.PostManager;
 
-public class ListPostController implements Controller {
+public class ReadPostListController implements Controller {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {

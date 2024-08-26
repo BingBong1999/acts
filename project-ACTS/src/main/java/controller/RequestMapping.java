@@ -20,7 +20,7 @@ public class RequestMapping {
 	public void initMapping() {
 
 		mappings.put("/", new ForwardController("index.jsp"));
-		mappings.put("/comm/main", new ListPostController());
+		mappings.put("/comm/main", new ReadPostListController());
 		mappings.put("/comm/search/list", new SearchCategoryController());
 		mappings.put("/user/myPage", new MyPageController());
 		mappings.put("/user/login/form", new ForwardController("/user/loginForm.jsp")); 

@@ -1,33 +1,33 @@
 package model;
 
-public class Category {
+public enum Category {
+	DESIGN(0, "디자인"), 
+	IT(1, "IT"), 
+	DOCUMENT(2, "문서"), 
+	OTHER(3, "기타");
 
-	private int categoryId;
-	private String categorName;
+	private final int id;
+	private final String name;
 
-	public Category() {
-	
+	Category(int id, String name) {
+		this.id = id;
+		this.name = name;
 	}
 
-	public Category(int categoryId, String categorName) {
-		super();
-		this.categoryId = categoryId;
-		this.categorName = categorName;
+	public int getId() {
+		return id;
 	}
 
-	public int getCategoryId() {
-		return categoryId;
+	public String getName() {
+		return name;
 	}
 
-	public void setCategoryId(int categoryId) {
-		this.categoryId = categoryId;
-	}
-
-	public String getCategorName() {
-		return categorName;
-	}
-
-	public void setCategorName(String categorName) {
-		this.categorName = categorName;
+	public static String getNameById(int id) {
+		for (Category category : Category.values()) {
+			if (category.getId() == id) {
+				return category.getName();
+			}
+		}
+		return "기타";
 	}
 }

@@ -68,18 +68,21 @@ public class SellerPostInfoController implements Controller {
 			return "redirect:/post/postList";
 		}
 		
-		if (likeRequest == 1) {
-		    fm.create(new Favorite(postId, userId));
-		    isLiked = true;
-		} else if (likeRequest == 0) {
-		    fm.removeByPostIdAndUserId(postId, userId);
-		    isLiked = false;
+		
+		if ( UserSessionUtils.hasLogined(session) ) {
+			
+			if (likeRequest == 1) {
+			    fm.create(new Favorite(postId, userId));
+			    isLiked = true;
+			} else if (likeRequest == 0) {
+			    fm.removeByPostIdAndUserId(postId, userId);
+			    isLiked = false;
+			} else {
+				isLiked = fm.findFavoriteByPostIdAndUserId(postId, userId) != null;
+			}
+			
 		} else {
-		    if (UserSessionUtils.hasLogined(session)) {
-		        isLiked = fm.findFavoriteByPostIdAndUserId(postId, userId) != null;
-		    } else {
-		        isLiked = false;
-		    }
+			isLiked = false;
 		}
 
 		request.setAttribute("isLiked", isLiked);

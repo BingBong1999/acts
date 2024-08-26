@@ -1,7 +1,7 @@
 package controller.post;
 
 import java.io.File;
-
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -50,7 +50,6 @@ public class SellerUpdatePostController implements Controller {
 		String views = null;
 		String status = null;
 		String price = null;
-		String pType = null;
 		String filename = null;
 		String writerId = null;
 		
@@ -65,16 +64,16 @@ public class SellerUpdatePostController implements Controller {
 			log.debug("PostUpdateForm Request : {}, {}", userId, iPostId);
 
 			user = userManager.findUserByUserId(userId);
-			post = postManager.findPost(iPostId);
+			post = postManager.findPostByPostId(iPostId);
 
 			request.setAttribute("user", user);
 			request.setAttribute("post", post);
 
-			if (Integer.parseInt(userId) == post.getWriterId()) {
+			if (userId == post.getAuthorId()) {
 				return "/post/postUpdateForm.jsp";
 			}
 
-			postUserNickName = postManager.getPostUserNickName(post.getWriterId());
+			postUserNickName = post.getAuthorId();
 			request.setAttribute("nickname", postUserNickName);
 			request.setAttribute("postUpdateFailed", true);
 			request.setAttribute("exception", new IllegalStateException("타인의 게시글은 수정할 수 없습니다."));
@@ -123,8 +122,6 @@ public class SellerUpdatePostController implements Controller {
 							status = value;
 						else if (item.getFieldName().equals("price"))
 							price = value;
-						else if (item.getFieldName().equals("pType"))
-							pType = value;
 						else if (item.getFieldName().equals("writerId"))
 							writerId = value;
 
@@ -137,7 +134,10 @@ public class SellerUpdatePostController implements Controller {
 							if (filename == null || filename.trim().length() == 0) {
 								
 								int iPostId = Integer.parseInt(postId);
-								filename = postManager.getImgUrl(iPostId);
+								
+								
+								Post post2 = postManager.findPostByPostId(iPostId);
+								filename = post2.getImageUrl();
 								continue;
 							}
 							
@@ -157,17 +157,18 @@ public class SellerUpdatePostController implements Controller {
 			}
 		}
 		
-		Post updatePost = new Post(Integer.parseInt(postId), title, description, filename,
-				Integer.parseInt(categoryId), status, Integer.parseInt(price), pType, Integer.parseInt(writerId));
+		
+		Post updatePost = new Post(-1, title, description, filename, new Date(0), 
+				Integer.parseInt(categoryId), Integer.parseInt(views), status, Integer.parseInt(price), writerId);
 		
 		request.setAttribute("post", updatePost);
-		postUserNickName = postManager.getPostUserNickName(Integer.parseInt(writerId));
+		postUserNickName = writerId;
 		log.debug("Update Post : {}", updatePost);
 		
-		postManager.increasePostView(updatePost);
+		postManager.increaseViewCount(updatePost);
 		postManager.update(updatePost);
 
-		request.setAttribute("postId", updatePost.getPostId());
+		request.setAttribute("postId", updatePost.getId());
 		request.setAttribute("post", updatePost);
 		request.setAttribute("nickname", postUserNickName);
 		

@@ -44,7 +44,7 @@ public class FavoriteListController implements Controller {
 		for (Favorite data : favoriteList) {
 			
 			int postId = data.getPostId();
-			Post post = pm.findPost(postId);
+			Post post = pm.findPostByPostId(postId);
 			postList.add(post);
 		
 		}

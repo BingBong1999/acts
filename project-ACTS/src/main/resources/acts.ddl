@@ -120,24 +120,24 @@ ALTER TABLE Message
 	
 
 /* 게시글 테이블 생성 */
-CREATE TABLE Post
+CREATE TABLE POST
 (
-	postId               INT NOT NULL ,
-	title                VARCHAR2(50) NOT NULL ,
-	description          VARCHAR2(2000) NOT NULL ,
-	imageUrl             VARCHAR2(500) NULL ,
-	createdTime          DATE DEFAULT  SYSDATE  NOT NULL ,
-	views                INT DEFAULT  0  NOT NULL ,
-	status               VARCHAR2(10) NOT NULL  CONSTRAINT  status_1697923632 CHECK (status IN ('available', 'ongoing', 'completed')),
-	price                INT NOT NULL  CONSTRAINT  post_price CHECK (price >= 0),
-	postType             CHAR(1) NOT NULL  CONSTRAINT  post_type CHECK (postType IN ('s', 'b')),
-	writerId             INT NOT NULL ,
-	categoryId           INT NOT NULL 
+	ID               INT NOT NULL ,
+	TITLE                VARCHAR2(50) NOT NULL ,
+	BODY          VARCHAR2(2000) NOT NULL ,
+	IMAGE_URL             VARCHAR2(500) NULL ,
+	CREATED_AT          DATE DEFAULT  SYSDATE  NOT NULL ,
+	CATEGORY_ID           INT NOT NULL ,
+	VIEW_COUNT                INT DEFAULT  0  NOT NULL ,
+	STATUS               VARCHAR2(10) NOT NULL  CONSTRAINT  status_1697923632 CHECK (status IN ('available', 'ongoing', 'completed')),
+	PRICE                INT NOT NULL  CONSTRAINT  POST_PRICE CHECK (PRICE >= 0),
+	AUTHOR_ID             STRING NOT NULL
+	
 );
 
-CREATE UNIQUE INDEX IDXPost ON Post (postId ASC);
+CREATE UNIQUE INDEX IDXPOST ON POST (ID ASC);
 
-ALTER TABLE Post ADD CONSTRAINT XPKPost PRIMARY KEY (postId);
+ALTER TABLE POST ADD CONSTRAINT XPKPOST PRIMARY KEY (ID);
 
 	
 	
@@ -208,26 +208,26 @@ ALTER TABLE MessageRoom
 ALTER TABLE Message
 	ADD (CONSTRAINT FK_ROOMID_Message FOREIGN KEY (roomId) REFERENCES MessageRoom (roomId));
 
-ALTER TABLE Post
-	ADD (CONSTRAINT FK_WRITERID_Post FOREIGN KEY (writerId) REFERENCES Account (ID));
+ALTER TABLE POST
+	ADD (CONSTRAINT FK_WRITERID_Post FOREIGN KEY (AUTHOR_ID) REFERENCES Account (ID));
 
-ALTER TABLE Post
-	ADD (CONSTRAINT FK_CATEGORYID_Post FOREIGN KEY (categoryId) REFERENCES Category (categoryId));
+ALTER TABLE POST
+	ADD (CONSTRAINT FK_CATEGORYID_POST FOREIGN KEY (CATEGORY_ID) REFERENCES Category (categoryId));
 
 ALTER TABLE PostReview
 	ADD (CONSTRAINT FK_REVIEWERID_PostReview FOREIGN KEY (reviewerId) REFERENCES Account (ID));
 
 ALTER TABLE PostReview
-	ADD (CONSTRAINT FK_POSTID_PostReview FOREIGN KEY (postId) REFERENCES Post (postId));
+	ADD (CONSTRAINT FK_POSTID_PostReview FOREIGN KEY (postId) REFERENCES POST (ID));
 
 ALTER TABLE Favorite
 	ADD (CONSTRAINT FK_USERID_Favorite FOREIGN KEY (userId) REFERENCES Account (ID) ON DELETE SET NULL);
 
 ALTER TABLE Favorite
-	ADD (CONSTRAINT FK_POSTID_Favorite FOREIGN KEY (postId) REFERENCES Post (postId));
+	ADD (CONSTRAINT FK_POSTID_Favorite FOREIGN KEY (postId) REFERENCES POST (ID));
 
 ALTER TABLE Transaction
 	ADD (CONSTRAINT FK_USERID_Transaction FOREIGN KEY (userId) REFERENCES Account (ID));
 
 ALTER TABLE Transaction
-	ADD (CONSTRAINT FK_POSTID_Transaction FOREIGN KEY (postId) REFERENCES Post (postId));
+	ADD (CONSTRAINT FK_POSTID_Transaction FOREIGN KEY (postId) REFERENCES POST (ID));

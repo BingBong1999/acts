@@ -18,7 +18,7 @@ public class ListPostController implements Controller {
 		PostManager manager = PostManager.getInstance();
 		request.setAttribute("postList", null);
 		
-		List<Post> postList = manager.findPostList();
+		List<Post> postList = manager.findAllPosts();
 		request.setAttribute("postList", postList);
 
 		return "/comm/main.jsp";

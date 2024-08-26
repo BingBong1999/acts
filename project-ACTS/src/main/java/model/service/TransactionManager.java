@@ -60,8 +60,8 @@ public class TransactionManager {
 			Transaction transaction = new Transaction(
 					transactionListById.get(i).getTransId(),
 					transactionListById.get(i).getTransDate(),
-					userDAO.findUserByUserId(Integer.toString(postDAO.findPost(postId).getWriterId())), 
-					postDAO.findPost(postId),
+					userDAO.findUserByUserId(postDAO.findPostByPostId(postId).getAuthorId()), 
+					postDAO.findPostByPostId(postId),
 					transactionListById.get(i).getTransTitle(), 
 					transactionListById.get(i).getTransContents());
 
@@ -82,7 +82,7 @@ public class TransactionManager {
 					transactionListById.get(i).getTransId(),
 					transactionListById.get(i).getTransDate(),
 					userDAO.findUserByUserId(Integer.toString(transactionListById.get(i).getUserId())),
-					postDAO.findPost(transactionListById.get(i).getPostId()),
+					postDAO.findPostByPostId(transactionListById.get(i).getPostId()),
 					transactionListById.get(i).getTransTitle(), 
 					transactionListById.get(i).getTransContents());
 

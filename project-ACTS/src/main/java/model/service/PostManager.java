@@ -6,6 +6,7 @@ import java.util.List;
 
 import exception.PostNotFoundException;
 import exception.UserNotFoundException;
+import model.Category;
 import model.Post;
 import model.dao.PostDAO;
 
@@ -15,11 +16,7 @@ public class PostManager {
 	private PostDAO postDAO;
 
 	private PostManager() {
-		try {
-			postDAO = new PostDAO();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		postDAO = new PostDAO();
 	}
 
 	public static PostManager getInstance() {
@@ -34,73 +31,45 @@ public class PostManager {
 		return postDAO.update(post);
 	}
 
-	public int remove(int postId) throws SQLException, PostNotFoundException {
-		return postDAO.remove(postId);
+	public int delete(int id) throws SQLException, PostNotFoundException {
+		return postDAO.delete(id);
 	}
 
-	public Post findPost(int postId) throws SQLException, PostNotFoundException {
+	public Post findPostByPostId(int id) throws SQLException, PostNotFoundException {
 
-		Post post = postDAO.findPost(postId);
+		Post post = postDAO.findPostByPostId(id);
 
 		if (post == null) {
-			throw new PostNotFoundException(postId + "는 존재하지 않는  포스트입니다.");
+			throw new PostNotFoundException(id + "는 존재하지 않는  포스트입니다.");
 		}
 
 		return post;
 	}
 
-	public List<Post> findPostList() throws SQLException, UserNotFoundException {
-		List<Post> posts = postDAO.findPostList();
+	public List<Post> findAllPosts() throws SQLException, UserNotFoundException {
+		List<Post> posts = postDAO.findAllPosts();
 
 		for (Post post : posts) {
-			post.setCategory(findCategoryName(post.getPostId()));
+			post.setCategoryName(Category.getNameById(post.getCategoryId()));
 		}
 		return posts;
 	}
 
-	public List<Post> findPostListUseCategory(String cName) throws SQLException {
-		return postDAO.findPostListUseCategory(cName);
+	public List<Post> findPostsByCategory(int category) throws SQLException {
+		return postDAO.findPostsByCategory(category);
 	}
 
-	public PostDAO getPostDAO() {
-		return this.postDAO;
+
+	public void increaseViewCount(Post post) throws SQLException {
+		postDAO.increaseViewCount(post);
 	}
 
-	public void increasePostView(Post post) throws SQLException {
-		postDAO.increasePostView(post);
-	}
-
-	public String getPostUserNickName(int userId) throws SQLException {
-
-		return postDAO.findUserNickNameByUserId(userId);
-	}
-
-	public String getImgUrl(int postId) throws SQLException {
-		Post post = postDAO.findPost(postId);
-
-		return post.getImgUrl();
-	}
-
-	public List<Post> findMyPostList(int userId) throws SQLException {
-		return postDAO.findMyPostList(userId);
-	}
-
-	public String findCategoryName(int categoryId) {
-		switch (categoryId) {
-		case 0:
-			return "디자인";
-		case 1:
-			return "IT";
-		case 3:
-			return "문서";
-		case 4:
-			return "기타";
-		default:
-			return "기타";
-		}
+	public List<Post> findPostsByAuthorId(String authorId) throws SQLException {
+		return postDAO.findPostsByAuthorId(authorId);
 	}
 	
-	
-	
-	
+	public List<Post> findPostsByKeywordOfTitle(String keyword) throws SQLException {
+		return postDAO.findPostsByKeywordOfTitle(keyword);
+	}
+
 }

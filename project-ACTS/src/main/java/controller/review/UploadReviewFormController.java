@@ -27,7 +27,7 @@ public class UploadReviewFormController implements Controller {
 		log.debug("ReviewPostId : {}", reviewPostId);
 
 		PostManager manager = PostManager.getInstance();
-		Post post = manager.findPost(Integer.parseInt(reviewPostId)); // find post
+		Post post = manager.findPostByPostId(Integer.parseInt(reviewPostId)); // find post
 
 		request.setAttribute("post", post);
 		

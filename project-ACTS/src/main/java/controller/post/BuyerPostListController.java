@@ -18,7 +18,7 @@ public class BuyerPostListController implements Controller {
 		PostDAO postdao = new PostDAO();
 		request.setAttribute("postList", null);
 		
-		List<Post> postList = postdao.findBuyerPostList();
+		List<Post> postList = postdao.findAllPosts();
 		request.setAttribute("postList", postList);
 
 		return "/post/buyerPostList.jsp";

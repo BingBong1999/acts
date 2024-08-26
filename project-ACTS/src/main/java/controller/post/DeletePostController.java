@@ -32,11 +32,11 @@ public class DeletePostController implements Controller {
 		}
 
 		if (UserSessionUtils.isLoginUser(writerId, session)) {
-			manager.remove(Integer.parseInt(postId));
+			manager.delete(Integer.parseInt(postId));
 			return "redirect:/comm/main";
 		}
 
-		Post post = manager.findPost(Integer.parseInt(postId));
+		Post post = manager.findPostByPostId(Integer.parseInt(postId));
 		request.setAttribute("post", post);
 		request.setAttribute("deleteFailed", true);
 

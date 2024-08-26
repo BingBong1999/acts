@@ -30,10 +30,10 @@ public class UploadReviewController implements Controller {
 
 		PostManager postManager = PostManager.getInstance();
 		int postId = Integer.parseInt(request.getParameter("postId"));
-		Post post = postManager.findPost(postId);
+		Post post = postManager.findPostByPostId(postId);
 
 		Review review = new Review(request.getParameter("content"), Integer.parseInt(request.getParameter("score")),
-				Integer.parseInt(user.getId()), post.getPostId());
+				Integer.parseInt(user.getId()), post.getId());
 
 		log.debug("Create Review : {}", review);
 

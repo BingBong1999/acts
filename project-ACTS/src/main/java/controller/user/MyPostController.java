@@ -10,21 +10,17 @@ import controller.Controller;
 
 import model.Post;
 import model.service.PostManager;
-import model.service.UserManager;
 
 public class MyPostController implements Controller {
 
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		UserManager userManager = UserManager.getInstance();
 		PostManager postManager = PostManager.getInstance();
 		HttpSession session = request.getSession();
 
-		String userId1 = UserSessionUtils.getLoginUserId(session);
-		int userId = Integer.parseInt(userManager.findUserByUserId(userId1).getId());
 
-		List<Post> postList = postManager.findMyPostList(userId);
+		List<Post> postList = postManager.findPostsByAuthorId(UserSessionUtils.getLoginUserId(session));
 
 		request.setAttribute("postList", postList);
 		

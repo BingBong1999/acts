@@ -30,16 +30,14 @@ public class CreateTransactionFormController implements Controller {
 
 		postId = Integer.parseInt(request.getParameter("postId"));
 		user = userManager.findUserByUserId(curUserId);
-		post = postManager.findPost(postId);
-		postUserNickName = postManager.getPostUserNickName(Integer.parseInt(request.getParameter("writerId")));
+		post = postManager.findPostByPostId(postId);
+		postUserNickName = request.getParameter("writerId");
 
 		request.setAttribute("user", user);
 		request.setAttribute("post", post);
 		request.setAttribute("nickname", postUserNickName);
 
-		int iwriterId = Integer.parseInt(user.getId());
-		
-		if (iwriterId == post.getWriterId()) {
+		if (user.getId() == post.getAuthorId()) {
 
 			request.setAttribute("trasactionCreateFailed", true);
 			request.setAttribute("exception", new IllegalStateException("본인의 글은 주문할 수 없습니다."));

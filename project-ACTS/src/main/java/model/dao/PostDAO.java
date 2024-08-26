@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import model.Post;
 
 public class PostDAO {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(PostDAO.class);
 	private JDBCUtil jdbcUtil = null;
 
@@ -22,22 +22,15 @@ public class PostDAO {
 
 	public int create(Post post) throws SQLException {
 
-		String sql = "INSERT INTO POST VALUES (post_id_seq.nextval, ?, ?, ?, DEFAULT, DEFAULT, ?, ?, ?, ?, ?)";
-		Object[] param = new Object[] { post.getTitle(), post.getDesc(), post.getImgUrl(), post.getStatus(),
-				post.getPrice(), post.getpType(), post.getWriterId(), post.getCategoryId() };
-		
-		for (Object p : param) {
-			System.out.println(p);
-		}
+		String sql = "INSERT INTO POST VALUES (POST_ID_SEQ.nextval, ?, ?, ?, NOW(), ?, ?, ?, ?, ?)";
+		Object[] param = new Object[] { post.getTitle(), post.getBody(), post.getImageUrl(),
+				post.getCategoryId(), post.getViewCount(), post.getStatus(), post.getPrice(), post.getAuthorId() };
 
 		jdbcUtil.setSqlAndParameters(sql, param);
-		
+
 		try {
-			
 			int result = jdbcUtil.executeUpdate();
-			
 			return result;
-		
 		} catch (Exception ex) {
 			jdbcUtil.rollback();
 			ex.printStackTrace();
@@ -45,16 +38,15 @@ public class PostDAO {
 			jdbcUtil.commit();
 			jdbcUtil.close();
 		}
-		
+
 		return 0;
 	}
 
 	public int update(Post post) throws SQLException {
-		
-		String sql = "UPDATE POST " + "SET title=?, description=?, imageUrl=?, categoryId=?, status=?, price=? "
-				+ "WHERE postId=?";
-		Object[] param = new Object[] { post.getTitle(), post.getDesc(), post.getImgUrl(), post.getCategoryId(),
-				post.getStatus(), post.getPrice(), post.getPostId() };
+
+		String sql = "UPDATE POST " + "SET TITLE=?, BODY=?, IMAGE_URL=?, CATEGORY_ID=?, PRICE=? " + "WHERE ID=?";
+		Object[] param = new Object[] { post.getTitle(), post.getBody(), post.getImageUrl(), post.getCategoryId(),
+				post.getPrice() };
 		jdbcUtil.setSqlAndParameters(sql, param);
 
 		try {
@@ -67,14 +59,14 @@ public class PostDAO {
 			jdbcUtil.commit();
 			jdbcUtil.close();
 		}
-		
+
 		return 0;
 	}
 
-	public int remove(int postId) throws SQLException {
-		
-		String sql = "DELETE FROM POST WHERE postId=?";
-		jdbcUtil.setSqlAndParameters(sql, new Object[] { postId });
+	public int delete(int id) throws SQLException {
+
+		String sql = "DELETE FROM POST WHERE ID=?";
+		jdbcUtil.setSqlAndParameters(sql, new Object[] { id });
 
 		try {
 			int result = jdbcUtil.executeUpdate();
@@ -86,58 +78,52 @@ public class PostDAO {
 			jdbcUtil.commit();
 			jdbcUtil.close();
 		}
-		
+
 		return 0;
 	}
 
-	public Post findPost(int postId) throws SQLException {
-		
-		String sql = "SELECT title, description, imageUrl, createdTime, categoryId, "
-				+ "views, status, price, postType, writerId " + "FROM POST " + "WHERE postId=? ";
-		jdbcUtil.setSqlAndParameters(sql, new Object[] { postId });
+	public Post findPostByPostId(int id) throws SQLException {
+
+		String sql = "SELECT * " + "FROM POST " + "WHERE ID=? ";
+		jdbcUtil.setSqlAndParameters(sql, new Object[] { id });
 
 		try {
-			
 			ResultSet rs = jdbcUtil.executeQuery();
-			
+
 			if (rs.next()) {
-				
-				Post post = new Post(
-						postId, rs.getString("title"), rs.getString("description"), rs.getString("imageUrl"),
-						rs.getDate("createdTime"), rs.getInt("categoryId"), rs.getInt("views"), rs.getString("status"),
-						rs.getInt("price"), rs.getString("postType"), rs.getInt("writerId"));
-				
+				Post post = new Post(rs.getInt("ID"), rs.getString("TITLE"), rs.getString("BODY"),
+						rs.getString("IMAGE_URL"), rs.getDate("CREATE_AT"), rs.getInt("CATEGORY_ID"),
+						rs.getInt("VIEW_COUNT"), rs.getString("STATUS"), rs.getInt("PRICE"), rs.getString("AUTHOR_ID"));
+
 				return post;
 			}
-			
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
 			jdbcUtil.close();
 		}
-		
+
 		return null;
 	}
 
-	public List<Post> findPostList() throws SQLException {
-		
-		String sql = "SELECT postId, title, imageUrl, views, status, price, postType, writerId " + "FROM POST "
-				+ "ORDER BY postId";
+	public List<Post> findAllPosts() throws SQLException {
+
+		String sql = "SELECT * " + "FROM POST " + "ORDER BY ID";
 		jdbcUtil.setSqlAndParameters(sql, null);
 
 		try {
-			
 			ResultSet rs = jdbcUtil.executeQuery();
 			List<Post> postList = new ArrayList<Post>();
-			
+
 			while (rs.next()) {
-				
-				Post post = new Post(rs.getInt("postId"), rs.getString("title"), rs.getString("imageUrl"), rs.getInt("views"),
-						rs.getString("status"), rs.getInt("price"), rs.getString("postType"), rs.getInt("writerId"));
-				
+				Post post = new Post(rs.getInt("ID"), rs.getString("TITLE"), rs.getString("BODY"),
+						rs.getString("IMAGE_URL"), rs.getDate("CREATE_AT"), rs.getInt("CATEGORY_ID"),
+						rs.getInt("VIEW_COUNT"), rs.getString("STATUS"), rs.getInt("PRICE"), rs.getString("AUTHOR_ID"));
+
 				postList.add(post);
 			}
-			
+
 			return postList;
 
 		} catch (Exception ex) {
@@ -145,27 +131,27 @@ public class PostDAO {
 		} finally {
 			jdbcUtil.close();
 		}
-		
+
 		return null;
 	}
 
-	public List<Post> findPostListUseCategory(String cName) throws SQLException {
-		
-		String sql = "SELECT postId, title, imageUrl, views, status, price, postType, writerId "
-				+ "FROM POST p JOIN CATEGORY c ON p.categoryId=c.categoryId " + "WHERE categoryName=? "
-				+ "ORDER BY postId";
-		jdbcUtil.setSqlAndParameters(sql, new Object[] { cName });
+	public List<Post> findPostsByCategory(int category) throws SQLException {
+
+		String sql = "SELECT * " + "FROM POST p JOIN CATEGORY c ON p.CATEGORY_ID=c.CATEGORY_ID "
+				+ "WHERE CATEGORY_ID=? " + "ORDER BY postId";
+		jdbcUtil.setSqlAndParameters(sql, new Object[] { category });
 
 		try {
-			
+
 			ResultSet rs = jdbcUtil.executeQuery();
 			List<Post> postList = new ArrayList<Post>();
-			
+
 			while (rs.next()) {
-				Post post = new Post(rs.getInt("postId"), rs.getString("title"), rs.getString("imageUrl"), rs.getInt("views"),
-						rs.getString("status"), rs.getInt("price"), rs.getString("postType"), rs.getInt("writerId"));
+				Post post = new Post(rs.getInt("ID"), rs.getString("TITLE"), rs.getString("BODY"),
+						rs.getString("IMAGE_URL"), rs.getDate("CREATE_AT"), rs.getInt("CATEGORY_ID"),
+						rs.getInt("VIEW_COUNT"), rs.getString("STATUS"), rs.getInt("PRICE"), rs.getString("AUTHOR_ID"));
 				postList.add(post);
-				
+
 				log.debug(rs.getString("postType"));
 			}
 
@@ -176,44 +162,14 @@ public class PostDAO {
 		} finally {
 			jdbcUtil.close();
 		}
-		
-		return null;
-	}
-
-	public List<Post> SearchPostList(String title) throws SQLException {
-		
-		String sql = "SELECT * " + "FROM POST " + "WHERE title LIKE '%" + title + "%'";
-		jdbcUtil.setSqlAndParameters(sql, null);
-
-		try {
-			
-			ResultSet rs = jdbcUtil.executeQuery();
-			List<Post> postList = new ArrayList<Post>();
-
-			while (rs.next()) {
-				
-				Post post = new Post(rs.getInt("postId"), rs.getString("title"), rs.getString("imageUrl"),
-						rs.getInt("views"), rs.getString("status"), rs.getInt("price"), rs.getString("postType"),
-						rs.getInt("writerId"));
-
-				postList.add(post);
-			}
-
-			return postList;
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		} finally {
-			jdbcUtil.close();
-		}
 
 		return null;
 	}
 
-	public void increasePostView(Post post) throws SQLException {
-		
-		String sql = "UPDATE POST " + "SET views=? " + "WHERE postId=?";
-		Object[] param = new Object[] { post.getViews() + 1, post.getPostId() };
+	public void increaseViewCount(Post post) throws SQLException {
+
+		String sql = "UPDATE POST " + "SET VIEW_COUNT=? " + "WHERE ID=?";
+		Object[] param = new Object[] { post.getViewCount() + 1, post.getId() };
 
 		jdbcUtil.setSqlAndParameters(sql, param);
 
@@ -228,45 +184,54 @@ public class PostDAO {
 		}
 	}
 
-	public String findUserNickNameByUserId(int userId) throws SQLException {
-		
-		String sql = "SELECT nickName " + "FROM ACCOUNT " + "WHERE userId=? ";
-		jdbcUtil.setSqlAndParameters(sql, new Object[] { userId });
+	public List<Post> findPostsByAuthorId(String authorId) throws SQLException {
+
+		String sql = "SELECT * " + "FROM POST " + "WHERE AUTHOR_ID=?";
+		Object[] param = new Object[] { authorId };
+
+		jdbcUtil.setSqlAndParameters(sql, param);
 
 		try {
-			
 			ResultSet rs = jdbcUtil.executeQuery();
-			
-			if (rs.next()) 
-				return rs.getString("nickName");
-			
+			List<Post> postList = new ArrayList<Post>();
+
+			while (rs.next()) {
+				Post post = new Post(rs.getInt("ID"), rs.getString("TITLE"), rs.getString("BODY"),
+						rs.getString("IMAGE_URL"), rs.getDate("CREATE_AT"), rs.getInt("CATEGORY_ID"),
+						rs.getInt("VIEW_COUNT"), rs.getString("STATUS"), rs.getInt("PRICE"), rs.getString("AUTHOR_ID"));
+				postList.add(post);
+			}
+
+			return postList;
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
 			jdbcUtil.close();
 		}
-		
+
 		return null;
 	}
 
-	public List<Post> findBuyerPostList() throws SQLException {
-		
-		String sql = "SELECT * " + "FROM POST " + "WHERE POSTTYPE='b' " + "ORDER BY postId";
+	public List<Post> findPostsByKeywordOfTitle(String keyword) throws SQLException {
+
+		String sql = "SELECT * " + "FROM POST " + "WHERE TITLE LIKE '%" + keyword + "%'";
 		jdbcUtil.setSqlAndParameters(sql, null);
 
 		try {
-			
+
 			ResultSet rs = jdbcUtil.executeQuery();
 			List<Post> postList = new ArrayList<Post>();
-			
+
 			while (rs.next()) {
-				
-				Post post = new Post(rs.getInt("postId"), rs.getString("title"), rs.getString("imageUrl"), rs.getInt("views"),
-						rs.getString("status"), rs.getInt("price"), rs.getString("postType"), rs.getInt("writerId"));
-				
+
+				Post post = new Post(rs.getInt("ID"), rs.getString("TITLE"), rs.getString("BODY"),
+						rs.getString("IMAGE_URL"), rs.getDate("CREATE_AT"), rs.getInt("CATEGORY_ID"),
+						rs.getInt("VIEW_COUNT"), rs.getString("STATUS"), rs.getInt("PRICE"), rs.getString("AUTHOR_ID"));
+
 				postList.add(post);
 			}
-			
+
 			return postList;
 
 		} catch (Exception ex) {
@@ -274,38 +239,8 @@ public class PostDAO {
 		} finally {
 			jdbcUtil.close();
 		}
-		
+
 		return null;
 	}
 
-	public List<Post> findMyPostList(int userId) throws SQLException {
-		
-		String sql = "SELECT * " + "FROM POST " + "WHERE writerId=? ";
-		jdbcUtil.setSqlAndParameters(sql, new Object[] { userId });
-
-		try {
-			
-			ResultSet rs = jdbcUtil.executeQuery();
-			List<Post> postList = new ArrayList<Post>();
-			
-			while (rs.next()) {
-				
-				Post post = new Post(rs.getInt("postId"), rs.getString("title"), rs.getString("description"),
-						rs.getString("imageUrl"), rs.getDate("createdTime"), rs.getInt("categoryId"),
-						rs.getInt("views"), rs.getString("status"), rs.getInt("price"), rs.getString("postType"),
-						rs.getInt("writerId"));
-				
-				postList.add(post);
-			}
-			
-			return postList;
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		} finally {
-			jdbcUtil.close();
-		}
-		
-		return null;
-	}
 }

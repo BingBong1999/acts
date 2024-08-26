@@ -3,87 +3,40 @@ package model;
 import java.util.Date;
 
 public class Post {
-	
-	private int postId;
+
+	private int id;
 	private String title;
-	private String desc;
-	private String imgUrl;
-	private Date cTime;
+	private String body;
+	private String imageUrl;
+	private Date createdAt;
 	private int categoryId;
-	private String category;
-	private int views;
+	private String categoryName;
+	private int viewCount;
 	private String status;
 	private int price;
-	private String pType;
-	private int writerId;
-	private String writer;
-	private String thumbImg;
+	private String authorId;
 
-	public Post() {
-	
-	}
-
-	public Post(int postId, String title, String desc, String imgUrl, Date cTime, int categoryId, int views,
-			String status, int price, String pType, int writerId) {
-		
+	public Post(int id, String title, String body, String imageUrl, Date createdAt, int categoryId, int viewCount,
+			String status, int price, String authorId) {
 		super();
-		this.postId = postId;
+		this.id = id;
 		this.title = title;
-		this.desc = desc;
-		this.imgUrl = imgUrl;
-		this.cTime = cTime;
+		this.body = body;
+		this.imageUrl = imageUrl;
+		this.createdAt = createdAt;
 		this.categoryId = categoryId;
-		this.views = views;
+		this.viewCount = viewCount;
 		this.status = status;
 		this.price = price;
-		this.pType = pType;
-		this.writerId = writerId;
+		this.authorId = authorId;
 	}
 
-	public Post(int postId, String title, String imgUrl, int views, String status, int price, String pType, int writerId) {
-		
-		this.postId = postId;
-		this.title = title;
-		this.imgUrl = imgUrl;
-		this.views = views;
-		this.status = status;
-		this.price = price;
-		this.pType = pType;
-		this.writerId = writerId;
+	public int getId() {
+		return id;
 	}
 
-	public Post(String title, String desc, String imgUrl, int categoryId, String status, int price, String pType, int writerId) {
-		
-		this.title = title;
-		this.desc = desc;
-		this.imgUrl = imgUrl;
-		this.categoryId = categoryId;
-		this.status = status;
-		this.price = price;
-		this.pType = pType;
-		this.writerId = writerId;
-
-	}
-
-	public Post(int postId, String title, String desc, String imgUrl, int categoryId, String status, int price, String pType, int writerId) {
-		
-		this.postId = postId;
-		this.title = title;
-		this.desc = desc;
-		this.imgUrl = imgUrl;
-		this.categoryId = categoryId;
-		this.status = status;
-		this.price = price;
-		this.pType = pType;
-		this.writerId = writerId;
-	}
-
-	public int getPostId() {
-		return postId;
-	}
-
-	public void setPostId(int postId) {
-		this.postId = postId;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getTitle() {
@@ -94,28 +47,28 @@ public class Post {
 		this.title = title;
 	}
 
-	public String getDesc() {
-		return desc;
+	public String getBody() {
+		return body;
 	}
 
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setBody(String body) {
+		this.body = body;
 	}
 
-	public String getImgUrl() {
-		return imgUrl;
+	public String getImageUrl() {
+		return imageUrl;
 	}
 
-	public void setImgUrl(String imgUrl) {
-		this.imgUrl = imgUrl;
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 
-	public Date getcTime() {
-		return cTime;
+	public Date getCreatedAt() {
+		return createdAt;
 	}
 
-	public void setcTime(Date cTime) {
-		this.cTime = cTime;
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
 	}
 
 	public int getCategoryId() {
@@ -125,21 +78,21 @@ public class Post {
 	public void setCategoryId(int categoryId) {
 		this.categoryId = categoryId;
 	}
-	
-	public String getCategory() {
-		return category;
+
+	public String getCategoryName() {
+		return categoryName;
 	}
 
-	public void setCategory(String category) {
-		this.category = category;
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
 
-	public int getViews() {
-		return views;
+	public int getViewCount() {
+		return viewCount;
 	}
 
-	public void setViews(int views) {
-		this.views = views;
+	public void setViewCount(int viewCount) {
+		this.viewCount = viewCount;
 	}
 
 	public String getStatus() {
@@ -158,44 +111,12 @@ public class Post {
 		this.price = price;
 	}
 
-	public String getpType() {
-		return pType;
+	public String getAuthorId() {
+		return authorId;
 	}
 
-	public void setpType(String pType) {
-		this.pType = pType;
+	public void setAuthorId(String authorId) {
+		this.authorId = authorId;
 	}
 
-	public int getWriterId() {
-		return writerId;
-	}
-
-	public void setWriterId(int writerId) {
-		this.writerId = writerId;
-	}
-	
-	public String getWriter() {
-		return writer;
-	}
-
-	public void setWriter(String writer) {
-		this.writer = writer;
-	}
-
-	public String getThumbImg() {
-		return thumbImg;
-	}
-
-	public void setThumbImg(String thumbImg) {
-		this.thumbImg = thumbImg;
-	}
-
-	@Override
-	public String toString() {
-		return "Post [postId=" + postId + ", title=" + title + ", desc=" + desc + ", imgUrl=" + imgUrl + ", cTime="
-				+ cTime + ", categoryId=" + categoryId + ", views=" + views + ", status=" + status + ", price=" + price
-				+ ", pType=" + pType + ", writerId=" + writerId + ", thumbImg=" + thumbImg + "]";
-	}
-
-	
 }

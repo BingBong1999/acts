@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import controller.Controller;
-
+import model.Category;
 import model.Post;
 import model.service.PostManager;
 
@@ -24,7 +24,7 @@ public class SearchCategoryController implements Controller {
 		log.debug("SearchCategoryController Request : {}", categoryName);
 
 		PostManager manager = PostManager.getInstance();
-		List<Post> postList = manager.findPostListUseCategory(categoryName);
+		List<Post> postList = manager.findPostsByCategory(Category.getIdByName(categoryName));
 
 		request.setAttribute("postList", postList);
 		

@@ -1,7 +1,7 @@
 package controller.post;
 
 import java.io.File;
-
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -42,7 +42,6 @@ public class UploadPostController implements Controller {
 		String categoryId = null;
 		String status = null;
 		String price = null;
-		String pType = null;
 		String filename = null;
 		
 		boolean check = ServletFileUpload.isMultipartContent(request);
@@ -85,8 +84,6 @@ public class UploadPostController implements Controller {
 							status = value;
 						else if (item.getFieldName().equals("price"))
 							price = value;
-						else if (item.getFieldName().equals("pType"))
-							pType = value;
 						
 					} else {
 						
@@ -116,18 +113,18 @@ public class UploadPostController implements Controller {
 
 		log.debug("Create title : {}", title);
 		
-		Post prod = new Post(title, description, filename, Integer.parseInt(categoryId), status,
-				Integer.parseInt(price), pType, Integer.parseInt(user.getId()));
-		request.setAttribute("post", prod);
+		Post updatePost = new Post(-1, title, description, filename, new Date(0), 
+				Integer.parseInt(categoryId), 0, status, Integer.parseInt(price), curUserId);
+		request.setAttribute("post", updatePost);
 
-		log.debug("Create ProductForm : {}", prod);
+		log.debug("Create ProductForm : {}", updatePost);
 
 		try {
 
 			PostManager postManager = PostManager.getInstance();
-			postManager.create(prod);
+			postManager.create(updatePost);
 
-			log.debug("Create ProductForm : {}", prod);
+			log.debug("Create ProductForm : {}", updatePost);
 			
 			return "redirect:/comm/main";
 		
@@ -135,7 +132,7 @@ public class UploadPostController implements Controller {
 			
 			request.setAttribute("uploadFail", true);
 			request.setAttribute("exception", e);
-			request.setAttribute("post", prod);
+			request.setAttribute("post", updatePost);
 			
 			return "/post/postForm.jsp";
 		}

@@ -31,8 +31,8 @@ public class CreateTransactionController implements Controller {
 
 		postId = Integer.parseInt(request.getParameter("postId"));
 		user = userManager.findUserByUserId(curUserId);
-		post = postManager.findPost(postId);
-		postUserNickName = postManager.getPostUserNickName(Integer.parseInt(request.getParameter("writerId")));
+		post = postManager.findPostByPostId(postId);
+		postUserNickName = request.getParameter("writerId");
 
 		TransactionManager transactionManager = TransactionManager.getInstance();
 		transTitle = request.getParameter("transTitle");

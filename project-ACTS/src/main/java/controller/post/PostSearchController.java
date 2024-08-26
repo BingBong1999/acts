@@ -18,7 +18,7 @@ public class PostSearchController implements Controller {
 
 		PostDAO postdao = new PostDAO();
 		String title = request.getParameter("searchKeyword");
-		List<Post> postList = postdao.SearchPostList(title);
+		List<Post> postList = postdao.findPostsByKeywordOfTitle(title);
 
 		request.setAttribute("postList", postList);
 

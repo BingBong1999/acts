@@ -48,12 +48,12 @@ public class PostInfoController implements Controller {
 
 		try {
 
-			post = postManager.findPost(Integer.parseInt(request.getParameter("postId")));
-			postId = post.getPostId();
-			log.debug("PostInfo Request : {}", post.getPostId());
-			postUserNickName = postManager.getPostUserNickName(post.getWriterId());
-			postManager.increasePostView(post);
-			reviewList = reviewManager.findReviewList(post.getPostId());
+			post = postManager.findPostByPostId(Integer.parseInt(request.getParameter("postId")));
+			postId = post.getId();
+			log.debug("PostInfo Request : {}", post.getId());
+			postUserNickName = post.getAuthorId();
+			postManager.increaseViewCount(post);
+			reviewList = reviewManager.findReviewList(post.getId());
 
 		} catch (PostNotFoundException e) {
 			return "redirect:/post/postList";

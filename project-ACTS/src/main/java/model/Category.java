@@ -1,10 +1,7 @@
 package model;
 
 public enum Category {
-	DESIGN(0, "디자인"), 
-	IT(1, "IT"), 
-	DOCUMENT(2, "문서"), 
-	OTHER(3, "기타");
+	DESIGN(0, "디자인"), IT(1, "IT"), DOCUMENT(3, "문서"), OTHER(4, "기타");
 
 	private final int id;
 	private final String name;
@@ -29,5 +26,14 @@ public enum Category {
 			}
 		}
 		return "기타";
+	}
+
+	public static int getIdByName(String name) {
+		for (Category category : Category.values()) {
+			if (category.getName().equalsIgnoreCase(name)) {
+				return category.getId();
+			}
+		}
+		return -1;
 	}
 }

@@ -50,13 +50,13 @@ public class SellerPostInfoController implements Controller {
 		
 		try {
 
-			post = postManager.findPost(Integer.parseInt(request.getParameter("postId")));
-			postId = post.getPostId();
-			log.debug("PostInfo Request : {}", post.getPostId());
+			post = postManager.findPostByPostId(Integer.parseInt(request.getParameter("postId")));
+			postId = post.getId();
+			log.debug("PostInfo Request : {}", post.getId());
 
-			postUserNickName = postManager.getPostUserNickName(Integer.parseInt(request.getParameter("writerId")));
-			postManager.increasePostView(post);
-			reviewList = reviewManager.findReviewList(post.getPostId());
+			postUserNickName = request.getParameter("writerId");
+			postManager.increaseViewCount(post);
+			reviewList = reviewManager.findReviewList(post.getId());
 
 		} catch (PostNotFoundException e) {
 			return "redirect:/post/postList";

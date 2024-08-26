@@ -52,6 +52,7 @@ public class RequestMapping {
 		mappings.put("/user/transactionDelete", new DeleteTransactionController());
 		mappings.put("/review/upload/form", new UploadReviewFormController());
 		mappings.put("/review/upload", new UploadReviewController());
+		mappings.put("/chatting/chatting", new ForwardController("/chatting/chatting.jsp")); 
 		
 		logger.info("Initialized Request Mapping!");
 	}

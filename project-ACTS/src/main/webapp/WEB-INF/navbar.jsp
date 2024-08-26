@@ -96,7 +96,9 @@
                         </form>
                     </li>
                 </ul>
-                
+               	<li class="nav-item">
+                    <a class="nav-link" href="<c:url value='/chatting/chatting' />">채팅창</a>
+                </li>
                 <c:if test="${accountId eq null}">
                     <li class="nav-item nav-item-right">
                         <a class="nav-link nav-link-large" href="<c:url value='/user/login/form' />"><i class="bi bi-box-arrow-in-right"></i></a>

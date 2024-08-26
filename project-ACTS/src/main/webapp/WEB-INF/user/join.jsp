@@ -40,7 +40,7 @@
     </style>
 </head>
 <body>
-
+ <%@include file="/WEB-INF/navbar.jsp"%>
 <div class="signup-container">
     <h2>회원가입</h2>
     <form>

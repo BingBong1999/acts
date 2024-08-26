@@ -27,13 +27,12 @@ public class RequestMapping {
 		mappings.put("/user/login", new LoginController());
 		mappings.put("/user/logout", new LogoutController());
 		mappings.put("/user/view", new ViewUserController());
-		mappings.put("/comm/buyerPage", new BuyerPostListController());
 		mappings.put("/user/register/form", new ForwardController("/user/registerForm.jsp"));
 		mappings.put("/user/register", new RegisterUserController());
 		mappings.put("/user/myInfo", new MyInfoController());
 		mappings.put("/user/update", new UpdateUserController());
 		mappings.put("/user/myPost", new MyPostController());
-		mappings.put("/user/myPage/myBuyerTransaction", new MyBuyerTransactionListController());
+		mappings.put("/user/myPage/myBuyerTransaction", new ReadTransactionListController());
 		mappings.put("/user/myPage/mySellerTransaction", new MySellerTransactionListController());
 		mappings.put("/user/followingList", new FavoriteListController());
 		mappings.put("/user/delete", new DeleteUserController());
@@ -41,8 +40,6 @@ public class RequestMapping {
 		mappings.put("/post/upload", new UploadPostController());
 		mappings.put("/post/update", new UpdatePostController());
 		mappings.put("/post/postInfo", new PostInfoController());
-		mappings.put("/post/sellerPostUpdate", new SellerUpdatePostController());
-		mappings.put("/post/sellerPostInfo", new SellerPostInfoController());
 		mappings.put("/post/delete", new DeletePostController());
 		mappings.put("/post/search", new PostSearchController());
 		mappings.put("/post/transactionForm", new CreateTransactionFormController());

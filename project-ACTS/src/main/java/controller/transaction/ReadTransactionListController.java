@@ -13,7 +13,7 @@ import model.Transaction;
 import model.service.TransactionManager;
 import model.service.UserManager;
 
-public class MyBuyerTransactionListController implements Controller {
+public class ReadTransactionListController implements Controller {
 	
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 

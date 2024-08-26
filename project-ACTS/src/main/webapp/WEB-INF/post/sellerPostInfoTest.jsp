@@ -188,26 +188,19 @@ h4, h5 {
 							</button>
 						</c:if>
 						
-						<c:if test="${isLiked eq false and not empty user.userId}">
-							<button class="like-btn"
-							onclick="window.location.href='<c:url value='/post/sellerPostInfo'>
-								<c:param name='postId' value='<%= String.valueOf(post.getPostId()) %>'/>
-								<c:param name='userId' value='<%= String.valueOf(user.getUserId())%>'/>
-								<c:param name='setting' value='1'/>
-								<c:param name='writerId' value='<%=writerId%>'/></c:url>'">
-							  <i class="bi <%= isLiked ? "bi-heart-fill" : "bi-heart" %>"></i> 좋아요
-							</button>
-						</c:if>
-
-						<c:if test="${isLiked eq true}">
-							<button class="like-btn"
-							onclick="window.location.href='<c:url value='/post/sellerPostInfo'>
-								<c:param name='postId' value='<%= String.valueOf(post.getPostId()) %>'/>
-								<c:param name='userId' value='<%= String.valueOf(user.getUserId())%>'/>
-								<c:param name='setting' value='0'/>
-								<c:param name='writerId' value='<%=writerId%>'/></c:url>'">
-							  <i class="bi <%= isLiked ? "bi-heart-fill" : "bi-heart" %>"></i> 좋아요
-							</button>
+						<c:if test="${not empty user.userId}">
+	    					<%
+	    						String iconClass = isLiked ? "bi-heart-fill" : "bi-heart";
+	    						String likeRequest = isLiked ? "0" : "1";
+	   	 					%>
+						    <button class="like-btn" onclick="window.location.href='<c:url value='/post/sellerPostInfo'>
+						            <c:param name='postId' value='<%= post.getPostId() %>'/>
+						            <c:param name='userId' value='<%= user.getUserId() %>'/>
+						            <c:param name='likeRequest' value='<%= likeRequest %>'/>
+						            <c:param name='writerId' value='<%= writerId %>'/>
+						        </c:url>'">
+						        <i class="bi <%= iconClass %>"></i> 좋아요
+						    </button>
 						</c:if>
 
 						<button class="order-btn ml-2"

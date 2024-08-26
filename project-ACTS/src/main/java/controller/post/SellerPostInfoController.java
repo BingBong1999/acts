@@ -33,6 +33,7 @@ public class SellerPostInfoController implements Controller {
 		PostManager postManager = PostManager.getInstance();
 		ReviewManager reviewManager = ReviewManager.getInstance();
 		FavoriteManager fm = FavoriteManager.getInstance();
+		
 		HttpSession session = request.getSession();
 
 		Post post = null;
@@ -40,7 +41,7 @@ public class SellerPostInfoController implements Controller {
 		List<Review> reviewList = null;
 		
 		boolean isLiked = false;
-		int setting = Integer.parseInt(request.getParameter("setting"));
+		int likeRequest = Integer.parseInt(request.getParameter("likeRequest"));
 		int postId = -1;
 		int userId = -1;
 		
@@ -66,22 +67,19 @@ public class SellerPostInfoController implements Controller {
 		} catch (PostNotFoundException e) {
 			return "redirect:/post/postList";
 		}
-
-		if (fm.findFavoriteByPostIdAndUserId(postId, userId) != null) {
-			isLiked = true;
+		
+		if (likeRequest == 1) {
+		    fm.create(new Favorite(postId, userId));
+		    isLiked = true;
+		} else if (likeRequest == 0) {
+		    fm.removeByPostIdAndUserId(postId, userId);
+		    isLiked = false;
 		} else {
-			isLiked = false;
-		}
-
-		if (setting == 1) {
-			fm.create(new Favorite(postId, userId));
-			isLiked = true;
-		} else if (setting == 0) {
-			fm.removeByPostIdAndUserId(postId, userId);
-			isLiked = false;
-		} else {
-			setting = -1;
-			isLiked = false;
+		    if (UserSessionUtils.hasLogined(session)) {
+		        isLiked = fm.findFavoriteByPostIdAndUserId(postId, userId) != null;
+		    } else {
+		        isLiked = false;
+		    }
 		}
 
 		request.setAttribute("isLiked", isLiked);

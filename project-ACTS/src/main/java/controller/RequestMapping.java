@@ -28,7 +28,7 @@ public class RequestMapping {
 		mappings.put("/comm/search/list", new SearchCategoryController());
 		mappings.put("/post/upload/form", new UploadPostFormController());
 		mappings.put("/post/upload", new UploadPostController());
-		mappings.put("/post/update", new UpdatePostController());
+//		mappings.put("/post/update", new UpdatePostController());
 		mappings.put("/post/postInfo", new PostInfoController());
 		mappings.put("/post/delete", new DeletePostController());
 		mappings.put("/post/search", new PostSearchController());

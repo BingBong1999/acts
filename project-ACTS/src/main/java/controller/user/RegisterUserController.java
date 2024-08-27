@@ -18,11 +18,6 @@ public class RegisterUserController implements Controller {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
     
-    	
-    	System.out.println(request.getParameter("id"));
-    	System.out.println(request.getParameter("password"));
-    	System.out.println(request.getParameter("email"));
-    	
        	User user = new User(
 			request.getParameter("id"),
 			request.getParameter("password"),

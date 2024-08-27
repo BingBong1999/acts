@@ -71,14 +71,14 @@
     <div class="acts-title">ACTS</div>
     <div class="subtitle">다양한 주니어들과 소비자들의 아이디어와 열정이 모이는 곳</div>
    
-    <form>
+    <form name = "form" method="POST" action="<c:url value='/user/login' />">
         <div class="form-group">
             <label for="username">아이디</label>
-            <input type="text" class="form-control" id="username" placeholder="아이디를 입력하세요">
+            <input type="text" class="form-control" name="id" placeholder="아이디를 입력하세요">
         </div>
         <div class="form-group">
             <label for="password">비밀번호</label>
-            <input type="password" class="form-control" id="password" placeholder="비밀번호를 입력하세요">
+            <input type="password" class="form-control" name="password" placeholder="비밀번호를 입력하세요">
         </div>
         <br>
         <button type="submit" class="btn btn-primary">로그인</button>

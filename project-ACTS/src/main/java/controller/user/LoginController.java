@@ -13,7 +13,7 @@ public class LoginController implements Controller {
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		String accountId = request.getParameter("accountId");
+		String accountId = request.getParameter("id");
 		String password = request.getParameter("password");
 
 		try {

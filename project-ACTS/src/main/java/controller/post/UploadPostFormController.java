@@ -14,8 +14,8 @@ public class UploadPostFormController implements Controller {
 		if (!UserSessionUtils.hasLogined(request.getSession()))
 			return "redirect:/user/login/form";
 
-		request.setAttribute("curUserId", UserSessionUtils.getLoginUserId(request.getSession()));
+		request.setAttribute("userId", UserSessionUtils.getLoginUserId(request.getSession()));
 		
-		return "/post/postFormTest.jsp";
+		return "/post/postForm.jsp";
 	}
 }

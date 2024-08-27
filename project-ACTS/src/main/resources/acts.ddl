@@ -62,29 +62,6 @@ ALTER TABLE SearchKeyword ADD CONSTRAINT XPKSearchKeyword PRIMARY KEY (userId);
 
 
 
-/* 카테고리 테이블 생성 */
-CREATE TABLE Category
-(
-	categoryId           INT NOT NULL ,
-	categoryName         VARCHAR2(100) NOT NULL 
-);
-
-CREATE UNIQUE INDEX IDXCategory ON Category (categoryId ASC);
-
-ALTER TABLE Category ADD CONSTRAINT XPKCategory PRIMARY KEY (categoryId);
-
-INSERT INTO Category (categoryId, categoryName) VALUES (1, '디자인');
-
-INSERT INTO Category (categoryId, categoryName) VALUES (2, 'IT');
-
-INSERT INTO Category (categoryId, categoryName) VALUES (3, '문서');
-
-INSERT INTO Category (categoryId, categoryName) VALUES (4, '기타');
-
-
-
-
-
 /* 메세지 룸 테이블 생성 */
 CREATE TABLE MessageRoom
 (
@@ -125,7 +102,6 @@ CREATE TABLE POST
 	ID               INT NOT NULL ,
 	TITLE                VARCHAR2(50) NOT NULL ,
 	BODY          VARCHAR2(2000) NOT NULL ,
-	IMAGE_URL             VARCHAR2(500) NULL ,
 	CREATED_AT          DATE DEFAULT  SYSDATE  NOT NULL ,
 	CATEGORY_ID           INT NOT NULL ,
 	VIEW_COUNT                INT DEFAULT  0  NOT NULL ,
@@ -190,6 +166,18 @@ CREATE TABLE Transaction
 CREATE UNIQUE INDEX IDXTransaction ON Transaction (transId ASC);
 
 ALTER TABLE Transaction ADD CONSTRAINT XPKTransaction PRIMARY KEY (transId);
+
+
+
+
+/* 이미지 테이블 생성 */
+CREATE TABLE images 
+(
+    ID INT AUTO_INCREMENT PRIMARY KEY,  
+    POST_ID INT NOT NULL,                     
+    IMAGE_URL VARCHAR(255) NOT NULL,          
+    CONSTRAINT FK_POST_ID FOREIGN KEY (POST_ID) REFERENCES POST(ID) ON DELETE CASCADE
+);
 
 
 

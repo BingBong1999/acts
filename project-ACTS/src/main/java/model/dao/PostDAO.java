@@ -37,7 +37,7 @@ public class PostDAO {
 			if (generatedKeys.next()) {
 				int postId = generatedKeys.getInt(1);
 
-				String imageSql = "INSERT INTO images (POST_ID, IMAGE_URL) VALUES (?, ?)";
+				String imageSql = "INSERT INTO IMAGE (POST_ID, IMAGE_URL) VALUES (?, ?)";
 
 				for (String imageUrl : imageUrls) {
 					Object[] imageParams = new Object[] { postId, imageUrl };

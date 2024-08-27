@@ -171,7 +171,7 @@ ALTER TABLE Transaction ADD CONSTRAINT XPKTransaction PRIMARY KEY (transId);
 
 
 /* 이미지 테이블 생성 */
-CREATE TABLE images 
+CREATE TABLE IMAGE 
 (
     ID INT AUTO_INCREMENT PRIMARY KEY,  
     POST_ID INT NOT NULL,                     

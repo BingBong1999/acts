@@ -242,4 +242,11 @@ public class JDBCUtil {
 	public void printDataSourceStats() {
 		connMan.printDataSourceStats();
 	}
+	
+	public void setAutoCommit(boolean autoCommit) throws SQLException {
+	    if (conn == null) {
+	        conn = connMan.getConnection();
+	    }
+	    conn.setAutoCommit(autoCommit);
+	}
 }

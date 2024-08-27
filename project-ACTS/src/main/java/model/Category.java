@@ -1,7 +1,12 @@
 package model;
 
 public enum Category {
-	DESIGN(0, "디자인"), IT(1, "IT"), DOCUMENT(3, "문서"), OTHER(4, "기타");
+	ART(0, "예술"), 
+	MUSIC(1, "음악"), 
+	WRITING(3, "글쓰기"), 
+	DESIGN(4, "디자인"),
+	TECHNOLOGY(5, "기술"),
+	ETC(6, "기타");
 
 	private final int id;
 	private final String name;

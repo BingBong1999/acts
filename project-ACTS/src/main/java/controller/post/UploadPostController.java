@@ -134,7 +134,7 @@ public class UploadPostController implements Controller {
 			request.setAttribute("exception", e);
 			request.setAttribute("post", updatePost);
 			
-			return "/post/postForm.jsp";
+			return "/post/postFormTest.jsp";
 		}
 	}
 }

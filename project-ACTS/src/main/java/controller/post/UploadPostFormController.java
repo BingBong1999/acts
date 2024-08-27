@@ -16,6 +16,6 @@ public class UploadPostFormController implements Controller {
 
 		request.setAttribute("curUserId", UserSessionUtils.getLoginUserId(request.getSession()));
 		
-		return "/post/postForm.jsp";
+		return "/post/postFormTest.jsp";
 	}
 }

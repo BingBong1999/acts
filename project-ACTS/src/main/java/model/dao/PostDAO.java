@@ -14,29 +14,47 @@ import model.Post;
 public class PostDAO {
 
 	private static final Logger log = LoggerFactory.getLogger(PostDAO.class);
-	private JDBCUtil jdbcUtil = null;
+	private JDBCUtil jdbcUtil;
 
 	public PostDAO() {
 		jdbcUtil = new JDBCUtil();
 	}
 
-	public int create(Post post) throws SQLException {
-
-		String sql = "INSERT INTO POST VALUES (POST_ID_SEQ.nextval, ?, ?, ?, NOW(), ?, ?, ?, ?, ?)";
-		Object[] param = new Object[] { post.getTitle(), post.getBody(), post.getImageUrl(),
-				post.getCategoryId(), post.getViewCount(), post.getStatus(), post.getPrice(), post.getAuthorId() };
-
-		jdbcUtil.setSqlAndParameters(sql, param);
+	public int create(Post post, List<String> imageUrls) throws Exception {
 
 		try {
-			int result = jdbcUtil.executeUpdate();
-			return result;
+			jdbcUtil.setAutoCommit(false);
+
+			String postSql = "INSERT INTO POST (ID, TITLE, BODY, CATEGORY_ID, PRICE, AUTHOR_ID, CREATED_AT) "
+					+ "VALUES (POST_ID_SEQ.nextval, ?, ?, ?, ?, ?, NOW())";
+			Object[] postParams = new Object[] { post.getTitle(), post.getBody(), post.getCategoryId(), post.getPrice(),
+					post.getAuthorId() };
+			jdbcUtil.setSqlAndParameters(postSql, postParams);
+			jdbcUtil.executeUpdate();
+
+			ResultSet generatedKeys = jdbcUtil.getGeneratedKeys();
+
+			if (generatedKeys.next()) {
+				int postId = generatedKeys.getInt(1);
+
+				String imageSql = "INSERT INTO images (POST_ID, IMAGE_URL) VALUES (?, ?)";
+
+				for (String imageUrl : imageUrls) {
+					Object[] imageParams = new Object[] { postId, imageUrl };
+					jdbcUtil.setSqlAndParameters(imageSql, imageParams);
+					jdbcUtil.executeUpdate();
+				}
+			} else {
+				throw new SQLException("게시글 생성에 실패했습니다. postId를 가져올 수 없습니다.");
+			}
+
 		} catch (Exception ex) {
 			jdbcUtil.rollback();
 			ex.printStackTrace();
 		} finally {
 			jdbcUtil.commit();
 			jdbcUtil.close();
+			jdbcUtil.setAutoCommit(true);
 		}
 
 		return 0;
@@ -44,9 +62,8 @@ public class PostDAO {
 
 	public int update(Post post) throws SQLException {
 
-		String sql = "UPDATE POST " + "SET TITLE=?, BODY=?, IMAGE_URL=?, CATEGORY_ID=?, PRICE=? " + "WHERE ID=?";
-		Object[] param = new Object[] { post.getTitle(), post.getBody(), post.getImageUrl(), post.getCategoryId(),
-				post.getPrice() };
+		String sql = "UPDATE POST " + "SET TITLE=?, BODY=?, CATEGORY_ID=?, PRICE=? " + "WHERE ID=?";
+		Object[] param = new Object[] { post.getTitle(), post.getBody(), post.getCategoryId(), post.getPrice() };
 		jdbcUtil.setSqlAndParameters(sql, param);
 
 		try {
@@ -92,8 +109,8 @@ public class PostDAO {
 
 			if (rs.next()) {
 				Post post = new Post(rs.getInt("ID"), rs.getString("TITLE"), rs.getString("BODY"),
-						rs.getString("IMAGE_URL"), rs.getDate("CREATE_AT"), rs.getInt("CATEGORY_ID"),
-						rs.getInt("VIEW_COUNT"), rs.getString("STATUS"), rs.getInt("PRICE"), rs.getString("AUTHOR_ID"));
+						rs.getDate("CREATE_AT"), rs.getInt("CATEGORY_ID"), rs.getInt("VIEW_COUNT"),
+						rs.getString("STATUS"), rs.getInt("PRICE"), rs.getString("AUTHOR_ID"));
 
 				return post;
 			}
@@ -118,8 +135,8 @@ public class PostDAO {
 
 			while (rs.next()) {
 				Post post = new Post(rs.getInt("ID"), rs.getString("TITLE"), rs.getString("BODY"),
-						rs.getString("IMAGE_URL"), rs.getDate("CREATE_AT"), rs.getInt("CATEGORY_ID"),
-						rs.getInt("VIEW_COUNT"), rs.getString("STATUS"), rs.getInt("PRICE"), rs.getString("AUTHOR_ID"));
+						rs.getDate("CREATE_AT"), rs.getInt("CATEGORY_ID"), rs.getInt("VIEW_COUNT"),
+						rs.getString("STATUS"), rs.getInt("PRICE"), rs.getString("AUTHOR_ID"));
 
 				postList.add(post);
 			}
@@ -138,7 +155,7 @@ public class PostDAO {
 	public List<Post> findPostsByCategory(int category) throws SQLException {
 
 		String sql = "SELECT * " + "FROM POST p JOIN CATEGORY c ON p.CATEGORY_ID=c.CATEGORY_ID "
-				+ "WHERE CATEGORY_ID=? " + "ORDER BY postId";
+				+ "WHERE CATEGORY_ID=? " + "ORDER BY p.ID";
 		jdbcUtil.setSqlAndParameters(sql, new Object[] { category });
 
 		try {
@@ -148,8 +165,8 @@ public class PostDAO {
 
 			while (rs.next()) {
 				Post post = new Post(rs.getInt("ID"), rs.getString("TITLE"), rs.getString("BODY"),
-						rs.getString("IMAGE_URL"), rs.getDate("CREATE_AT"), rs.getInt("CATEGORY_ID"),
-						rs.getInt("VIEW_COUNT"), rs.getString("STATUS"), rs.getInt("PRICE"), rs.getString("AUTHOR_ID"));
+						rs.getDate("CREATE_AT"), rs.getInt("CATEGORY_ID"), rs.getInt("VIEW_COUNT"),
+						rs.getString("STATUS"), rs.getInt("PRICE"), rs.getString("AUTHOR_ID"));
 				postList.add(post);
 
 				log.debug(rs.getString("postType"));
@@ -197,8 +214,8 @@ public class PostDAO {
 
 			while (rs.next()) {
 				Post post = new Post(rs.getInt("ID"), rs.getString("TITLE"), rs.getString("BODY"),
-						rs.getString("IMAGE_URL"), rs.getDate("CREATE_AT"), rs.getInt("CATEGORY_ID"),
-						rs.getInt("VIEW_COUNT"), rs.getString("STATUS"), rs.getInt("PRICE"), rs.getString("AUTHOR_ID"));
+						rs.getDate("CREATE_AT"), rs.getInt("CATEGORY_ID"), rs.getInt("VIEW_COUNT"),
+						rs.getString("STATUS"), rs.getInt("PRICE"), rs.getString("AUTHOR_ID"));
 				postList.add(post);
 			}
 
@@ -226,8 +243,8 @@ public class PostDAO {
 			while (rs.next()) {
 
 				Post post = new Post(rs.getInt("ID"), rs.getString("TITLE"), rs.getString("BODY"),
-						rs.getString("IMAGE_URL"), rs.getDate("CREATE_AT"), rs.getInt("CATEGORY_ID"),
-						rs.getInt("VIEW_COUNT"), rs.getString("STATUS"), rs.getInt("PRICE"), rs.getString("AUTHOR_ID"));
+						rs.getDate("CREATE_AT"), rs.getInt("CATEGORY_ID"), rs.getInt("VIEW_COUNT"),
+						rs.getString("STATUS"), rs.getInt("PRICE"), rs.getString("AUTHOR_ID"));
 
 				postList.add(post);
 			}

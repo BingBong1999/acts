@@ -23,8 +23,8 @@ public class PostManager {
 		return post;
 	}
 
-	public int create(Post post) throws SQLException {
-		return postDAO.create(post);
+	public int create(Post post, List<String> imageUrls) throws Exception {
+		return postDAO.create(post, imageUrls);
 	}
 
 	public int update(Post post) throws SQLException, PostNotFoundException {

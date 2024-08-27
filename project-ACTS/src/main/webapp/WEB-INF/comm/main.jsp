@@ -10,7 +10,7 @@ List<Post> postList = (List<Post>)request.getAttribute("postList");
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ACTS</title>
+    <title>ACTS - 다양한 주니어들과 소비자들의 아이디어와 열정이 모이는 곳</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -56,7 +56,6 @@ List<Post> postList = (List<Post>)request.getAttribute("postList");
             font-size: 0.9rem;
             color: #6c757d;
         }
-        /* 페이지 상단에 플러스 버튼 추가 */
         .add-post-btn {
         	
             position: absolute;
@@ -82,7 +81,6 @@ List<Post> postList = (List<Post>)request.getAttribute("postList");
 <body>
     <%@include file="/WEB-INF/navbar.jsp"%>
 
-    <!-- 상단에 플러스 버튼 추가 -->
     <div class="container-relative">
         <a href="<c:url value='/post/upload/form' />" class="add-post-btn">+</a>
     </div>

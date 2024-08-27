@@ -1,6 +1,5 @@
 <%@page contentType="text/html; charset=utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!-- 데이터베이스 프로그래밍 02분반 10팀 솜마추어 -->
 <html>
 <head>
 <title>Acts On</title>

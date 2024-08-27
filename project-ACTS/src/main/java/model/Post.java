@@ -7,7 +7,6 @@ public class Post {
 	private int id;
 	private String title;
 	private String body;
-	private String imageUrl;
 	private Date createdAt;
 	private int categoryId;
 	private String categoryName;
@@ -16,13 +15,12 @@ public class Post {
 	private int price;
 	private String authorId;
 
-	public Post(int id, String title, String body, String imageUrl, Date createdAt, int categoryId, int viewCount,
-			String status, int price, String authorId) {
+	public Post(int id, String title, String body, Date createdAt, int categoryId, int viewCount, String status,
+			int price, String authorId) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.body = body;
-		this.imageUrl = imageUrl;
 		this.createdAt = createdAt;
 		this.categoryId = categoryId;
 		this.viewCount = viewCount;
@@ -53,14 +51,6 @@ public class Post {
 
 	public void setBody(String body) {
 		this.body = body;
-	}
-
-	public String getImageUrl() {
-		return imageUrl;
-	}
-
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
 	}
 
 	public Date getCreatedAt() {

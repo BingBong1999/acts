@@ -66,7 +66,7 @@ List<Post> postList = (List<Post>)request.getAttribute("postList");
                                 <span class="category-badge badge badge-info">${post.category}</span>
                             </h5>
                             <p class="price">${post.price}</p>
-                            <p class="author">작성자: ${post.user.}</p>dd
+                            <p class="author">작성자: ${post.user.}</p>
                             <a href="<c:url value='/post/${post.postId}' />" class="btn btn-primary">상세보기</a>
                         </div>
                     </div>

@@ -15,10 +15,11 @@ public class UserDAO {
 
 	public int create(User user) throws SQLException {
 
-		String sql = "INSERT INTO ACCOUNT VALUES (ID, PASSWORD, EMAIL)";
+		String sql = "INSERT INTO ACCOUNT (ID, PASSWORD, EMAIL) VALUES (?, ?, ?)";
 		Object[] param = new Object[] { user.getId(), user.getPassword(), user.getEmail() };
 		jdbcUtil.setSqlAndParameters(sql, param);
 
+		
 		try {
 			int result = jdbcUtil.executeUpdate();
 			return result;

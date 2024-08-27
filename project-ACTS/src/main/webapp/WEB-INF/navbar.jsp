@@ -61,6 +61,10 @@
         .nav-link-large i {
             font-size: 1.5rem; /* 원래 크기 */
         }
+        /* 검색 버튼 크기 고정 */
+        .btn-search {
+            width: 50px; /* 고정된 버튼 크기 */
+        }
     </style>
 </head>
 <body>
@@ -82,7 +86,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="<c:url value='' />">공지사항</a>
                 </li>
-                 <li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link" href="<c:url value='' />">인기글</a>
                 </li>
                 
@@ -90,13 +94,13 @@
                     <li class="nav-item">
                         <form class="form-inline my-2 my-lg-0">
                             <input class="form-control mr-sm-2" type="search" placeholder="찾고싶은 상품이 있나요?" aria-label="Search">
-                            <button class="btn btn-primary my-2 my-sm-0" type="submit">
+                            <button class="btn btn-primary my-2 my-sm-0 btn-search" type="submit">
                                 <i class="bi bi-search"></i>
                             </button>
                         </form>
                     </li>
                 </ul>
-               	<li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link" href="<c:url value='/chatting/chatting' />">채팅창</a>
                 </li>
                 <c:if test="${accountId eq null}">

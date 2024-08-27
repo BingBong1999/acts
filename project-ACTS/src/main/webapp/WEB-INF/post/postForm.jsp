@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*, model.*"%>
 <%
-	User user = (User)request.getAttribute("user");
+	String userId = (String) request.getAttribute("userId");
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -26,7 +26,7 @@
 				return false;
 			}
 	
-			if (form.content_textarea.value == "") {
+			if (form.body.value == "") {
 				alert("내용을 입력하십시오.");
 				form.content_textarea.focus();
 				return false;
@@ -78,12 +78,12 @@
 <%@include file="/WEB-INF/navbar.jsp"%>
 
 <div class="post-form-container">
-    <h3>빙봉이님만의 특별한 재능</h3>
+    <h3><%= userId %>님만의 특별한 재능</h3>
     <p style="color: gray;">함께함으로써 세상에 가치를 더하는 첫 발자국, 지금부터 소개해주세요.</p>
     <form name="form" method="POST" action="<c:url value='/post/upload' />" enctype="multipart/form-data">
         <div class="form-group">
-            <label for="categoryName">카테고리</label>
-            <select class="form-control" name="categoryName">
+            <label for="categoryId">카테고리</label>
+            <select class="form-control" name="categoryId">
                 <option value="1">예술</option>
                 <option value="2">음악</option>
                 <option value="3">글쓰기</option>

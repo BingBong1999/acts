@@ -31,17 +31,9 @@ function userDelete() {
 	<table>
 
 		<tr><td>아이디</td>
-			<td><%= user.getAccountId() %></td></tr>
-		<tr><td>이름</td>
-			<td><%= user.getName() %></td></tr>
-		<tr><td>닉네임</td>
-			<td><%= user.getNickName() %></td></tr>
-		<tr><td>전화번호</td>
-			<td><%= user.getPhone() %></td></tr>
+			<td><%= user.getId() %></td></tr>
 		<tr><td>이메일</td>
 			<td><%= user.getEmail() %></td></tr>
-		<tr><td>가입일</td>
-			<td><%= user.getJoinDate() %></td></tr>
 
 	</table>
 	<input type="hidden" name="accountId" value="${user.accountId}" />

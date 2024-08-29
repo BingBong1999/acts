@@ -3,12 +3,16 @@ package controller.post;
 import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
+import java.io.File;
+
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import controller.Controller;
 import controller.user.UserSessionUtils;
@@ -22,44 +26,65 @@ public class UploadPostController implements Controller {
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
 
-		PostManager postManager = PostManager.getInstance();
-		HttpSession session = request.getSession();
+		if (ServletFileUpload.isMultipartContent(request)) {
 
-		String title = request.getParameter("title");
-		String body = request.getParameter("body");
-		int categoryId = Integer.parseInt(request.getParameter("categoryId"));
-		int viewCount = 0;
-		String status = "available";
-		int price = Integer.parseInt(request.getParameter("price"));
-		String authorId = UserSessionUtils.getLoginUserId(session);
+			DiskFileItemFactory factory = new DiskFileItemFactory();
+			ServletFileUpload upload = new ServletFileUpload(factory);
 
-		Post post = new Post(-1, title, body, new Date(0), categoryId, viewCount, status, price, authorId);
+			try {
 
-		List<String> imageUrls = extractImageUrls(body);
+				PostManager postManager = PostManager.getInstance();
 
-		try {
-			postManager.create(post, imageUrls);
-			return "redirect:/comm/main";
+				List<FileItem> formItems = upload.parseRequest(request);
 
-		} catch (Exception e) {
-			request.setAttribute("uploadFail", true);
-			request.setAttribute("exception", e);
-			return "/post/postForm.jsp";
+				String title = null;
+				String body = null;
+				int categoryId = -1;
+				int price = -1;
+				List<String> imageUrls = new ArrayList<String>();
+
+				for (FileItem item : formItems) {
+					if (item.isFormField()) {
+						switch (item.getFieldName()) {
+						case "title":
+							title = item.getString("UTF-8");
+							break;
+						case "body":
+							body = item.getString("UTF-8");
+							break;
+						case "categoryId":
+							categoryId = Integer.parseInt(item.getString("UTF-8"));
+							break;
+						case "price":
+							price = Integer.parseInt(item.getString("UTF-8"));
+							break;
+						}
+					} else if (item.getFieldName().equals("image")) {
+						ServletContext context = request.getServletContext();
+						String filePath = context.getRealPath("/") + "imageResource/" + item.getName();
+
+						File storeFile = new File(filePath);
+						item.write(storeFile);
+						imageUrls.add("uploads/" + item.getName()); // 저장된 이미지의 경로를 리스트에 추가
+					}
+				}
+
+				Post post = new Post(-1, title, body, new Date(0), categoryId, 0, "available", price,
+						UserSessionUtils.getLoginUserId(request.getSession()));
+
+				postManager.create(post, imageUrls);
+
+				return "redirect:/comm/main";
+			} catch (Exception e) {
+				e.printStackTrace();
+				request.setAttribute("uploadFail", true);
+				request.setAttribute("exception", e);
+			}
+
 		}
+
+		return "/post/postForm.jsp";
 
 	}
 
-	private List<String> extractImageUrls(String body) {
-
-		List<String> imageUrls = new ArrayList<>();
-		String imgTagPattern = "<img[^>]+src=\"([^\"]+)\"[^>]*>";
-
-		Pattern pattern = Pattern.compile(imgTagPattern);
-		Matcher matcher = pattern.matcher(body);
-
-		while (matcher.find()) {
-			imageUrls.add(matcher.group(1));
-		}
-		return imageUrls;
-	}
 }

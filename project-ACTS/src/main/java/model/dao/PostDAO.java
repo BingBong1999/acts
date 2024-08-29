@@ -23,31 +23,39 @@ public class PostDAO {
 	public int create(Post post, List<String> imageUrls) throws Exception {
 
 		try {
+			// 생성할 POST의 ID 가져오기
 			jdbcUtil.setAutoCommit(false);
 
-			String postSql = "INSERT INTO POST (ID, TITLE, BODY, CATEGORY_ID, PRICE, AUTHOR_ID, CREATED_AT) "
-					+ "VALUES (POST_ID_SEQ.nextval, ?, ?, ?, ?, ?, NOW())";
-			Object[] postParams = new Object[] { post.getTitle(), post.getBody(), post.getCategoryId(), post.getPrice(),
-					post.getAuthorId() };
+			String getIdSql = "SELECT POST_ID_SEQ.nextval FROM dual";
+			jdbcUtil.setSqlAndParameters(getIdSql, null);
+			ResultSet rs = jdbcUtil.executeQuery();
+
+			int postId = -1;
+			
+			if (rs.next()) {
+				postId = rs.getInt(1);
+			} else {
+				throw new SQLException("시퀀스에서 postId를 가져올 수 없습니다.");
+			}
+
+			// POST 레코드 생성하기
+			String postSql = "INSERT INTO POST (ID, TITLE, BODY, CREATED_AT, CATEGORY_ID, VIEW_COUNT, STATUS, PRICE, AUTHOR_ID) "
+					+ "VALUES (?, ?, ?, SYSDATE, ?, ?, ?, ?, ?)";
+			Object[] postParams = new Object[] { postId, post.getTitle(), post.getBody(), post.getCategoryId(),
+					post.getViewCount(), post.getStatus(), post.getPrice(), post.getAuthorId() };
+
 			jdbcUtil.setSqlAndParameters(postSql, postParams);
 			jdbcUtil.executeUpdate();
 
-			ResultSet generatedKeys = jdbcUtil.getGeneratedKeys();
+			// IMAGE 레코드 생성하기
+			String imageSql = "INSERT INTO IMAGE (POST_ID, IMAGE_URL) VALUES (?, ?)";
 
-			if (generatedKeys.next()) {
-				int postId = generatedKeys.getInt(1);
-
-				String imageSql = "INSERT INTO IMAGE (POST_ID, IMAGE_URL) VALUES (?, ?)";
-
-				for (String imageUrl : imageUrls) {
-					Object[] imageParams = new Object[] { postId, imageUrl };
-					jdbcUtil.setSqlAndParameters(imageSql, imageParams);
-					jdbcUtil.executeUpdate();
-				}
-			} else {
-				throw new SQLException("게시글 생성에 실패했습니다. postId를 가져올 수 없습니다.");
+			for (String imageUrl : imageUrls) {
+				Object[] imageParams = new Object[] { postId, imageUrl };
+				jdbcUtil.setSqlAndParameters(imageSql, imageParams);
+				jdbcUtil.executeUpdate();
 			}
-
+			
 		} catch (Exception ex) {
 			jdbcUtil.rollback();
 			ex.printStackTrace();

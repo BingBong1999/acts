@@ -12,7 +12,6 @@
     <title>ACTS - 다양한 주니어들과 소비자들의 아이디어와 열정이 모이는 곳</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
 	<script>
 		function postCreate() {
 			if (form.title.value == "") {
@@ -100,12 +99,7 @@
         <div class="form-group">
             <label for="body">내용</label>
             <textarea class="form-control" name="body" rows="10" placeholder="내용을 입력하세요"></textarea>
-            <script>
-                CKEDITOR.replace('body', {
-                    filebrowserUploadUrl: '/uploader/upload.php',
-                    filebrowserUploadMethod: 'form'
-                });
-            </script>
+		    <input type="file" name="image" accept="image/*"><br><br>
         </div>
        
         <div class="form-group">

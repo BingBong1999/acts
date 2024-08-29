@@ -91,19 +91,19 @@ List<Post> postList = (List<Post>)request.getAttribute("postList");
                 <div class="col-md-3">
                     <div class="card">
                         <div class="card-img-container">
-                            <img src="${pageContext.request.contextPath}/upload/${post.getImgUrl()}" class="card-img-top">
+                            <img src="${pageContext.request.contextPath}/imageResource/${post.imageUrl.get(0)}" class="card-img-top">
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">
                                 ${post.title}
-                                <span class="category-badge badge badge-info">${post.category}</span>
+                                <span class="category-badge badge badge-info">${post.categoryName}</span>
                             </h5>
                             <p class="price">${post.price}원</p>
-                            <p class="author">작성자: ${post.writer}</p>
+                            <p class="author">작성자: ${post.authorId}</p>
                             
                             <a href="<c:url value='/post/sellerPostInfo'>
-                                        <c:param name='postId' value='${post.postId}'/>
-                                        <c:param name='writerId' value ='${post.writerId}' />
+                                        <c:param name='postId' value='${post.id}'/>
+                                        <c:param name='writerId' value ='${post.authorId}' />
                                         <c:param name='likeRequest' value = '-1' /> 
                                     </c:url>" class="btn btn-primary"> 상세보기
                             </a>

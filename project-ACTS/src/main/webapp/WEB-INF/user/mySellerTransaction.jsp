@@ -50,7 +50,7 @@
 		<c:forEach var="transaction" items="${transactionList}">
 			<tr>
 				<td width="190" align="center" bgcolor="ffffff" height="20">
-					<a href="<c:url value='/post/sellerPostInfo'>
+					<a href="<c:url value='/post/postInfo'>
 					   			<c:param name='postId' value='${transaction.post.postId}'/>
 					   			<c:param name='writerId' value ='${transaction.post.writerId}' />
 					   			<c:param name='setting' value = '-1' /> 

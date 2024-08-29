@@ -42,7 +42,7 @@ public class CreateTransactionFormController implements Controller {
 			request.setAttribute("trasactionCreateFailed", true);
 			request.setAttribute("exception", new IllegalStateException("본인의 글은 주문할 수 없습니다."));
 
-			return "/post/sellerPostInfo.jsp";
+			return "/post/postInfo.jsp";
 		}
 
 		return "/post/transactionForm.jsp";

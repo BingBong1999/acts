@@ -84,7 +84,7 @@
 				</c:if>
 				
 				<c:if test="${fOrNot eq 0 and not empty user.userId}">
-					<form method="POST" action="<c:url value='/post/sellerPostInfo' />">
+					<form method="POST" action="<c:url value='/post/postInfo' />">
 					  	<input type="hidden" name="postId" value='${post.postId}'>
 					  	<input type="hidden" name="userId" value='${user.userId}'>
 					  	<input type="hidden" name="setting" value='1'>
@@ -97,7 +97,7 @@
 				</c:if>
 				
 				<c:if test="${fOrNot eq 1}">
-					<form method="POST" action="<c:url value='/post/sellerPostInfo' />">
+					<form method="POST" action="<c:url value='/post/post/postInfo' />">
 					  	<input type="hidden" name="postId" value='${post.postId}'>
 					  	<input type="hidden" name="userId" value='${user.userId}'>
 					  	<input type="hidden" name="setting" value='0'>

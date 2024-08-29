@@ -101,7 +101,7 @@ List<Post> postList = (List<Post>)request.getAttribute("postList");
                             <p class="price">${post.price}원</p>
                             <p class="author">작성자: ${post.authorId}</p>
                             
-                            <a href="<c:url value='/post/sellerPostInfo'>
+                            <a href="<c:url value='/post/postInfo'>
                                         <c:param name='postId' value='${post.id}'/>
                                         <c:param name='writerId' value ='${post.authorId}' />
                                         <c:param name='likeRequest' value = '-1' /> 

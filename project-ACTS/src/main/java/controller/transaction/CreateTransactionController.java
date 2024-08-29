@@ -45,6 +45,6 @@ public class CreateTransactionController implements Controller {
 		request.setAttribute("nickname", postUserNickName);
 		request.setAttribute("trasactionCreateSuccess", true);
 		
-		return "/post/sellerPostInfo.jsp";
+		return "/post/postInfo.jsp";
 	}
 }

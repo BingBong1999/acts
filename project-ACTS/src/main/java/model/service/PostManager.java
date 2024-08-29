@@ -39,10 +39,12 @@ public class PostManager {
 	public Post findPostByPostId(int id) throws SQLException, PostNotFoundException {
 
 		Post post = postDAO.findPostByPostId(id);
-
+		
 		if (post == null) {
 			throw new PostNotFoundException(id + "는 존재하지 않는  포스트입니다.");
 		}
+
+		post.setImageUrl(imageManager.findImageUrlsByPostId(post.getId()));
 
 		return post;
 	}

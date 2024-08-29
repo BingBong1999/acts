@@ -20,7 +20,6 @@ import model.service.ReviewManager;
 import model.Favorite;
 import model.Post;
 import model.Review;
-import model.User;
 
 public class PostInfoController implements Controller {
 
@@ -31,27 +30,25 @@ public class PostInfoController implements Controller {
 
 		PostManager postManager = PostManager.getInstance();
 		ReviewManager reviewManager = ReviewManager.getInstance();
+		FavoriteManager fm = FavoriteManager.getInstance();
 
 		HttpSession session = request.getSession();
-		FavoriteManager fm = FavoriteManager.getInstance();
+
 		Post post = null;
-		User user = null;
 		List<Review> reviewList = null;
 
-		int fOrNot;
+		boolean isLiked = false;
 		int likeRequest = Integer.parseInt(request.getParameter("likeRequest"));
 		int postId = -1;
 
-		String userId = UserSessionUtils.getLoginUserId(session);
-
-		String postUserNickName = null;
+		String loginAccountId = UserSessionUtils.getLoginUserId(session);
 
 		try {
 
 			post = postManager.findPostByPostId(Integer.parseInt(request.getParameter("postId")));
 			postId = post.getId();
 			log.debug("PostInfo Request : {}", post.getId());
-			postUserNickName = post.getAuthorId();
+
 			postManager.increaseViewCount(post);
 			reviewList = reviewManager.findReviewList(post.getId());
 
@@ -59,28 +56,27 @@ public class PostInfoController implements Controller {
 			return "redirect:/post/postList";
 		}
 
-		if (fm.findFavoriteByPostIdAndUserId(postId, userId) != null) {
-			fOrNot = 1;
+		if (UserSessionUtils.hasLogined(session)) {
+
+			if (likeRequest == 1) {
+				fm.create(new Favorite(postId, loginAccountId));
+				isLiked = true;
+			} else if (likeRequest == 0) {
+				fm.removeByPostIdAndUserId(postId, loginAccountId);
+				isLiked = false;
+			} else {
+				isLiked = fm.findFavoriteByPostIdAndUserId(postId, loginAccountId) != null;
+			}
+
 		} else {
-			fOrNot = 0;
+			isLiked = false;
 		}
 
-		if (likeRequest == 1) {
-			fm.create(new Favorite(postId, Integer.parseInt(userId)));
-			fOrNot = 1;
-		} else if (likeRequest == 0) {
-			fm.removeByPostIdAndUserId(postId, Integer.parseInt(userId));
-			fOrNot = 0;
-		} else {
-			likeRequest = -1;
-		}
-
-		request.setAttribute("fOrNot", fOrNot);
-		request.setAttribute("user", user);
+		request.setAttribute("isLiked", isLiked);
+		request.setAttribute("loginId", loginAccountId);
 		request.setAttribute("post", post);
-		request.setAttribute("nickname", postUserNickName);
 		request.setAttribute("reviewList", reviewList);
 
-		return "/post/postInfoTest.jsp";
+		return "/post/postInfo.jsp";
 	}
 }

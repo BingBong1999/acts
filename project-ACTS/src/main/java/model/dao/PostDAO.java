@@ -143,7 +143,7 @@ public class PostDAO {
 
 			while (rs.next()) {
 				Post post = new Post(rs.getInt("ID"), rs.getString("TITLE"), rs.getString("BODY"),
-						rs.getDate("CREATE_AT"), rs.getInt("CATEGORY_ID"), rs.getInt("VIEW_COUNT"),
+						rs.getDate("CREATED_AT"), rs.getInt("CATEGORY_ID"), rs.getInt("VIEW_COUNT"),
 						rs.getString("STATUS"), rs.getInt("PRICE"), rs.getString("AUTHOR_ID"));
 
 				postList.add(post);

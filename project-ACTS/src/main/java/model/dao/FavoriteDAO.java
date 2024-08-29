@@ -56,7 +56,7 @@ public class FavoriteDAO {
 		return 0;
 	}
 
-	public Favorite findFavoriteByPostIdAndUserId(int postId, int userId) throws SQLException {
+	public Favorite findFavoriteByPostIdAndUserId(int postId, String userId) throws SQLException {
 		
 		String sql = "SELECT favorId, userId, postId " + "FROM favorite " + "WHERE postId=? AND userId=?";
 		jdbcUtil.setSqlAndParameters(sql, new Object[] { postId, userId });

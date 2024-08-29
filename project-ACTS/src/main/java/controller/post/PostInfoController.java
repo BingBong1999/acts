@@ -59,7 +59,7 @@ public class PostInfoController implements Controller {
 			return "redirect:/post/postList";
 		}
 
-		if (fm.findFavoriteByPostIdAndUserId(postId, Integer.parseInt(userId)) != null) {
+		if (fm.findFavoriteByPostIdAndUserId(postId, userId) != null) {
 			fOrNot = 1;
 		} else {
 			fOrNot = 0;

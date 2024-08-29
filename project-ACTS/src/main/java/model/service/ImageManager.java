@@ -1,6 +1,7 @@
 package model.service;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import model.dao.ImageDAO;
 
@@ -19,6 +20,10 @@ public class ImageManager {
 
 	public int create(int postId, String imageUrl) throws SQLException {
 		return imageDAO.create(postId, imageUrl);
+	}
+
+	public List<String> findImageUrlsByPostId(int postId) {
+		return imageDAO.findImageUrlsByPostId(postId);
 	}
 
 }

@@ -1,27 +1,30 @@
 package model;
 
 public class Favorite {
-	
+
 	private int favorId;
-	private int userId;
 	private int postId;
+	private String userId;
+	
+	public Favorite(int postId, String userId) {
+		super();
+		this.userId = userId;
+		this.postId = postId;
+	}
 
-	public Favorite(int favorId, int userId, int postId) {
+	public int getFavorId() {
+		return favorId;
+	}
+
+	public void setFavorId(int favorId) {
 		this.favorId = favorId;
-		this.userId = userId;
-		this.postId = postId;
 	}
 
-	public Favorite(int postId, int userId) {
-		this.postId = postId;
-		this.userId = userId;
-	}
-
-	public int getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(int userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 
@@ -33,11 +36,4 @@ public class Favorite {
 		this.postId = postId;
 	}
 
-	public int getFavorId() {
-		return favorId;
-	}
-
-	public void setFavorId(int favorId) {
-		this.favorId = favorId;
-	}
 }

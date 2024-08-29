@@ -37,7 +37,7 @@ public class FavoriteDAO {
 		return 0;
 	}
 
-	public int removeByPostIdAndUserId(int postId, int userId) throws SQLException {
+	public int removeByPostIdAndUserId(int postId, String userId) throws SQLException {
 		
 		String sql = "DELETE FROM FAVORITE WHERE postId=? AND userId=?";
 		jdbcUtil.setSqlAndParameters(sql, new Object[] { postId, userId });
@@ -66,7 +66,7 @@ public class FavoriteDAO {
 			
 			if (rs.next()) {
 				
-				Favorite favorite = new Favorite(rs.getInt("favorId"), rs.getInt("userId"), rs.getInt("postId"));
+				Favorite favorite = new Favorite(rs.getInt("postId"), rs.getString("userId"));
 				
 				return favorite;
 			}
@@ -91,7 +91,7 @@ public class FavoriteDAO {
 			List<Favorite> favorList = new ArrayList<Favorite>();
 			
 			while (rs.next()) {
-				Favorite favor = new Favorite(rs.getInt("favorId"), rs.getInt("userId"), rs.getInt("postId"));
+				Favorite favor = new Favorite(rs.getInt("postId"), rs.getString("userId"));
 				favorList.add(favor);
 			}
 			

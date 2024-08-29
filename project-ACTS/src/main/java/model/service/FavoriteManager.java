@@ -29,7 +29,7 @@ public class FavoriteManager {
 		return favoriteDAO.create(favorite);
 	}
 
-	public int removeByPostIdAndUserId(int postId, int userId) throws SQLException, PostNotFoundException {
+	public int removeByPostIdAndUserId(int postId, String userId) throws SQLException, PostNotFoundException {
 		return favoriteDAO.removeByPostIdAndUserId(postId, userId);
 	}
 

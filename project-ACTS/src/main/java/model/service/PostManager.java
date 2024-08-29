@@ -12,6 +12,7 @@ import model.dao.PostDAO;
 
 public class PostManager {
 
+	private static ImageManager imageManager = ImageManager.getInstance();
 	private static PostManager post = new PostManager();
 	private PostDAO postDAO;
 
@@ -51,6 +52,7 @@ public class PostManager {
 
 		for (Post post : posts) {
 			post.setCategoryName(Category.getNameById(post.getCategoryId()));
+			post.setImageUrl(imageManager.findImageUrlsByPostId(post.getId()));
 		}
 		return posts;
 	}

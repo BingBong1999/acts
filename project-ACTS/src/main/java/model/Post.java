@@ -1,6 +1,7 @@
 package model;
 
 import java.util.Date;
+import java.util.List;
 
 public class Post {
 
@@ -14,6 +15,7 @@ public class Post {
 	private String status;
 	private int price;
 	private String authorId;
+	private List<String> imageUrl;
 
 	public Post(int id, String title, String body, Date createdAt, int categoryId, int viewCount, String status,
 			int price, String authorId) {
@@ -107,6 +109,14 @@ public class Post {
 
 	public void setAuthorId(String authorId) {
 		this.authorId = authorId;
+	}
+	
+	public List<String> getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(List<String> imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 
 }

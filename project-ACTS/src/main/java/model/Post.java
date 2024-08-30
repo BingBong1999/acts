@@ -110,13 +110,20 @@ public class Post {
 	public void setAuthorId(String authorId) {
 		this.authorId = authorId;
 	}
-	
+
 	public List<String> getImageUrl() {
 		return imageUrl;
 	}
 
 	public void setImageUrl(List<String> imageUrl) {
 		this.imageUrl = imageUrl;
+	}
+
+	@Override
+	public String toString() {
+		return "Post [id=" + id + ", title=" + title + ", body=" + body + ", createdAt=" + createdAt + ", categoryId="
+				+ categoryId + ", categoryName=" + categoryName + ", viewCount=" + viewCount + ", status=" + status
+				+ ", price=" + price + ", authorId=" + authorId + ", imageUrl=" + imageUrl + "]";
 	}
 
 }

@@ -51,6 +51,7 @@ public class UploadPostController implements Controller {
 							break;
 						case "body":
 							body = item.getString("UTF-8");
+							body = body.replace("\n", "<br>");
 							break;
 						case "categoryId":
 							categoryId = Integer.parseInt(item.getString("UTF-8"));
@@ -59,11 +60,9 @@ public class UploadPostController implements Controller {
 							price = Integer.parseInt(item.getString("UTF-8"));
 							break;
 						}
-					} else if (item.getFieldName().equals("image")) {
+					} else if (item.getSize() > 0 && item.getFieldName().equals("image")) {
 						ServletContext context = request.getServletContext();
 						String filePath = context.getRealPath("/") + "imageResource/" + item.getName();
-						
-						System.out.println(filePath);
 						File storeFile = new File(filePath);
 						item.write(storeFile);
 						imageUrls.add(item.getName()); // 저장된 이미지의 경로를 리스트에 추가

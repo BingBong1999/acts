@@ -21,13 +21,11 @@ List<Post> postList = (List<Post>)request.getAttribute("postList");
 		    padding: 15px;
 		}
         .card-img-top {
-		    width: 100%;
-		    height: auto;
-		    object-fit: cover;
-		    display: block;
-		    margin: 0 auto;
+        	height: 220px;
+        	width: auto;
         }
         .card {
+        	height: 450px;
             margin-bottom: 30px;
         }
         .card-body {
@@ -36,7 +34,7 @@ List<Post> postList = (List<Post>)request.getAttribute("postList");
             justify-content: space-between;
         }
         .card-title {
-            font-size: 1.25rem;
+            font-size: 1.0rem;
             display: flex;
             align-items: center;
             margin-bottom: 10px;
@@ -44,11 +42,11 @@ List<Post> postList = (List<Post>)request.getAttribute("postList");
         .category-badge {
             font-size: 0.9rem;
             font-weight: 700;
-            margin-left: 10px;
             color: #007bff;
+            margin-right: 5px;
         }
         .price {
-            font-size: 1.25rem;
+            font-size: 0.9rem;
             font-weight: 700;
             margin-bottom: 10px;
         }
@@ -82,7 +80,7 @@ List<Post> postList = (List<Post>)request.getAttribute("postList");
     <%@include file="/WEB-INF/navbar.jsp"%>
 
     <div class="container-relative">
-        <a href="<c:url value='/post/upload/form' />" class="add-post-btn">+</a>
+        <a href="<c:url value='/post/form' />" class="add-post-btn">+</a>
     </div>
 
     <div class="container mt-4">
@@ -91,7 +89,9 @@ List<Post> postList = (List<Post>)request.getAttribute("postList");
                 <div class="col-md-3">
                     <div class="card">
                     	<c:if test="${empty post.getImageUrl()}">
-							<img src="<c:url value='/images/noImage.png' />" class="img">
+                    		<div class="card-img-container">
+								<img src="<c:url value='/images/noImage.png' />" class="card-img-top">
+							</div>
 						</c:if>
 						<c:if test="${not empty post.getImageUrl()}">
  							<div class="card-img-container">
@@ -101,8 +101,8 @@ List<Post> postList = (List<Post>)request.getAttribute("postList");
                        
                         <div class="card-body">
                             <h5 class="card-title">
-                                ${post.title}
                                 <span class="category-badge badge badge-info">${post.categoryName}</span>
+                                ${post.title}
                             </h5>
                             <p class="price">${post.price}원</p>
                             <p class="author">작성자: ${post.authorId}</p>

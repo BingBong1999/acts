@@ -71,7 +71,8 @@ public class PostDAO {
 	public int update(Post post) throws SQLException {
 
 		String sql = "UPDATE POST " + "SET TITLE=?, BODY=?, CATEGORY_ID=?, PRICE=? " + "WHERE ID=?";
-		Object[] param = new Object[] { post.getTitle(), post.getBody(), post.getCategoryId(), post.getPrice() };
+		Object[] param = new Object[] { post.getTitle(), post.getBody(), post.getCategoryId(), post.getPrice(), post.getId() };
+		
 		jdbcUtil.setSqlAndParameters(sql, param);
 
 		try {

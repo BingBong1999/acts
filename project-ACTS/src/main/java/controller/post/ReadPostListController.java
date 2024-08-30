@@ -16,7 +16,6 @@ public class ReadPostListController implements Controller {
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		PostManager manager = PostManager.getInstance();
-		request.setAttribute("postList", null);
 		
 		List<Post> postList = manager.findAllPosts();
 		request.setAttribute("postList", postList);

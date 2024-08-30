@@ -1,8 +1,17 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*, model.*"%>
 <%
-	String userId = (String) request.getAttribute("userId");
+	String loginId = (String) request.getAttribute("loginId");
+	Post post = (Post) request.getAttribute("post");
+	
+	String bodyText = "";
+	
+	if (post != null && post.getBody() != null) {
+		bodyText = post.getBody().replace("<br>", "\n");
+	}
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -77,37 +86,50 @@
 <%@include file="/WEB-INF/navbar.jsp"%>
 
 <div class="post-form-container">
-    <h3><%= userId %>님만의 특별한 재능</h3>
+    <h3><%= loginId %>님만의 특별한 재능</h3>
     <p style="color: gray;">함께함으로써 세상에 가치를 더하는 첫 발자국, 지금부터 소개해주세요.</p>
-    <form name="form" method="POST" action="<c:url value='/post/upload' />" enctype="multipart/form-data">
+    
+    <c:if test="${empty post}">
+    	 <form name="form" method="POST" action="<c:url value='/post/upload' />" enctype="multipart/form-data">
+	</c:if>
+	<c:if test="${not empty post}">
+		 <form name="form" method="POST" action="<c:url value='/post/update'><c:param name='postId' value='${post.id}'/></c:url>" enctype="multipart/form-data">
+	</c:if>
+    
         <div class="form-group">
             <label for="categoryId">카테고리</label>
             <select class="form-control" name="categoryId">
-                <option value="1">예술</option>
-                <option value="2">음악</option>
-                <option value="3">글쓰기</option>
-                <option value="4">디자인</option>
-                <option value="5">기술</option>
-                <option value="6">기타</option>
+                <option value="1" <c:if test="${post.categoryId == 1}">selected</c:if>>예술</option>
+                <option value="2" <c:if test="${post.categoryId == 2}">selected</c:if>>음악</option>
+                <option value="3" <c:if test="${post.categoryId == 3}">selected</c:if>>글쓰기</option>
+                <option value="4" <c:if test="${post.categoryId == 4}">selected</c:if>>디자인</option>
+                <option value="5" <c:if test="${post.categoryId == 5}">selected</c:if>>기술</option>
+                <option value="6" <c:if test="${post.categoryId == 6}">selected</c:if>>기타</option>
             </select>
         </div>
         
         <div class="form-group">
             <label for="title">제목</label>
-            <input type="text" class="form-control" name="title" placeholder="제목을 입력하세요">
+            <input type="text" class="form-control" name="title" placeholder="제목을 입력하세요" value ="<c:out value='${post.title}' />">
         </div>
         <div class="form-group">
             <label for="body">내용</label>
-            <textarea class="form-control" name="body" rows="10" placeholder="내용을 입력하세요"></textarea>
+            <textarea class="form-control" name="body" rows="10" placeholder="내용을 입력하세요"><%=bodyText%></textarea>
 		    <input type="file" name="image" accept="image/*"><br><br>
         </div>
        
         <div class="form-group">
             <label for="price">가격(원)</label>
-            <input type="number" class="form-control" name="price" placeholder="가격을 입력하세요">
+            <input type="number" class="form-control" name="price" placeholder="가격을 입력하세요" value ="<c:out value='${post.price}' />">
         </div>
         
-        <button type="submit" onClick="postCreate()" class="btn btn-primary btn-block">등록</button>
+        <c:if test="${empty post}">
+        	 <button type="submit" onClick="postCreate()" class="btn btn-primary btn-block">등록</button>
+		</c:if>
+		<c:if test="${not empty post}">
+			 <button type="submit" onClick="postCreate()" class="btn btn-primary btn-block">수정</button>
+		</c:if>
+       
     </form>
 </div>
 

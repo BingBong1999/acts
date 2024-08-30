@@ -90,9 +90,15 @@ List<Post> postList = (List<Post>)request.getAttribute("postList");
             <c:forEach var="post" items="${postList}">
                 <div class="col-md-3">
                     <div class="card">
-                        <div class="card-img-container">
-                            <img src="${pageContext.request.contextPath}/imageResource/${post.imageUrl.get(0)}" class="card-img-top">
-                        </div>
+                    	<c:if test="${empty post.getImageUrl()}">
+							<img src="<c:url value='/images/noImage.png' />" class="img">
+						</c:if>
+						<c:if test="${not empty post.getImageUrl()}">
+ 							<div class="card-img-container">
+                            	<img src="${pageContext.request.contextPath}/imageResource/${post.imageUrl.get(0)}" class="card-img-top">
+                        	</div>
+						</c:if>
+                       
                         <div class="card-body">
                             <h5 class="card-title">
                                 ${post.title}

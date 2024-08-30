@@ -58,7 +58,7 @@ List<Post> postList = (List<Post>)request.getAttribute("postList");
         	
             position: absolute;
             top: 20px;
-            right: 400px;
+            right: 300px;
             width: 50px;
             height: 50px;
             background-color: #007bff;

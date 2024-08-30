@@ -239,19 +239,11 @@ h4, h5 {
 				<hr>
 				<c:if test="${empty post.getImageUrl()}">
 					<img src="<c:url value='/images/noImage.png' />" class="img">
-					<script>
-					        console.log(post.getImageUrl());
-					    </script>
 				</c:if>
 				<c:if test="${not empty post.getImageUrl()}">
 					<c:forEach var="url" items="${post.getImageUrl()}">
-						<script>
-					        console.log(post.getImageUrl());
-					        console.log(url);
-					    </script>
 					    <img src="${pageContext.request.contextPath}/imageResource/${url}" class="img">
 					</c:forEach>
-					
 				</c:if>
 				<br> <br>
 				<p class="card-text">

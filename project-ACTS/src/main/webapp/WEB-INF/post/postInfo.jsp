@@ -219,7 +219,7 @@ h4, h5 {
 					<div class="d-inline float-right">
 						<c:if test="${loginId != null && loginId == post.authorId}">
 							<button class="edit-btn"
-								onclick="window.location.href='<c:url value='/post/sellerPostUpdate'><c:param name='postId' value='${post.id}'/></c:url>'">
+								onclick="window.location.href='<c:url value='/post/form'><c:param name='postId' value='${post.id}'/></c:url>'">
 								<i class="bi bi-pencil"></i> 수정
 							</button>
 							<button class="delete-btn"

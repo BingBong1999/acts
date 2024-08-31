@@ -59,7 +59,7 @@ public class RequestMapping {
 		mappings.put("/review/upload", new UploadReviewController());
 		
 		// 채팅
-		mappings.put("/chatting/chatting", new ForwardController("/chatting/chatting.jsp")); 
+		mappings.put("/chat/list", new ForwardController("/chat/list.jsp")); 
 		
 		logger.info("Initialized Request Mapping!");
 	}

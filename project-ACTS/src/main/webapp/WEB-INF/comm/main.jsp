@@ -74,6 +74,11 @@ List<Post> postList = (List<Post>)request.getAttribute("postList");
         .container-relative {
             position: relative;
         }
+        .add-post-btn.chat-btn {
+		    top: 80px; /* Adjust this value as needed */
+		    right: 300px; /* Same as the '+' button to align properly */
+		    background-color: #28a745; /* Green theme similar to Bootstrap success button */
+		}
     </style>
 </head>
 <body>
@@ -81,6 +86,7 @@ List<Post> postList = (List<Post>)request.getAttribute("postList");
 
     <div class="container-relative">
         <a href="<c:url value='/post/form' />" class="add-post-btn">+</a>
+        <a href="<c:url value='/chat/list' />" class="add-post-btn chat-btn"><i class="bi bi-chat-dots"></i></a>
     </div>
 
     <div class="container mt-4">

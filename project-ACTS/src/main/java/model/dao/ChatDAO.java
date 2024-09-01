@@ -52,7 +52,7 @@ public class ChatDAO {
 
 			while (rs.next()) {
 				Message message = new Message(rs.getInt("ID"), rs.getString("SENDER_ID"),
-						rs.getString("RECEIVER_ID"), rs.getString("CONTENT"), rs.getDate("CREATED_AT"));
+						rs.getString("RECEIVER_ID"), rs.getString("CONTENT"), rs.getDate("CREATED_AT").toString());
 
 				messages.add(message);
 			}

@@ -11,7 +11,7 @@
     <style>
         body {
             background-color: #f8f9fa;
-            font-family: 'Noto Sans KR', sans-serif;
+            font-family: 'Noto Sans KR';
         }
 
         .chat-container {
@@ -37,6 +37,7 @@
             border-bottom: 1px solid #dee2e6;
             cursor: pointer;
             min-height: 70px; 
+            position: relative;
         }
 
         .user-item:hover {
@@ -111,6 +112,16 @@
 		    margin-top: 20px;
 		    font-size: 1rem;
 		}
+		.timestamp {
+		    font-family: 'Noto Sans KR';
+		    font-size: 0.8rem;
+		    color: #6c757d; /* 회색 글씨색 */
+		    top: 0; /* 상단에 배치 */
+		    right: 0; /* 오른쪽에 배치 */
+		    margin-right: 3px;
+		    margin-top: 23px;
+		    position: absolute;
+		}
     </style>
 </head>
 <body>
@@ -148,8 +159,6 @@ function updateChatList() {
         dataType: 'json',
         success: function(messageList) {
         	
-            $('#userList').empty();
-        	
             if (messageList.length === 0) {
             	$('#userList').innerHTML = "<p class='text-muted'>현재 대화하는 사용자가 없습니다.</p>";
                 return;
@@ -162,18 +171,24 @@ function updateChatList() {
                 user_item.onclick = function() {
                     showChatHistory();
                 };
-
+                
                 const user_id = document.createElement("div");
                 user_id.classList.add("user-id");
                 user_id.textContent = Message.receiverId;
                 
+                const timestamp = document.createElement("div");
+                timestamp.classList.add("timestamp");
+                timestamp.textContent = Message.createdAt; // 메시지 시간 표시
+
                 const recent_message = document.createElement("div");
                 recent_message.classList.add("recent-message");
                 recent_message.textContent = Message.content;
-
-
+                
+                
                 user_item.appendChild(user_id);
+                user_item.appendChild(timestamp);
                 user_item.appendChild(recent_message);
+                
                 $('#userList').append(user_item);
             });
         },
@@ -182,6 +197,7 @@ function updateChatList() {
         }
     });
 }
+
 
 </script>
 </body>

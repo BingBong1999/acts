@@ -86,7 +86,7 @@ List<Post> postList = (List<Post>)request.getAttribute("postList");
 
     <div class="container-relative">
         <a href="<c:url value='/post/form' />" class="add-post-btn">+</a>
-        <a href="<c:url value='/chat/list' />" class="add-post-btn chat-btn"><i class="bi bi-chat-dots"></i></a>
+        <a href="<c:url value='/chat/view'></c:url>" class="add-post-btn chat-btn"><i class="bi bi-chat-dots"></i></a>
     </div>
 
     <div class="container mt-4">

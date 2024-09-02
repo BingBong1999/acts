@@ -1,14 +1,16 @@
 package model;
 
+import java.util.Date;
+
 public class Message {
 
 	private int id;
 	private String senderId;
 	private String receiverId;
 	private String content;
-	private String createdAt;
+	private Date createdAt;
 
-	public Message(int id, String senderId, String receiverId, String content, String createdAt) {
+	public Message(int id, String senderId, String receiverId, String content, Date createdAt) {
 		super();
 		this.id = id;
 		this.senderId = senderId;
@@ -49,11 +51,11 @@ public class Message {
 		this.content = content;
 	}
 
-	public String getCreatedAt() {
+	public Date getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(String createdAt) {
+	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
 

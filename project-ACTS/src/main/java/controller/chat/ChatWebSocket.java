@@ -3,8 +3,8 @@ package controller.chat;
 import java.io.IOException;
 
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
@@ -20,19 +20,43 @@ import model.service.ChatManager;
 @ServerEndpoint("/chatSocket")
 public class ChatWebSocket {
 
-	private static Set<Session> clients = Collections.synchronizedSet(new HashSet<>());
+	private static Map<String, Session> userSessions = Collections.synchronizedMap(new HashMap<>());
 	private ChatManager chatManager = ChatManager.getInstance();
 
 	@OnOpen
 	public void onOpen(Session session) {
-		clients.add(session);
-		System.out.println("새로운 클라이언트 연결: " + session.getId());
+
+		String query = session.getQueryString();
+		String userId = null;
+
+		if (query != null) {
+			for (String param : query.split("&")) {
+				String[] keyValue = param.split("=");
+				if ("userId".equals(keyValue[0]) && keyValue.length > 1) {
+					userId = keyValue[1];
+				}
+			}
+		}
+
+		if (userId != null) {
+			if (userSessions.containsKey(userId)) {
+				onClose(userSessions.get(userId));
+			}
+
+			userSessions.put(userId, session);
+			session.getUserProperties().put("userId", userId);
+			System.out.println("새로운 클라이언트 연결: " + session.getId() + ", 사용자 ID: " + userId);
+		}
 	}
 
 	@OnClose
 	public void onClose(Session session) {
-		clients.remove(session);
-		System.out.println("클라이언트 연결 종료: " + session.getId());
+		String userId = (String) session.getUserProperties().get("userId");
+
+		if (userId != null) {
+			userSessions.remove(userId);
+			System.out.println("클라이언트 연결 종료: " + session.getId() + ", 사용자 ID: " + userId);
+		}
 	}
 
 	@OnMessage
@@ -50,17 +74,16 @@ public class ChatWebSocket {
 	}
 
 	private void sendToSpecificUsers(String message, String receiverId, String senderId) {
-		synchronized (clients) {
-			for (Session client : clients) {
-				if (client.getUserProperties().get("userId").equals(receiverId) ||
-		                client.getUserProperties().get("userId").equals(senderId)) {
+		synchronized (userSessions) {
+			userSessions.forEach((userId, session) -> {
+				if (userId.equals(receiverId) || userId.equals(senderId)) {
 					try {
-						client.getBasicRemote().sendText(message);
+						session.getBasicRemote().sendText(message);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
 				}
-			}
+			});
 		}
 	}
 }

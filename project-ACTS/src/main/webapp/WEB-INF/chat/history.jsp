@@ -16,47 +16,6 @@
 	let socket;
 	let loginId;
 	
-    function sendMessage(receiverId) {
-    	
-        const inputField = document.getElementById("chatInput");
-        const messageContent = inputField.value.trim();
-
-        if (messageContent === "") 
-        	return;
-
-        const message = {
-            senderId: loginId,
-            receiverId: receiverId,
-            content: messageContent,
-            createdAt: new Date().toLocaleTimeString()
-        };
-
-        socket.send(JSON.stringify(message));
-        displayMessage(message);
-        inputField.value = ""; 
-    }
-    
-    function connectWebSocket() {
-        socket = new WebSocket("ws://localhost:8080/project-ACTS/chatSocket");
-
-        socket.onopen = function() {
-            console.log("웹소켓 연결이 열렸습니다.");
-        };
-
-        /*socket.onmessage = function(event) {
-            const message = JSON.parse(event.data);
-            displayMessage(message);
-        };*/
-
-        socket.onclose = function() {
-            console.log("웹소켓 연결이 닫혔습니다.");
-        };
-
-        socket.onerror = function(error) {
-            console.error("웹소켓 오류:", error);
-        };
-    }
-
     function updateChatHistory(paramReceiverId) {
     	
     	$.ajax({
@@ -98,12 +57,35 @@
                     sendMessage(paramReceiverId);
                 });
             	
+            	connectWebSocket();
+            	
             },
             error: function(error) {
             	 console.error('서버 응답 오류:', error);
             }
         });
     	
+    }
+    
+    function connectWebSocket() {
+        socket = new WebSocket("ws://localhost:8080/project-ACTS/chatSocket?userId=" + loginId);
+
+        socket.onopen = function() {
+            console.log("웹소켓 연결이 열렸습니다.");
+        };
+
+        socket.onmessage = function(event) {
+            const message = JSON.parse(event.data);
+            displayMessage(message);
+        };
+
+        socket.onclose = function() {
+            console.log("웹소켓 연결이 닫혔습니다.");
+        };
+
+        socket.onerror = function(error) {
+            console.error("웹소켓 오류:", error);
+        };
     }
     
     function displayMessage(message, lastDate) {
@@ -132,7 +114,6 @@
         messageContent.classList.add("message-content");
         messageContent.textContent = message.content;
 
-        console.log(message.createdAt);
         const messageTimeValue = new Date(message.createdAt).toLocaleTimeString('ko-KR', {
 	        hour: '2-digit',
 	        minute: '2-digit'
@@ -149,10 +130,25 @@
         chatBox.scrollTop = chatBox.scrollHeight;
         
     }
+    
+    function sendMessage(receiverId) {
+    	
+        const inputField = document.getElementById("chatInput");
+        const messageContent = inputField.value.trim();
 
-    $(document).ready(function () {
-	    connectWebSocket();
-	});
+        if (messageContent === "") 
+        	return;
+
+        const message = {
+            senderId: loginId,
+            receiverId: receiverId,
+            content: messageContent,
+            createdAt: new Date().toISOString()
+        };
+
+        socket.send(JSON.stringify(message));
+        inputField.value = ""; 
+    }
 </script>
 
 </body>

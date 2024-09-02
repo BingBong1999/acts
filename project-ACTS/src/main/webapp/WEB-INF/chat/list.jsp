@@ -72,12 +72,18 @@
 		    height: 100%; 
 		    text-align: center;
         }
+        .user-item.selected {
+		    background-color: #e2e6ea;
+		    border-left: 4px solid #007bff;
+		    transition: background-color 0.3s;
+		}
+		        
 		
 		
 		
 		.chat-box {
-		    height: 530px; /* 높이를 고정 */
-		    overflow-y: auto; /* 내용이 넘칠 경우 스크롤 가능 */
+		    height: 530px;
+		    overflow-y: auto;
 		    padding: 10px;
 		    background-color: #fff;
 		    border: 1px solid #dee2e6;
@@ -210,7 +216,9 @@ function updateChatList() {
                 const user_item = document.createElement("div");
                 user_item.classList.add("user-item");
                 user_item.onclick = function() {
+                	document.querySelectorAll('.user-item').forEach(item => item.classList.remove('selected'));
                 	updateChatHistory(Message.receiverId);
+                	user_item.classList.add('selected');
                 };
                 
                 const user_id = document.createElement("div");

@@ -337,60 +337,60 @@ INSERT INTO IMAGE (POST_ID, IMAGE_URL) VALUES (24, '소셜 미디어 콘텐츠 �
 
 
 INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
-VALUES (1, 'kyungwon', 'johnDoe', '안녕하세요, 맞춤형 수채화 작품에 관심 있으신가요?', to_timestamp('24/08/30 09:00:00', 'RR/MM/DD HH24:MI:SS'));
+VALUES (1, 'johnDoe', 'kyungwon', '안녕하세요, 맞춤형 수채화 작품에 관심 있으신가요?', to_timestamp('24/08/30 09:00:00', 'RR/MM/DD HH24:MI:SS'));
 INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
-VALUES (2, 'johnDoe', 'kyungwon', '네, 맞춤형 수채화 작품에 대해 알고 싶어요. 가격이 어떻게 되나요?', to_timestamp('24/08/30 09:05:00', 'RR/MM/DD HH24:MI:SS'));
+VALUES (2, 'kyungwon', 'johnDoe', '네, 맞춤형 수채화 작품에 대해 알고 싶어요. 가격이 어떻게 되나요?', to_timestamp('24/08/30 09:05:00', 'RR/MM/DD HH24:MI:SS'));
 INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
-VALUES (3, 'kyungwon', 'johnDoe', '맞춤형 수채화 작품은 50,000원입니다.', to_timestamp('24/08/30 09:10:00', 'RR/MM/DD HH24:MI:SS'));
+VALUES (3, 'johnDoe', 'kyungwon', '맞춤형 수채화 작품은 50,000원입니다.', to_timestamp('24/08/30 09:10:00', 'RR/MM/DD HH24:MI:SS'));
 INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
-VALUES (4, 'johnDoe', 'kyungwon', '제작 기간은 얼마나 걸리나요?', to_timestamp('24/08/30 09:15:00', 'RR/MM/DD HH24:MI:SS'));
+VALUES (4, 'kyungwon', 'johnDoe', '제작 기간은 얼마나 걸리나요?', to_timestamp('24/08/30 09:15:00', 'RR/MM/DD HH24:MI:SS'));
 INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
-VALUES (5, 'kyungwon', 'johnDoe', '제작 기간은 약 7일 정도 소요됩니다.', to_timestamp('24/08/30 09:20:00', 'RR/MM/DD HH24:MI:SS'));
+VALUES (5, 'johnDoe', 'kyungwon', '제작 기간은 약 7일 정도 소요됩니다.', to_timestamp('24/08/30 09:20:00', 'RR/MM/DD HH24:MI:SS'));
 
 
 INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
-VALUES (6, 'kyungwon', 'janeSmith', '벽화 디자인에 대해 궁금한 점이 있으신가요?', to_timestamp('24/08/30 10:00:00', 'RR/MM/DD HH24:MI:SS'));
+VALUES (6, 'janeSmith', 'kyungwon', '벽화 디자인에 대해 궁금한 점이 있으신가요?', to_timestamp('24/08/30 10:00:00', 'RR/MM/DD HH24:MI:SS'));
 INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
-VALUES (7, 'janeSmith', 'kyungwon', '네, 벽화 디자인은 어떤 스타일이 가능한가요?', to_timestamp('24/08/30 10:05:00', 'RR/MM/DD HH24:MI:SS'));
+VALUES (7, 'kyungwon', 'janeSmith', '네, 벽화 디자인은 어떤 스타일이 가능한가요?', to_timestamp('24/08/30 10:05:00', 'RR/MM/DD HH24:MI:SS'));
 INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
-VALUES (8, 'kyungwon', 'janeSmith', '현대적, 고전적, 자연풍경 등 다양한 스타일이 가능합니다.', to_timestamp('24/08/30 10:10:00', 'RR/MM/DD HH24:MI:SS'));
+VALUES (8, 'janeSmith', 'kyungwon', '현대적, 고전적, 자연풍경 등 다양한 스타일이 가능합니다.', to_timestamp('24/08/30 10:10:00', 'RR/MM/DD HH24:MI:SS'));
 INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
-VALUES (9, 'janeSmith', 'kyungwon', '가격은 어떻게 되나요?', to_timestamp('24/08/30 10:15:00', 'RR/MM/DD HH24:MI:SS'));
+VALUES (9, 'kyungwon', 'janeSmith', '가격은 어떻게 되나요?', to_timestamp('24/08/30 10:15:00', 'RR/MM/DD HH24:MI:SS'));
 INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
-VALUES (10, 'kyungwon', 'janeSmith', '벽화 디자인의 가격은 150,000원부터 시작합니다.', to_timestamp('24/08/30 10:20:00', 'RR/MM/DD HH24:MI:SS'));
+VALUES (10, 'janeSmith', 'kyungwon', '벽화 디자인의 가격은 150,000원부터 시작합니다.', to_timestamp('24/08/30 10:20:00', 'RR/MM/DD HH24:MI:SS'));
 
 
 INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
-VALUES (11, 'kyungwon', 'mikeJones', '테마 음악 작곡 서비스에 관심 있으신가요?', to_timestamp('24/08/30 11:00:00', 'RR/MM/DD HH24:MI:SS'));
+VALUES (11, 'mikeJones', 'kyungwon', '테마 음악 작곡 서비스에 관심 있으신가요?', to_timestamp('24/08/30 11:00:00', 'RR/MM/DD HH24:MI:SS'));
 INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
-VALUES (12, 'mikeJones', 'kyungwon', '네, 맞춤형 음악 작곡에 대해 알고 싶어요.', to_timestamp('24/08/30 11:05:00', 'RR/MM/DD HH24:MI:SS'));
+VALUES (12, 'kyungwon', 'mikeJones', '네, 맞춤형 음악 작곡에 대해 알고 싶어요.', to_timestamp('24/08/30 11:05:00', 'RR/MM/DD HH24:MI:SS'));
 INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
-VALUES (13, 'kyungwon', 'mikeJones', '원하시는 스타일과 테마에 맞춰 작곡이 가능합니다.', to_timestamp('24/08/30 11:10:00', 'RR/MM/DD HH24:MI:SS'));
+VALUES (13, 'mikeJones', 'kyungwon', '원하시는 스타일과 테마에 맞춰 작곡이 가능합니다.', to_timestamp('24/08/30 11:10:00', 'RR/MM/DD HH24:MI:SS'));
 INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
-VALUES (14, 'mikeJones', 'kyungwon', '가격은 얼마인가요?', to_timestamp('24/08/30 11:15:00', 'RR/MM/DD HH24:MI:SS'));
+VALUES (14, 'kyungwon', 'mikeJones', '가격은 얼마인가요?', to_timestamp('24/08/30 11:15:00', 'RR/MM/DD HH24:MI:SS'));
 INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
-VALUES (15, 'kyungwon', 'mikeJones', '테마 음악 작곡의 가격은 120,000원입니다.', to_timestamp('24/08/30 11:20:00', 'RR/MM/DD HH24:MI:SS'));
+VALUES (15, 'mikeJones', 'kyungwon', '테마 음악 작곡의 가격은 120,000원입니다.', to_timestamp('24/08/30 11:20:00', 'RR/MM/DD HH24:MI:SS'));
 
 
 INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
-VALUES (16, 'kyungwon', 'emilyClark', '편지 대필 서비스에 관심 있으신가요?', to_timestamp('24/08/30 12:00:00', 'RR/MM/DD HH24:MI:SS'));
+VALUES (16, 'emilyClark', 'kyungwon', '편지 대필 서비스에 관심 있으신가요?', to_timestamp('24/08/30 12:00:00', 'RR/MM/DD HH24:MI:SS'));
 INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
-VALUES (17, 'emilyClark', 'kyungwon', '네, 대필 서비스에 대해 알고 싶어요.', to_timestamp('24/08/30 12:05:00', 'RR/MM/DD HH24:MI:SS'));
+VALUES (17, 'kyungwon', 'emilyClark', '네, 대필 서비스에 대해 알고 싶어요.', to_timestamp('24/08/30 12:05:00', 'RR/MM/DD HH24:MI:SS'));
 INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
-VALUES (18, 'kyungwon', 'emilyClark', '받는 분의 마음을 감동시킬 수 있도록 편지를 작성해 드립니다.', to_timestamp('24/08/30 12:10:00', 'RR/MM/DD HH24:MI:SS'));
+VALUES (18, 'emilyClark', 'kyungwon', '받는 분의 마음을 감동시킬 수 있도록 편지를 작성해 드립니다.', to_timestamp('24/08/30 12:10:00', 'RR/MM/DD HH24:MI:SS'));
 INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
-VALUES (19, 'emilyClark', 'kyungwon', '서비스 가격은 어떻게 되나요?', to_timestamp('24/08/30 12:15:00', 'RR/MM/DD HH24:MI:SS'));
+VALUES (19, 'kyungwon', 'emilyClark', '서비스 가격은 어떻게 되나요?', to_timestamp('24/08/30 12:15:00', 'RR/MM/DD HH24:MI:SS'));
 INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
-VALUES (20, 'kyungwon', 'emilyClark', '편지 대필 서비스의 가격은 30,000원입니다.', to_timestamp('24/08/30 12:20:00', 'RR/MM/DD HH24:MI:SS'));
+VALUES (20, 'emilyClark', 'kyungwon', '편지 대필 서비스의 가격은 30,000원입니다.', to_timestamp('24/08/30 12:20:00', 'RR/MM/DD HH24:MI:SS'));
 
 
 INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
-VALUES (21, 'kyungwon', 'davidBrown', '개인 브랜딩을 위한 로고 디자인에 관심 있으신가요?', to_timestamp('24/08/30 13:00:00', 'RR/MM/DD HH24:MI:SS'));
+VALUES (21, 'davidBrown', 'kyungwon', '개인 브랜딩을 위한 로고 디자인에 관심 있으신가요?', to_timestamp('24/08/30 13:00:00', 'RR/MM/DD HH24:MI:SS'));
 INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
-VALUES (22, 'davidBrown', 'kyungwon', '네, 로고 디자인에 대해 알고 싶어요.', to_timestamp('24/08/30 13:05:00', 'RR/MM/DD HH24:MI:SS'));
+VALUES (22, 'kyungwon', 'davidBrown', '네, 로고 디자인에 대해 알고 싶어요.', to_timestamp('24/08/30 13:05:00', 'RR/MM/DD HH24:MI:SS'));
 INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
-VALUES (23, 'kyungwon', 'davidBrown', '당신의 브랜드에 맞는 독창적인 로고를 제작해 드립니다.', to_timestamp('24/08/30 13:10:00', 'RR/MM/DD HH24:MI:SS'));
+VALUES (23, 'davidBrown', 'kyungwon', '당신의 브랜드에 맞는 독창적인 로고를 제작해 드립니다.', to_timestamp('24/08/30 13:10:00', 'RR/MM/DD HH24:MI:SS'));
 INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
-VALUES (24, 'davidBrown', 'kyungwon', '가격은 얼마인가요?', to_timestamp('24/08/30 13:15:00', 'RR/MM/DD HH24:MI:SS'));
+VALUES (24, 'kyungwon', 'davidBrown', '가격은 얼마인가요?', to_timestamp('24/08/30 13:15:00', 'RR/MM/DD HH24:MI:SS'));
 INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
-VALUES (25, 'kyungwon', 'davidBrown', '로고 디자인의 가격은 80,000원입니다.', to_timestamp('24/08/30 13:20:00', 'RR/MM/DD HH24:MI:SS'));
+VALUES (25, 'davidBrown', 'kyungwon', '로고 디자인의 가격은 80,000원입니다.', to_timestamp('24/08/30 13:20:00', 'RR/MM/DD HH24:MI:SS'));

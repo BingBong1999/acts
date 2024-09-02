@@ -1,7 +1,5 @@
 package model;
 
-import java.sql.Date;
-
 public class Message {
 
 	private int id;

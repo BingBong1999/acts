@@ -137,6 +137,10 @@
 		.received-message .message-time {
 		   	margin-left: 8px;
 		}
+		.sent-message .message-content {
+		    background-color: #007bff;
+    		color: white;
+		}
         
     </style>
 </head>

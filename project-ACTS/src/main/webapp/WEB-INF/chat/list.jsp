@@ -13,7 +13,6 @@
             background-color: #f8f9fa;
             font-family: 'Noto Sans KR';
         }
-
         .chat-container {
             max-width: 900px;
             margin: 50px auto;
@@ -23,8 +22,6 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             height: 650px; 
         }
-
-		
         .user-list {
             max-height: 600px; 
             overflow-y: auto;
@@ -91,12 +88,14 @@
             display: flex;
             justify-content: flex-end;
             margin-bottom: 10px;
+            position: relative; 
         }
 
         .received-message {
             display: flex;
             justify-content: flex-start;
             margin-bottom: 10px;
+            position: relative; 
         }
 
         .message-content {
@@ -105,12 +104,14 @@
             background-color: #f1f1f1;
             display: inline-block;
             max-width: 80%;
+            position: relative;
         }
 
         .message-time {
             font-size: 0.8rem;
             color: #6c757d;
-            margin-left: 5px;
+        	margin-top: auto; /* 타임스탬프를 아래쪽에 붙임 */
+    		margin-left: 8px; /* 기본 여백 */
         }
 
         .chat-input-box {
@@ -127,6 +128,15 @@
         .chat-input-box button {
             white-space: nowrap;
         }
+        .sent-message .message-time {
+		    order: -1; /* 타임스탬프를 메시지 왼쪽에 배치 */
+		    margin-right: 8px;
+		    margin-left: 0;
+		}
+		
+		.received-message .message-time {
+		   	margin-left: 8px;
+		}
         
     </style>
 </head>
@@ -161,8 +171,7 @@ function updateChatList() {
         dataType: 'json',
         success: function(response) {
         	
-        	const loginId = response.loginId;
-        	const messageList = response.messageList;
+        	const messageList = response;
         	
             if (messageList.length === 0) {
             	$('#userList').innerHTML = "<p class='text-muted'>현재 대화하는 사용자가 없습니다.</p>";
@@ -174,7 +183,7 @@ function updateChatList() {
                 const user_item = document.createElement("div");
                 user_item.classList.add("user-item");
                 user_item.onclick = function() {
-                	displayMessage(Message, loginId);
+                	updateChatHistory(Message.receiverId);
                 };
                 
                 const user_id = document.createElement("div");

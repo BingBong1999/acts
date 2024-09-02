@@ -217,9 +217,14 @@ function updateChatList() {
                 user_id.classList.add("user-id");
                 user_id.textContent = Message.receiverId;
                 
+                const messageDate = new Date(Message.createdAt).toLocaleDateString('ko-KR', {
+        	        month: 'long',
+        	        day: 'numeric'
+        		});
+                
                 const timestamp = document.createElement("div");
                 timestamp.classList.add("timestamp");
-                timestamp.textContent = Message.createdAt; // 메시지 시간 표시
+                timestamp.textContent = messageDate;
 
                 const recent_message = document.createElement("div");
                 recent_message.classList.add("recent-message");

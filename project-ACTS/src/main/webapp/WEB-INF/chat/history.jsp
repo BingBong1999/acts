@@ -132,9 +132,15 @@
         messageContent.classList.add("message-content");
         messageContent.textContent = message.content;
 
+        console.log(message.createdAt);
+        const messageTimeValue = new Date(message.createdAt).toLocaleTimeString('ko-KR', {
+	        hour: '2-digit',
+	        minute: '2-digit'
+		});
+        
         const messageTime = document.createElement("span");
         messageTime.classList.add("message-time");
-        messageTime.textContent = message.createdAt;
+        messageTime.textContent = messageTimeValue;
 
         messageItem.appendChild(messageContent);
         messageItem.appendChild(messageTime);

@@ -60,6 +60,7 @@ public class RequestMapping {
 		
 		// 채팅
 		mappings.put("/chat/list", new ReadChatListController());
+		mappings.put("/chat/history", new ReadChatHistoryController());
 		mappings.put("/chat/view", new ForwardController("/chat/list.jsp"));
 		
 		logger.info("Initialized Request Mapping!");

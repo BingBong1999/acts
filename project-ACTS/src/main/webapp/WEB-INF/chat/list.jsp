@@ -24,6 +24,7 @@
             height: 650px; 
         }
 
+		
         .user-list {
             max-height: 600px; 
             overflow-y: auto;
@@ -31,7 +32,6 @@
             padding-right: 10px;
             
         }
-
         .user-item {
             padding: 20px; 
             border-bottom: 1px solid #dee2e6;
@@ -39,11 +39,6 @@
             min-height: 70px; 
             position: relative;
         }
-
-        .user-item:hover {
-            background-color: #e9ecef;
-        }
-
         .user-id {
             font-weight: bold;
             margin-bottom: 5px;
@@ -57,21 +52,51 @@
 		    text-overflow: ellipsis;
 		    max-width: 100%; 
         }
-
-        .chat-box {
-            max-height: 600px; /* 높이 조정 */
-            overflow-y: auto;
-            padding: 10px;
-            margin-bottom: 350px;
+		.no-messages {
+		    text-align: center;
+		    color: #6c757d;
+		    margin-top: 20px;
+		    font-size: 1rem;
+		}
+		.timestamp {
+		    font-family: 'Noto Sans KR';
+		    font-size: 0.8rem;
+		    color: #6c757d;
+		    top: 0; 
+		    right: 0;
+		    margin-right: 3px;
+		    margin-top: 23px;
+		    position: absolute;
+		}
+		.text-muted {
+        	margin-top: 200px;
+		    justify-content: center;
+		    align-items: center;
+		    height: 100%; 
+		    text-align: center;
+        }
+		
+		
+		
+		.chat-box {
+		    height: 530px; /* 높이를 고정 */
+		    overflow-y: auto; /* 내용이 넘칠 경우 스크롤 가능 */
+		    padding: 10px;
+		    background-color: #fff;
+		    border: 1px solid #dee2e6;
+		    border-radius: 8px;
+		    margin-bottom: 20px;
+		}
+        .sent-message {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 10px;
         }
 
-		.chat-input-box {
-		    padding: 10px 0;
-		    margin-top: auto;
-		    display: flex; 
-		}
-        .message-item {
-            margin-bottom: 15px;
+        .received-message {
+            display: flex;
+            justify-content: flex-start;
+            margin-bottom: 10px;
         }
 
         .message-content {
@@ -87,41 +112,22 @@
             color: #6c757d;
             margin-left: 5px;
         }
-        .text-muted {
-        	margin-top: 200px;
-		    justify-content: center;
-		    align-items: center;
-		    height: 100%; 
-		    text-align: center;
-        }
+
         .chat-input-box {
-		    padding: 10px 0;
-		}
-		
-		.chat-input-box input {
-		    flex: 1;
-		    border-radius: 4px;
-		}
-		
-		.chat-input-box button {
-		    white-space: nowrap;
-		}
-		.no-messages {
-		    text-align: center;
-		    color: #6c757d;
-		    margin-top: 20px;
-		    font-size: 1rem;
-		}
-		.timestamp {
-		    font-family: 'Noto Sans KR';
-		    font-size: 0.8rem;
-		    color: #6c757d; /* 회색 글씨색 */
-		    top: 0; /* 상단에 배치 */
-		    right: 0; /* 오른쪽에 배치 */
-		    margin-right: 3px;
-		    margin-top: 23px;
-		    position: absolute;
-		}
+            display: flex;
+            margin-top: 10px;
+        }
+
+        .chat-input-box input {
+            flex: 1;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+
+        .chat-input-box button {
+            white-space: nowrap;
+        }
+        
     </style>
 </head>
 <body>
@@ -133,9 +139,7 @@
             <!-- 사용자 목록이 여기에 표시됩니다. -->
         </div>
         <div class="col-md-8">
-            <div class="chat-box" id="chatBox">
-                <p class="text-muted">사용자를 선택하여 채팅 내역을 확인하세요.</p>
-            </div>
+        	<%@include file="/WEB-INF/chat/history.jsp"%>
         </div>
     </div>
 </div>
@@ -147,7 +151,6 @@
 <script>
 
 $(document).ready(function() {
-    // 페이지가 로드되면 서버에 요청을 보냅니다.
     updateChatList();
 });
 
@@ -155,9 +158,11 @@ function updateChatList() {
     $.ajax({
         url: '/project-ACTS/chat/list',
         method: 'GET',
-        data: { action: 'list' },
         dataType: 'json',
-        success: function(messageList) {
+        success: function(response) {
+        	
+        	const loginId = response.loginId;
+        	const messageList = response.messageList;
         	
             if (messageList.length === 0) {
             	$('#userList').innerHTML = "<p class='text-muted'>현재 대화하는 사용자가 없습니다.</p>";
@@ -169,7 +174,7 @@ function updateChatList() {
                 const user_item = document.createElement("div");
                 user_item.classList.add("user-item");
                 user_item.onclick = function() {
-                    showChatHistory();
+                	displayMessage(Message, loginId);
                 };
                 
                 const user_id = document.createElement("div");
@@ -197,7 +202,6 @@ function updateChatList() {
         }
     });
 }
-
 
 </script>
 </body>

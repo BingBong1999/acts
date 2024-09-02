@@ -192,7 +192,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <script>
-
 $(document).ready(function() {
     updateChatList();
 });
@@ -233,10 +232,15 @@ function updateChatList() {
                 const timestamp = document.createElement("div");
                 timestamp.classList.add("timestamp");
                 timestamp.textContent = messageDate;
+                const timestampId = `timestamp`+ Message.receiverId;
+                timestamp.setAttribute('id', timestampId);
+
 
                 const recent_message = document.createElement("div");
                 recent_message.classList.add("recent-message");
                 recent_message.textContent = Message.content;
+                const recent_messageId = `recent_message` + Message.receiverId;
+                recent_message.setAttribute('id', recent_messageId);
                 
                 
                 user_item.appendChild(user_id);
@@ -250,6 +254,29 @@ function updateChatList() {
         	 console.error('서버 응답 오류:', error);
         }
     });
+}
+
+function updateChatListItem(message) {
+    
+	const timestampId = `timestamp`+ message.receiverId;
+    const timestamp = document.getElementById(timestampId);
+    
+    const recent_messageId = `recent_message` + message.receiverId;
+    const recentMessage = document.getElementById(recent_messageId);
+
+    const messageDate = new Date(message.createdAt).toLocaleDateString('ko-KR', {
+        month: 'long',
+        day: 'numeric'
+    });
+
+    if (timestamp) {
+        timestamp.textContent = messageDate;
+    }
+
+    if (recentMessage) {
+        recentMessage.textContent = message.content;
+    }
+    
 }
 
 </script>

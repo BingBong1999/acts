@@ -26,5 +26,9 @@ public class ChatManager {
 	public List<Message> findLatestMessagesPerReceiverBySenderId(String senderId) throws Exception {
 		return chatDAO.findLatestMessagesPerReceiverBySenderId(senderId);
 	}
+	
+	public List<Message> findMessagesBySenderIdAndReceiverId(String senderId, String receiverId) throws Exception {
+		return chatDAO.findMessagesBySenderIdAndReceiverId(senderId, receiverId);
+	}
 
 }

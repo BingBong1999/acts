@@ -68,5 +68,32 @@ public class ChatDAO {
 		return null;
 
 	}
+	
+	public List<Message> findMessagesBySenderIdAndReceiverId(String senderId, String receiverId) throws Exception {
+		String query = "SELECT * FROM MESSAGE WHERE (SENDER_ID=? AND RECEIVER_ID=?) OR (SENDER_ID=? AND RECEIVER_ID=?) ORDER BY CREATED_AT ASC";
+		
+		jdbcUtil.setSqlAndParameters(query, new Object[] { senderId, receiverId, receiverId, senderId });
+
+		try {
+			List<Message> messages = new ArrayList<>();
+			ResultSet rs = jdbcUtil.executeQuery();
+
+			while (rs.next()) {
+				Message message = new Message(rs.getInt("ID"), rs.getString("SENDER_ID"),
+						rs.getString("RECEIVER_ID"), rs.getString("CONTENT"), rs.getDate("CREATED_AT").toString());
+
+				messages.add(message);
+			}
+
+			return messages;
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			jdbcUtil.close();
+		}
+
+		return null;
+	}
 
 }

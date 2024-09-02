@@ -15,6 +15,7 @@
 
 	let socket;
 	let loginId;
+	let lastDate;
 	
     function updateChatHistory(paramReceiverId) {
     	
@@ -38,8 +39,6 @@
                     return;
                 }
 
-            	let lastDate = '';
-            	
             	messageList.forEach(msg => {
             		
             		const messageDate = new Date(msg.createdAt).toLocaleDateString('ko-KR', {
@@ -76,7 +75,16 @@
 
         socket.onmessage = function(event) {
             const message = JSON.parse(event.data);
-            displayMessage(message);
+            displayMessage(message, lastDate);
+            
+            const messageDate = new Date(message.createdAt).toLocaleDateString('ko-KR', {
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            lastDate = messageDate;
+            
+            updateChatListItem(message);
         };
 
         socket.onclose = function() {
@@ -149,6 +157,8 @@
         socket.send(JSON.stringify(message));
         inputField.value = ""; 
     }
+    
+
 </script>
 
 </body>

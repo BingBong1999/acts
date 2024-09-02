@@ -39,32 +39,59 @@
         };
     }
 
-    function displayMessage(msg, loginId) {
+    function updateChatHistory(paramReceiverId) {
     	
-        const chatBox = document.getElementById("chatBox");
-        chatBox.innerHTML = "";
+    	$.ajax({
+            url: '/project-ACTS/chat/history',
+            method: 'GET',
+            data: { 
+                receiverId: paramReceiverId
+            },
+            dataType: 'json',
+            success: function(response) {
+            	
+            	const messageList = response.messageList;
+            	const loginId = response.loginId;
+            	
+            	
+            	const chatBox = document.getElementById("chatBox");
+            	chatBox.innerHTML = "";
 
-        const messageItem = document.createElement("div");
-        
-        if (msg.senderId === loginId) {
-            messageItem.classList.add("sent-message");
-        } else {
-            messageItem.classList.add("received-message");
-        }
+            	if (messageList.length === 0) {
+            		chatBox.innerHTML = "<p class='text-muted'>대화내역이 없습니다.</p>";
+                    return;
+                }
+            	
+            	messageList.forEach(msg => {
+            		
+                    const messageItem = document.createElement("div");
+                    
+                    if (msg.senderId === loginId) {
+                        messageItem.classList.add("sent-message");
+                    } else {
+                        messageItem.classList.add("received-message");
+                    }
 
-        const messageContent = document.createElement("div");
-        messageContent.classList.add("message-content");
-        messageContent.textContent = msg.content;
+                    const messageContent = document.createElement("div");
+                    messageContent.classList.add("message-content");
+                    messageContent.textContent = msg.content;
 
-        const messageTime = document.createElement("span");
-        messageTime.classList.add("message-time");
-        messageTime.textContent = msg.createdAt;
+                    const messageTime = document.createElement("span");
+                    messageTime.classList.add("message-time");
+                    messageTime.textContent = msg.createdAt;
 
-        messageItem.appendChild(messageContent);
-        messageItem.appendChild(messageTime);
+                    messageItem.appendChild(messageContent);
+                    messageItem.appendChild(messageTime);
 
-        chatBox.appendChild(messageItem);
-        chatBox.scrollTop = chatBox.scrollHeight;
+                    chatBox.appendChild(messageItem);
+                    chatBox.scrollTop = chatBox.scrollHeight;
+            	});
+            },
+            error: function(error) {
+            	 console.error('서버 응답 오류:', error);
+            }
+        });
+    	
     }
 
     // 메시지 전송

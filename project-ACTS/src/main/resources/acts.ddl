@@ -201,3 +201,196 @@ ALTER TABLE Transaction
 
 ALTER TABLE Transaction
 	ADD (CONSTRAINT FK_POSTID_Transaction FOREIGN KEY (postId) REFERENCES POST (ID));
+	
+	
+/* 샘플 데이터 생성 */
+	
+INSERT INTO ACCOUNT (ID, PASSWORD, EMAIL) VALUES ('johnDoe', 'password123', 'john.doe@example.com');
+INSERT INTO ACCOUNT (ID, PASSWORD, EMAIL) VALUES ('janeSmith', 'password456', 'jane.smith@example.com');
+INSERT INTO ACCOUNT (ID, PASSWORD, EMAIL) VALUES ('mikeJones', 'password789', 'mike.jones@example.com');
+INSERT INTO ACCOUNT (ID, PASSWORD, EMAIL) VALUES ('emilyClark', 'password101', 'emily.clark@example.com');
+INSERT INTO ACCOUNT (ID, PASSWORD, EMAIL) VALUES ('davidBrown', 'password202', 'david.brown@example.com');
+INSERT INTO ACCOUNT (ID, PASSWORD, EMAIL) VALUES ('kyungwon', 'kyungwon', 'kyungwon@example.com');
+
+	
+
+Insert into C##KIMKYUNGWON.POST (ID,TITLE,BODY,CREATED_AT,CATEGORY_ID,VIEW_COUNT,STATUS,PRICE,AUTHOR_ID) values (14,
+'맞춤형 수채화 작품 그리기','맞춤형 수채화 작품 그리기 서비스를 소개합니다!
+<br>
+<br>당신만의 감성을 담은 맞춤형 수채화, 이제 간편하게 주문하세요!
+<br>
+<br>특별한 날을 기념하거나 소중한 사람에게 마음을 전하고 싶을 때, 맞춤형 수채화는 그 자체로 감동을 선사하는 선물입니다. 사진 속 소중한 순간, 반려동물, 혹은 머릿속에만 그려두었던 아름다운 풍경을 수채화 작품으로 제작해 드립니다.
+<br>
+<br>- 개인 맞춤형 제작: 고객님의 요청에 맞춰 특별한 순간을 그대로 담아냅니다. 원하는 색감, 스타일, 크기 등을 세세하게 반영하여 세상에 하나뿐인 작품을 만들어 드립니다.
+<br>
+<br>- 전문가 수준의 퀄리티: 실력 있는 작가들이 정성을 다해 작업합니다. 고퀄리티의 수채화로 일상의 특별함을 표현합니다.
+<br>
+<br>- 편리한 주문 과정: 간단한 주문서 작성으로 원하는 작품의 스타일과 디테일을 지정하세요. 작품이 완성되면, 빠르고 안전하게 배송해 드립니다.
+<br>
+<br>- 맞춤형 선물 포장: 요청 시 선물 포장 서비스를 제공하여, 받는 분의 기쁨을 배가시킬 수 있습니다.
+<br>지금 주문하시고 세상에 하나뿐인 수채화 작품을 만나보세요. 당신의 이야기가 물감으로 펼쳐지는 특별한 경험을 선사합니다!',
+to_date('24/08/30','RR/MM/DD'),1,16,'available',50000,'johnDoe');
+
+
+Insert into C##KIMKYUNGWON.POST (ID,TITLE,BODY,CREATED_AT,CATEGORY_ID,VIEW_COUNT,STATUS,PRICE,AUTHOR_ID) values (15,
+'벽화 디자인','공간에 특별한 매력을 더해줄 벽화 디자인 서비스를 제공합니다. 
+<br>
+<br>집 안 거실이나 아이들 방, 카페, 레스토랑, 사무실 등 다양한 장소에 어울리는 맞춤형 벽화를 그려드립니다. 
+<br>
+<br>고객의 요청에 맞춰 특정 테마나 분위기, 색상을 반영하여 공간에 생동감과 개성을 불어넣습니다. 벽
+<br>
+<br>화는 단순한 그림을 넘어 공간의 이야기를 담는 예술 작품입니다.
+<br>
+<br>가격: 150,000원',
+to_date('24/08/30','RR/MM/DD'),4,7,'available',150000,'janeSmith');
+
+
+Insert into C##KIMKYUNGWON.POST (ID,TITLE,BODY,CREATED_AT,CATEGORY_ID,VIEW_COUNT,STATUS,PRICE,AUTHOR_ID) values (18,
+'테마 음악 작곡','당신의 이야기를 음악으로 표현해드립니다. 
+<br>
+<br>결혼식의 감동을 더하는 웨딩송, 개인적인 프로젝트에 생기를 불어넣는 배경음악, 또는 브랜드를 대표할 수 있는 테마 음악 등 다양한 요구에 맞춰 작곡해 드립니다. 
+<br>
+<br>전문 작곡가가 세심하게 상담하여 고객님의 감성과 메시지를 음악에 담아냅니다. 특별한 순간에 어울리는 음악으로 그날을 더욱 빛나게 만들어 보세요.
+<br>
+<br>가격: 120,000원',
+to_date('24/08/30','RR/MM/DD'),2,0,'available',120000,'janeSmith');
+
+
+Insert into C##KIMKYUNGWON.POST (ID,TITLE,BODY,CREATED_AT,CATEGORY_ID,VIEW_COUNT,STATUS,PRICE,AUTHOR_ID) values (19,
+'감동을 전하는 편지 대필 서비스','마음은 가득하지만 글로 표현하기 어려운 당신을 위해 편지를 대신 작성해드립니다. 
+<br>
+<br>사랑하는 연인에게 전할 로맨틱한 편지, 오랜 친구에게 보내는 감사의 메시지, 가족에게 전하는 진심 가득한 편지 등 다양한 상황에 맞춰 감동적인 글을 작성합니다. 
+<br>
+<br>고객님의 이야기를 듣고 진심을 담아, 받는 사람의 마음을 따뜻하게 해줄 편지를 만들어 드립니다.
+<br>
+<br>가격: 30,000원',to_date('24/08/30','RR/MM/DD'),3,2,'available',30000,'mikeJones');
+Insert into C##KIMKYUNGWON.POST (ID,TITLE,BODY,CREATED_AT,CATEGORY_ID,VIEW_COUNT,STATUS,PRICE,AUTHOR_ID) values (20,'개인 브랜딩을 위한 로고 디자인','브랜드의 첫인상을 결정하는 로고 디자인, 이제 전문가에게 맡겨보세요. 
+<br>
+<br>스타트업, 개인 사업, 프리랜서 등 당신의 브랜드 아이덴티티를 돋보이게 할 독창적인 로고를 제작해 드립니다. 
+<br>
+<br>브랜드의 핵심 가치를 반영하고, 기억에 남는 디자인으로 고객과의 첫 만남을 특별하게 만들어 드립니다. 
+<br>
+<br>상담을 통해 브랜드의 스토리와 철학을 파악하고, 이를 시각적으로 구현하여 차별화된 로고를 완성합니다.
+<br>
+<br>가격: 80,000원',
+to_date('24/08/30','RR/MM/DD'),4,0,'available',80000,'mikeJones');
+
+
+Insert into C##KIMKYUNGWON.POST (ID,TITLE,BODY,CREATED_AT,CATEGORY_ID,VIEW_COUNT,STATUS,PRICE,AUTHOR_ID) values (21,
+'웹사이트 제작','당신의 비즈니스에 완벽히 맞춘 웹사이트를 제작해 드립니다. 
+<br>
+<br>제품 판매를 위한 쇼핑몰, 포트폴리오 사이트, 블로그 등 다양한 목적에 맞는 웹사이트를 최신 기술과 트렌드를 반영하여 설계합니다. 
+<br>
+<br>사용자가 쉽게 탐색할 수 있는 UI/UX 디자인과 모바일 친화적인 반응형 웹사이트로 사용자 경험을 최적화합니다. 
+<br>
+<br>비즈니스의 성장을 돕는 웹사이트로 온라인에서의 존재감을 확립하세요.
+<br>
+<br>가격: 300,000원',
+to_date('24/08/30','RR/MM/DD'),5,0,'available',300000,'mikeJones');
+
+
+Insert into C##KIMKYUNGWON.POST (ID,TITLE,BODY,CREATED_AT,CATEGORY_ID,VIEW_COUNT,STATUS,PRICE,AUTHOR_ID) values (25,
+'포스터 디자인','이벤트, 공연, 캠페인 등 다양한 용도의 포스터 디자인을 제공합니다. 
+<br>
+<br>고객의 요청에 따라 테마와 메시지를 시각적으로 강렬하게 전달할 수 있는 포스터를 제작합니다. 
+<br>
+<br>브랜딩과 일관성을 유지하면서도 눈길을 사로잡는 디자인으로, 대중의 관심을 끌어낼 수 있습니다. 
+<br>
+<br>디지털 파일로 제공되며, 필요 시 인쇄 옵션도 지원합니다.
+<br>
+<br>가격: 70,000원',
+to_date('24/08/30','RR/MM/DD'),4,0,'available',70000,'emilyClark');
+
+
+Insert into C##KIMKYUNGWON.POST (ID,TITLE,BODY,CREATED_AT,CATEGORY_ID,VIEW_COUNT,STATUS,PRICE,AUTHOR_ID) values (23,
+'초상화 제작','가족 사진, 연인 사진, 또는 나만의 특별한 모습을 담은 맞춤형 초상화를 그려드립니다. 
+<br>
+<br>사진만 보내주시면, 고퀄리티의 초상화로 제작하여 특별한 선물이나 인테리어 소품으로 활용할 수 있습니다. 
+<br>
+<br>아크릴, 유화, 수채화 등 다양한 기법을 선택할 수 있으며, 고객의 요청에 따라 특정 스타일을 반영하여 제작합니다. 
+<br>
+<br>이 초상화는 시간과 공간을 초월하여 특별한 순간을 영원히 간직할 수 있는 예술 작품입니다.
+<br>
+<br>가격: 100,000원',
+to_date('24/08/30','RR/MM/DD'),1,0,'available',100000,'davidBrown');
+
+
+Insert into C##KIMKYUNGWON.POST (ID,TITLE,BODY,CREATED_AT,CATEGORY_ID,VIEW_COUNT,STATUS,PRICE,AUTHOR_ID) values (24,
+'소셜 미디어 콘텐츠 제작','인스타그램, 페이스북, 유튜브 등 다양한 소셜 미디어 플랫폼에서 활용할 수 있는 맞춤형 콘텐츠를 제작해 드립니다. 
+<br>
+<br>비즈니스의 홍보, 개인 브랜드의 성장, 이벤트 알림 등 목적에 맞는 콘텐츠로 팔로워의 관심을 끌고, 브랜드 가치를 극대화하세요. 
+<br>
+<br>텍스트, 이미지, 동영상 등 다양한 포맷을 지원하며, 트렌드에 맞춘 디자인과 전략으로 소셜 미디어에서의 성공을 돕습니다.
+<br>
+<br>가격: 50,000원',
+to_date('24/08/30','RR/MM/DD'),6,0,'available',50000,'davidBrown');
+
+INSERT INTO IMAGE (POST_ID, IMAGE_URL) VALUES (14, 'paint.PNG');
+INSERT INTO IMAGE (POST_ID, IMAGE_URL) VALUES (15, '벽화 디자인.PNG');
+INSERT INTO IMAGE (POST_ID, IMAGE_URL) VALUES (18, '테마 음악 작곡.PNG');
+INSERT INTO IMAGE (POST_ID, IMAGE_URL) VALUES (19, '감동을 전하는 편지 대필 서비스.PNG');
+INSERT INTO IMAGE (POST_ID, IMAGE_URL) VALUES (20, '개인 브랜딩을 위한 로고 디자인.PNG');
+INSERT INTO IMAGE (POST_ID, IMAGE_URL) VALUES (21, '웹사이트 제작.PNG');
+INSERT INTO IMAGE (POST_ID, IMAGE_URL) VALUES (25, '포스터 디자인.PNG');
+INSERT INTO IMAGE (POST_ID, IMAGE_URL) VALUES (23, '초상화 제작.PNG');
+INSERT INTO IMAGE (POST_ID, IMAGE_URL) VALUES (24, '소셜 미디어 콘텐츠 제작.PNG');
+
+
+INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
+VALUES (1, 'kyungwon', 'johnDoe', '안녕하세요, 맞춤형 수채화 작품에 관심 있으신가요?', to_timestamp('24/08/30 09:00:00', 'RR/MM/DD HH24:MI:SS'));
+INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
+VALUES (2, 'johnDoe', 'kyungwon', '네, 맞춤형 수채화 작품에 대해 알고 싶어요. 가격이 어떻게 되나요?', to_timestamp('24/08/30 09:05:00', 'RR/MM/DD HH24:MI:SS'));
+INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
+VALUES (3, 'kyungwon', 'johnDoe', '맞춤형 수채화 작품은 50,000원입니다.', to_timestamp('24/08/30 09:10:00', 'RR/MM/DD HH24:MI:SS'));
+INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
+VALUES (4, 'johnDoe', 'kyungwon', '제작 기간은 얼마나 걸리나요?', to_timestamp('24/08/30 09:15:00', 'RR/MM/DD HH24:MI:SS'));
+INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
+VALUES (5, 'kyungwon', 'johnDoe', '제작 기간은 약 7일 정도 소요됩니다.', to_timestamp('24/08/30 09:20:00', 'RR/MM/DD HH24:MI:SS'));
+
+
+INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
+VALUES (6, 'kyungwon', 'janeSmith', '벽화 디자인에 대해 궁금한 점이 있으신가요?', to_timestamp('24/08/30 10:00:00', 'RR/MM/DD HH24:MI:SS'));
+INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
+VALUES (7, 'janeSmith', 'kyungwon', '네, 벽화 디자인은 어떤 스타일이 가능한가요?', to_timestamp('24/08/30 10:05:00', 'RR/MM/DD HH24:MI:SS'));
+INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
+VALUES (8, 'kyungwon', 'janeSmith', '현대적, 고전적, 자연풍경 등 다양한 스타일이 가능합니다.', to_timestamp('24/08/30 10:10:00', 'RR/MM/DD HH24:MI:SS'));
+INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
+VALUES (9, 'janeSmith', 'kyungwon', '가격은 어떻게 되나요?', to_timestamp('24/08/30 10:15:00', 'RR/MM/DD HH24:MI:SS'));
+INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
+VALUES (10, 'kyungwon', 'janeSmith', '벽화 디자인의 가격은 150,000원부터 시작합니다.', to_timestamp('24/08/30 10:20:00', 'RR/MM/DD HH24:MI:SS'));
+
+
+INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
+VALUES (11, 'kyungwon', 'mikeJones', '테마 음악 작곡 서비스에 관심 있으신가요?', to_timestamp('24/08/30 11:00:00', 'RR/MM/DD HH24:MI:SS'));
+INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
+VALUES (12, 'mikeJones', 'kyungwon', '네, 맞춤형 음악 작곡에 대해 알고 싶어요.', to_timestamp('24/08/30 11:05:00', 'RR/MM/DD HH24:MI:SS'));
+INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
+VALUES (13, 'kyungwon', 'mikeJones', '원하시는 스타일과 테마에 맞춰 작곡이 가능합니다.', to_timestamp('24/08/30 11:10:00', 'RR/MM/DD HH24:MI:SS'));
+INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
+VALUES (14, 'mikeJones', 'kyungwon', '가격은 얼마인가요?', to_timestamp('24/08/30 11:15:00', 'RR/MM/DD HH24:MI:SS'));
+INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
+VALUES (15, 'kyungwon', 'mikeJones', '테마 음악 작곡의 가격은 120,000원입니다.', to_timestamp('24/08/30 11:20:00', 'RR/MM/DD HH24:MI:SS'));
+
+
+INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
+VALUES (16, 'kyungwon', 'emilyClark', '편지 대필 서비스에 관심 있으신가요?', to_timestamp('24/08/30 12:00:00', 'RR/MM/DD HH24:MI:SS'));
+INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
+VALUES (17, 'emilyClark', 'kyungwon', '네, 대필 서비스에 대해 알고 싶어요.', to_timestamp('24/08/30 12:05:00', 'RR/MM/DD HH24:MI:SS'));
+INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
+VALUES (18, 'kyungwon', 'emilyClark', '받는 분의 마음을 감동시킬 수 있도록 편지를 작성해 드립니다.', to_timestamp('24/08/30 12:10:00', 'RR/MM/DD HH24:MI:SS'));
+INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
+VALUES (19, 'emilyClark', 'kyungwon', '서비스 가격은 어떻게 되나요?', to_timestamp('24/08/30 12:15:00', 'RR/MM/DD HH24:MI:SS'));
+INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
+VALUES (20, 'kyungwon', 'emilyClark', '편지 대필 서비스의 가격은 30,000원입니다.', to_timestamp('24/08/30 12:20:00', 'RR/MM/DD HH24:MI:SS'));
+
+
+INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
+VALUES (21, 'kyungwon', 'davidBrown', '개인 브랜딩을 위한 로고 디자인에 관심 있으신가요?', to_timestamp('24/08/30 13:00:00', 'RR/MM/DD HH24:MI:SS'));
+INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
+VALUES (22, 'davidBrown', 'kyungwon', '네, 로고 디자인에 대해 알고 싶어요.', to_timestamp('24/08/30 13:05:00', 'RR/MM/DD HH24:MI:SS'));
+INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
+VALUES (23, 'kyungwon', 'davidBrown', '당신의 브랜드에 맞는 독창적인 로고를 제작해 드립니다.', to_timestamp('24/08/30 13:10:00', 'RR/MM/DD HH24:MI:SS'));
+INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
+VALUES (24, 'davidBrown', 'kyungwon', '가격은 얼마인가요?', to_timestamp('24/08/30 13:15:00', 'RR/MM/DD HH24:MI:SS'));
+INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 
+VALUES (25, 'kyungwon', 'davidBrown', '로고 디자인의 가격은 80,000원입니다.', to_timestamp('24/08/30 13:20:00', 'RR/MM/DD HH24:MI:SS'));

@@ -50,8 +50,7 @@ public class UserManager {
 		return user;
 	}
 
-	public boolean login(String id, String password)
-			throws SQLException, UserNotFoundException, PasswordMismatchException {
+	public boolean login(String id, String password) throws SQLException, UserNotFoundException, PasswordMismatchException {
 
 		if (!isMatchPassword(id, password))
 			throw new PasswordMismatchException("비밀번호가 일치하지 않습니다.");

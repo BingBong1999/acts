@@ -3,8 +3,6 @@ package controller.chat;
 import java.io.PrintWriter;
 
 import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,15 +28,9 @@ public class ReadChatListController implements Controller {
 
 			List<Message> messageList = chatManager.findLatestMessagesPerReceiverBySenderId(loginId);
 
-			Map<String, Object> result = new HashMap<>();
-			result.put("loginId", loginId);
-            result.put("messageList", messageList);
-            
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
-			
-			String json = new Gson().toJson(result);
-			
+			String json = new Gson().toJson(messageList);
 			PrintWriter out = response.getWriter();
 			out.write(json);
 			out.flush();

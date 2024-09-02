@@ -42,6 +42,7 @@
     function displayMessage(msg, loginId) {
     	
         const chatBox = document.getElementById("chatBox");
+        chatBox.innerHTML = "";
 
         const messageItem = document.createElement("div");
         

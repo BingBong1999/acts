@@ -78,9 +78,20 @@
             		chatBox.innerHTML = "<p class='text-muted'>대화내역이 없습니다.</p>";
                     return;
                 }
+
+            	let lastDate = '';
             	
             	messageList.forEach(msg => {
-            		displayMessage(msg);
+            		
+            		const messageDate = new Date(msg.createdAt).toLocaleDateString('ko-KR', {
+                        month: 'long',
+                        day: 'numeric'
+                    });
+                    
+            		displayMessage(msg, lastDate);
+                    
+            		lastDate = messageDate;
+            		
             	});
             	
             	$('#sendButton').off('click').on('click', function () {
@@ -95,7 +106,19 @@
     	
     }
     
-    function displayMessage(message) {
+    function displayMessage(message, lastDate) {
+    	
+    	const messageDate = new Date(message.createdAt).toLocaleDateString('ko-KR', {
+    	        month: 'long',
+    	        day: 'numeric'
+    	});
+    	
+        if (messageDate !== lastDate) {
+            const dateSeparator = document.createElement("div");
+            dateSeparator.classList.add("date-separator");
+            dateSeparator.textContent = messageDate;
+            chatBox.appendChild(dateSeparator);
+        }
     	
     	const messageItem = document.createElement("div");
         
@@ -117,7 +140,6 @@
         messageItem.appendChild(messageTime);
 
         chatBox.appendChild(messageItem);
-        
         chatBox.scrollTop = chatBox.scrollHeight;
         
     }

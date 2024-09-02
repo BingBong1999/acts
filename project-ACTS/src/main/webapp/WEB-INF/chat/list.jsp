@@ -141,6 +141,29 @@
 		    background-color: #007bff;
     		color: white;
 		}
+		.date-separator {
+		    display: flex;
+		    align-items: center;
+		    text-align: center;
+		    color: #adb5bd;
+		    margin: 20px 0;
+		  
+		    position: relative;
+		}
+		
+		.date-separator::before, .date-separator::after {
+		    content: "";
+		    flex: 0.9;
+		    border-bottom: 2px solid #dee2e6;
+		}
+		
+		.date-separator::before {
+		    margin-right: 10px;
+		}
+		
+		.date-separator::after {
+		    margin-left: 10px;
+		}
         
     </style>
 </head>

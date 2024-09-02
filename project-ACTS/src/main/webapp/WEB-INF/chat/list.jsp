@@ -277,6 +277,14 @@ function updateChatListItem(message) {
         recentMessage.textContent = message.content;
     }
     
+    const userItem = timestamp ? timestamp.closest('.user-item') : null;
+    
+    if (userItem) {
+        const userList = document.getElementById('userList');
+        userList.removeChild(userItem);
+        userList.prepend(userItem);
+    }
+    
 }
 
 </script>

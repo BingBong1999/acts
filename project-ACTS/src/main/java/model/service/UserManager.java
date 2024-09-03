@@ -2,6 +2,8 @@ package model.service;
 
 import java.sql.SQLException;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import exception.ExistingUserException;
 import exception.PasswordMismatchException;
 import exception.UserNotFoundException;
@@ -28,11 +30,18 @@ public class UserManager {
 		
 		if (duplicatedUser != null)
 			throw new ExistingUserException(user.getId() + "는 존재하는 아이디입니다.");
+		
+		String hashedPassword = hashPassword(user.getPassword());
+		user.setPassword(hashedPassword);
 
 		return userDAO.create(user);
 	}
 
 	public int update(User user) throws SQLException, UserNotFoundException {
+		
+		String hashedPassword = hashPassword(user.getPassword());
+		user.setPassword(hashedPassword);
+		
 		return userDAO.update(user);
 	}
 
@@ -61,12 +70,21 @@ public class UserManager {
 	public boolean isMatchPassword(String id, String password) throws SQLException {
 
 		User user = userDAO.findUserByUserId(id);
-
+		
 		if (password == null) {
 			return false;
 		}
+		
+		if (BCrypt.checkpw(password, user.getPassword())) {
+			return true;
+		} 
 
-		return user.getPassword().equals(password);
+		return false;
+	}
+	
+	public static String hashPassword(String plainPassword) {
+		String salt = BCrypt.gensalt();
+		return BCrypt.hashpw(plainPassword, salt);
 	}
 
 }

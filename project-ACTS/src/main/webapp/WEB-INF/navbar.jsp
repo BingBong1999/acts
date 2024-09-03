@@ -101,14 +101,14 @@
                     </li>
                 </ul>
                 <c:if test="${accountId eq null}">
-                    <li class="nav-item nav-item-right">
-                        <a class="nav-link nav-link-large" href="<c:url value='/user/login/form' />"><i class="bi bi-box-arrow-in-right"></i></a>
-                    </li>
+                    <li class="nav-item">
+	                    <a class="nav-link" href="<c:url value='/user/login' />">로그인</a>
+	                </li>
                 </c:if>
                 <c:if test="${accountId ne null}">
-                    <li class="nav-item nav-item-right">
-                        <a class="nav-link nav-link-large" href="<c:url value='/user/logout' />"><i class="bi bi-box-arrow-in-right"></i></a>
-                    </li>
+                    <li class="nav-item">
+	                    <a class="nav-link" href="<c:url value='/user/logout' />">로그아웃</a>
+	                </li>
                 </c:if>
                 <li class="nav-item nav-item-right">
                     <a class="nav-link nav-link-large" href="<c:url value='/user/myPage' />"><i class="bi bi-person"></i></a>

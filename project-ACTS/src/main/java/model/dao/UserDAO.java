@@ -5,6 +5,9 @@ import java.sql.SQLException;
 
 import model.User;
 
+import java.util.List;
+import java.util.ArrayList;
+
 public class UserDAO {
 
 	private JDBCUtil jdbcUtil = null;
@@ -86,6 +89,32 @@ public class UserDAO {
 				User user = new User(rs.getString("ID"), rs.getString("PASSWORD"), rs.getString("EMAIL"));
 				return user;
 			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			jdbcUtil.close();
+		}
+
+		return null;
+	}
+	
+	public List<String> findAllUserId() throws SQLException {
+
+		List<String> userIds = new ArrayList<>();
+		
+		String sql = "SELECT ID " + "FROM ACCOUNT";
+		jdbcUtil.setSqlAndParameters(sql, new Object[] { });
+
+		try {
+			
+			ResultSet rs = jdbcUtil.executeQuery();
+
+			while (rs.next()) {
+				userIds.add(rs.getString("ID"));
+			}
+			
+			return userIds;
 
 		} catch (Exception ex) {
 			ex.printStackTrace();

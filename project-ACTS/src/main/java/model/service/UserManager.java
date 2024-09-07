@@ -1,6 +1,7 @@
 package model.service;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -57,6 +58,10 @@ public class UserManager {
 			throw new UserNotFoundException(id + "는 존재하지 않는 아이디입니다.");
 
 		return user;
+	}
+	
+	public List<String> findAllUserId() throws SQLException, UserNotFoundException {
+		return userDAO.findAllUserId();
 	}
 
 	public boolean login(String id, String password) throws SQLException, UserNotFoundException, PasswordMismatchException {

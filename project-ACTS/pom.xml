@@ -85,6 +85,8 @@
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- for WebSocket -->
 	    <dependency>
 	        <groupId>javax.websocket</groupId>
 	        <artifactId>javax.websocket-api</artifactId>
@@ -95,12 +97,49 @@
 		    <artifactId>gson</artifactId>
 		    <version>2.8.9</version>
 		</dependency>
+		
+		<!-- for Password Encryption -->
 		<dependency>
 		    <groupId>org.mindrot</groupId>
 		    <artifactId>jbcrypt</artifactId>
 		    <version>0.4</version>
 		</dependency>
+		
+		<!-- for MLP Model -->
+		<dependency>
+		    <groupId>org.deeplearning4j</groupId>
+		    <artifactId>deeplearning4j-core</artifactId>
+		    <version>1.0.0-M1.1</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.nd4j</groupId>
+		    <artifactId>nd4j-native-platform</artifactId>
+		    <version>1.0.0-M1.1</version>
+		</dependency>
+		
+		<!-- for faiss client -->
+		<dependency>
+		    <groupId>org.json</groupId>
+		    <artifactId>json</artifactId>
+		    <version>20210307</version> <!-- 최신 버전을 사용해도 좋음 -->
+		</dependency>
+		
+		<!-- for KOMORAN -->
+		  <dependency>
+		    <groupId>com.github.shin285</groupId>
+		    <artifactId>KOMORAN</artifactId>
+		    <version>3.3.9</version>
+		  </dependency>
 	</dependencies>
+	
+	<!-- for KOMORAN -->
+	<repositories>
+	  <repository>
+	      <id>jitpack.io</id>
+	      <url>https://jitpack.io</url>
+	  </repository>
+	</repositories>
+  
   <build>
   	<plugins>
 			<plugin>

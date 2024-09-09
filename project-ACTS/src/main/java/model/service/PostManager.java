@@ -21,6 +21,7 @@ import model.dao.PostDAO;
 public class PostManager {
 
 	private static ImageManager imageManager = ImageManager.getInstance();
+	private static UserActionManager userActionManager = UserActionManager.getInstance();
 	private static PostManager post = new PostManager();
 	private PostDAO postDAO;
 
@@ -82,6 +83,10 @@ public class PostManager {
 
 	public List<Post> findPostsByKeywordOfTitle(String keyword) throws SQLException {
 		return postDAO.findPostsByKeywordOfTitle(keyword);
+	}
+	
+	public List<Post> findRecommendPersonalizedPostsByUserId(String userId) throws Exception {
+		return userActionManager.findRecommendPersonalizedPostsByUserId(userId);
 	}
 
 	public JSONArray convertAllPostToJsonArray() throws SQLException, UserNotFoundException {

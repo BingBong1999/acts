@@ -9,23 +9,22 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-//import java.util.concurrent.Executors;
-//import java.util.concurrent.ScheduledExecutorService;
-//import java.util.concurrent.TimeUnit;
+import java.util.Map;
+import java.util.HashMap;
 
 import model.Post;
-
 import model.UserAction.MLP;
 import model.UserAction.UserActionRecord;
 import model.UserAction.UserActionProcessed;
 import model.UserAction.UserActionPrediction;
-
 import model.dao.UserActionDAO;
 
 public class UserActionManager {
 
 	private static UserActionManager userActionManager = new UserActionManager();
 	private UserActionDAO userActionDao;
+	private static final long CACHE_DURATION_MS = 3 * 24 * 60 * 60 * 1000; // 3일
+	private Map<String, CacheEntry> cache = new HashMap<>();
 
 	private UserActionManager() {
 		userActionDao = new UserActionDAO();
@@ -44,26 +43,42 @@ public class UserActionManager {
 		return userActionDao.create(record);
 	}
 
+	private static class CacheEntry {
+		List<Post> posts;
+		long timestamp;
+
+		CacheEntry(List<Post> posts, long timestamp) {
+			this.posts = posts;
+			this.timestamp = timestamp;
+		}
+	}
+
 	public List<Post> findRecommendPersonalizedPostsByUserId(String userId) throws Exception {
 
-		
+		long currentTime = System.currentTimeMillis();
+
+		if (cache.containsKey(userId) && (currentTime - cache.get(userId).timestamp) < CACHE_DURATION_MS) {
+			System.out.println("Returning cached posts for user: " + userId);
+			return cache.get(userId).posts;
+		}
+
 		System.out.println("사용자 " + userId + "의 사용자 행동 전처리 데이터를 수집합니다.");
-		
+
 		List<UserActionProcessed> UserActionProcessed = findPreprocessUserActionsByUserId(userId);
-		
+
 		if (UserActionProcessed.isEmpty()) {
 			System.out.println("사용자 " + userId + "의 데이터가 없습니다.");
 			return null;
 		}
-		
+
 		System.out.println("사용자 " + userId + "의 MLP 모델 학습을 시작합니다.");
-		
+
 		List<DataSet> trainingData = convertToDataSet(UserActionProcessed);
 		MLP mlp = new MLP();
 		mlp.trainModel(trainingData);
 
 		System.out.println("사용자 " + userId + "의 선호 게시글 예측을 시작합니다.");
-		
+
 		List<UserActionPrediction> predictions = new ArrayList<>();
 
 		for (UserActionProcessed data : UserActionProcessed) {
@@ -80,27 +95,29 @@ public class UserActionManager {
 		System.out.println("모든 게시글 인덱싱을 시작합니다.");
 
 		PostManager postManager = PostManager.getInstance();
-		
+
 		JSONArray posts = postManager.convertAllPostToJsonArray();
 		FaissClient.indexPosts(posts);
-		
 
 		System.out.println("인덱싱된 모든 게시글 중 사용자의 선호 게시글을 검색합니다.");
-		
+
 		Post preferredPost = postManager.findPostByPostId(topPost.getPostId());
 		System.out.println("사용자가 가장 선호하는 게시글의 제목은: " + preferredPost.getTitle());
-		
+
 		int[] arr = FaissClient.findSimilar(postManager.convertPostToJsonArray(preferredPost));
-		
+
 		List<Post> similarPosts = new ArrayList<>();
-		
-		for(int i = 1; i < arr.length; i++) {
+
+		for (int i = 1; i < arr.length; i++) {
 			Post post = postManager.findPostByPostId(arr[i]);
 			similarPosts.add(post);
-			
+
 			System.out.println(arr[i]);
 		}
-		
+
+		cache.put(userId, new CacheEntry(similarPosts, currentTime));
+		System.out.println("Updating cache for user: " + userId);
+
 		return similarPosts;
 
 	}

@@ -60,7 +60,7 @@ public class UserActionManager {
 		return userActionDao.create(record);
 	}
 
-	public void getTopPostForAllUsers() throws Exception {
+	public List<Post> getTopPostForAllUsers() throws Exception {
 
 		System.out.println("배치 학습을 시작합니다.");
 
@@ -105,8 +105,6 @@ public class UserActionManager {
 
 		System.out.println("배치 학습 및 선호 게시글 예측 데이터 생성이 완료되었습니다.");
 
-		System.out.println("=== 사용자별 최상위 선호 게시글 ===");
-
 		int topPostId = -1;
 
 		for (Map.Entry<String, UserActionProcessed> entry : userTopPosts.entrySet()) {
@@ -116,9 +114,6 @@ public class UserActionManager {
 			if (topPost != null) {
 				System.out.println("사용자 ID: " + userId);
 				System.out.println("선호 게시글 ID: " + topPost.getPostId());
-				System.out.println("좋아요 여부: " + topPost.getLiked());
-				System.out.println("조회 시간: " + topPost.getViewDuration());
-				System.out.println("조회수: " + topPost.getViewCount());
 				System.out.println("-------------------------------");
 
 				topPostId = topPost.getPostId();
@@ -126,10 +121,6 @@ public class UserActionManager {
 				System.out.println("사용자 ID: " + userId + "는 선호 게시글이 없습니다.");
 			}
 		}
-
-		System.out.println("=== 로그 출력 완료 ===");
-
-		System.out.println("선호 게시글을 바탕으로 한, 유사 게시글 데이터 검색을 시작합니다.");
 
 		System.out.println("모든 게시글 인덱싱을 시작합니다.");
 
@@ -143,10 +134,14 @@ public class UserActionManager {
 		Post topPost = postManager.findPostByPostId(topPostId);
 		int[] arr = FaissClient.findSimilar(postManager.convertPostToJsonArray(topPost));
 		
-
-		for (int a : arr) {
-			System.out.println(a);
+		List<Post> similarPosts = new ArrayList<>();
+		
+		for(int i = 1; i < arr.length; i++) {
+			Post post = postManager.findPostByPostId(topPostId);
+			similarPosts.add(post);
 		}
+		
+		return similarPosts;
 
 	}
 

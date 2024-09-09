@@ -232,7 +232,7 @@ INSERT INTO ACCOUNT (ID, PASSWORD, EMAIL) VALUES ('janeSmith', 'password456', 'j
 INSERT INTO ACCOUNT (ID, PASSWORD, EMAIL) VALUES ('mikeJones', 'password789', 'mike.jones@example.com');
 INSERT INTO ACCOUNT (ID, PASSWORD, EMAIL) VALUES ('emilyClark', 'password101', 'emily.clark@example.com');
 INSERT INTO ACCOUNT (ID, PASSWORD, EMAIL) VALUES ('davidBrown', 'password202', 'david.brown@example.com');
-INSERT INTO ACCOUNT (ID, PASSWORD, EMAIL) VALUES ('kyungwon', 'kyungwon', 'kyungwon@example.com');
+INSERT INTO ACCOUNT (ID, PASSWORD, EMAIL) VALUES ('kyungwon', '$2a$10$5wwPGrYPQxQi4pImMxv1beCrrEzOv/O6RTgKjBYgUHVuXlVuUgUkO', 'kyungwon@example.com');
 
 	
 

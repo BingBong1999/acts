@@ -9,11 +9,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.Map;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-import java.util.HashMap;
+//import java.util.concurrent.Executors;
+//import java.util.concurrent.ScheduledExecutorService;
+//import java.util.concurrent.TimeUnit;
 
 import model.Post;
 
@@ -29,22 +27,8 @@ public class UserActionManager {
 	private static UserActionManager userActionManager = new UserActionManager();
 	private UserActionDAO userActionDao;
 
-	private UserManager userManager = UserManager.getInstance();
-	private PostManager postManager = PostManager.getInstance();
-
-	private static final int SCHEDULE_INTERVAL = 60; // 배치 처리 주기 (초)
-	private static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-
 	private UserActionManager() {
 		userActionDao = new UserActionDAO();
-		scheduler.scheduleAtFixedRate(() -> {
-			try {
-				getTopPostForAllUsers();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}, SCHEDULE_INTERVAL, SCHEDULE_INTERVAL, TimeUnit.SECONDS);
 	}
 
 	public static UserActionManager getInstance() {
@@ -60,85 +44,61 @@ public class UserActionManager {
 		return userActionDao.create(record);
 	}
 
-	public List<Post> getTopPostForAllUsers() throws Exception {
+	public List<Post> findRecommendPersonalizedPostsByUserId(String userId) throws Exception {
 
-		System.out.println("배치 학습을 시작합니다.");
+		
+		System.out.println("사용자 " + userId + "의 사용자 행동 전처리 데이터를 수집합니다.");
+		
+		List<UserActionProcessed> UserActionProcessed = findPreprocessUserActionsByUserId(userId);
+		
+		if (UserActionProcessed.isEmpty()) {
+			System.out.println("사용자 " + userId + "의 데이터가 없습니다.");
+			return null;
+		}
+		
+		System.out.println("사용자 " + userId + "의 MLP 모델 학습을 시작합니다.");
+		
+		List<DataSet> trainingData = convertToDataSet(UserActionProcessed);
+		MLP mlp = new MLP();
+		mlp.trainModel(trainingData);
 
-		Map<String, UserActionProcessed> userTopPosts = new HashMap<>();
+		System.out.println("사용자 " + userId + "의 선호 게시글 예측을 시작합니다.");
+		
+		List<UserActionPrediction> predictions = new ArrayList<>();
 
-		for (String userId : userManager.findAllUserId()) {
+		for (UserActionProcessed data : UserActionProcessed) {
+			double[] features = new double[] { data.getLiked(), data.getViewDuration(), data.getViewCount() };
+			double score = mlp.predict(features);
 
-			System.out.println("사용자 " + userId + "의 데이터로 학습을 시작합니다.");
-
-			List<UserActionProcessed> userActions = findPreprocessUserActionsByUserId(userId);
-
-			if (userActions.isEmpty()) {
-				System.out.println("사용자 " + userId + "의 데이터가 없습니다. 다음 사용자로 넘어갑니다.");
-				continue;
-			}
-
-			List<DataSet> trainingData = convertToDataSet(userActions);
-
-			MLP mlp = new MLP();
-			mlp.trainModel(trainingData);
-
-			System.out.println("사용자 " + userId + "의 데이터로 학습이 완료되었습니다.");
-			System.out.println("사용자 " + userId + "의 선호 게시글 예측을 시작합니다.");
-
-			List<UserActionPrediction> predictions = new ArrayList<>();
-
-			for (UserActionProcessed action : userActions) {
-				double[] features = new double[] { action.getLiked(), action.getViewDuration(), action.getViewCount() };
-				double score = mlp.predict(features);
-
-				predictions.add(new UserActionPrediction(action, score));
-			}
-
-			UserActionProcessed topPost = predictions.stream()
-					.sorted(Comparator.comparingDouble(UserActionPrediction::getScore).reversed()).findFirst()
-					.map(UserActionPrediction::getAction).orElse(null);
-
-			System.out.println("사용자 " + userId + "의 선호 게시글 예측을 종료합니다.");
-
-			userTopPosts.put(userId, topPost);
+			predictions.add(new UserActionPrediction(data, score));
 		}
 
-		System.out.println("배치 학습 및 선호 게시글 예측 데이터 생성이 완료되었습니다.");
-
-		int topPostId = -1;
-
-		for (Map.Entry<String, UserActionProcessed> entry : userTopPosts.entrySet()) {
-			String userId = entry.getKey();
-			UserActionProcessed topPost = entry.getValue();
-
-			if (topPost != null) {
-				System.out.println("사용자 ID: " + userId);
-				System.out.println("선호 게시글 ID: " + topPost.getPostId());
-				System.out.println("-------------------------------");
-
-				topPostId = topPost.getPostId();
-			} else {
-				System.out.println("사용자 ID: " + userId + "는 선호 게시글이 없습니다.");
-			}
-		}
+		UserActionProcessed topPost = predictions.stream()
+				.sorted(Comparator.comparingDouble(UserActionPrediction::getScore).reversed()).findFirst()
+				.map(UserActionPrediction::getAction).orElse(null);
 
 		System.out.println("모든 게시글 인덱싱을 시작합니다.");
 
+		PostManager postManager = PostManager.getInstance();
+		
 		JSONArray posts = postManager.convertAllPostToJsonArray();
 		FaissClient.indexPosts(posts);
 		
-		System.out.println("모든 게시글 인덱싱을 완료하였습니다.");
 
 		System.out.println("인덱싱된 모든 게시글 중 사용자의 선호 게시글을 검색합니다.");
 		
-		Post topPost = postManager.findPostByPostId(topPostId);
-		int[] arr = FaissClient.findSimilar(postManager.convertPostToJsonArray(topPost));
+		Post preferredPost = postManager.findPostByPostId(topPost.getPostId());
+		System.out.println("사용자가 가장 선호하는 게시글의 제목은: " + preferredPost.getTitle());
+		
+		int[] arr = FaissClient.findSimilar(postManager.convertPostToJsonArray(preferredPost));
 		
 		List<Post> similarPosts = new ArrayList<>();
 		
 		for(int i = 1; i < arr.length; i++) {
-			Post post = postManager.findPostByPostId(topPostId);
+			Post post = postManager.findPostByPostId(arr[i]);
 			similarPosts.add(post);
+			
+			System.out.println(arr[i]);
 		}
 		
 		return similarPosts;

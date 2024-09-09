@@ -4,6 +4,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 List<Post> postList = (List<Post>)request.getAttribute("postList");
+List<Post> recommendedPostList = (List<Post>)request.getAttribute("recommendedPostList");
+String userId = (String) request.getAttribute("userId");
 %>
 <!DOCTYPE html>
 <html>
@@ -79,6 +81,25 @@ List<Post> postList = (List<Post>)request.getAttribute("postList");
 		    right: 300px; /* Same as the '+' button to align properly */
 		    background-color: #28a745; /* Green theme similar to Bootstrap success button */
 		}
+	    .left-container {
+	        position: absolute;
+	        left: 80px; /* 왼쪽 위치 설정 */
+	        top: 135px; /* 높이 설정 */
+	    }
+        .recommended-text {
+            font-family: 'Noto Sans KR', sans-serif;
+            color: #6c757d; /* 회색 */
+            font-weight: 700; /* 두껍게 */
+            font-size: 1.1rem;
+            margin-bottom: 20px; /* 여백 추가 */
+        }
+        .divider {
+            border-left: 5px solid #ddd; /* 구분 선 스타일 */
+            height: 100%; /* 높이 설정 */
+            position: absolute;
+            left: 330px; /* left-container 위치와 맞추어 설정 */
+            top: 135px; /* 높이 설정 */
+        }        
     </style>
 </head>
 <body>
@@ -88,7 +109,44 @@ List<Post> postList = (List<Post>)request.getAttribute("postList");
         <a href="<c:url value='/post/form' />" class="add-post-btn">+</a>
         <a href="<c:url value='/chat/view'></c:url>" class="add-post-btn chat-btn"><i class="bi bi-chat-dots"></i></a>
     </div>
-
+    
+    <div class="left-container">
+		<p class="recommended-text">회원님이 좋아하실만한 상품
+	    <div class="row">
+	    	<c:forEach var="post" items="${recommendedPostList}">
+	        	<div class="col-md-3">
+	            	<div class="card" style="height: 300px; width: 200px;">
+	                	<c:if test="${empty post.getImageUrl()}">
+	                    	<div class="card-img-container" >
+								<img src="<c:url value='/images/noImage.png' />" class="card-img-top" style="height: 150px;">
+							</div>
+						</c:if>
+						<c:if test="${not empty post.getImageUrl()}">
+	 						<div class="card-img-container">
+	                           	<img src="${pageContext.request.contextPath}/imageResource/${post.imageUrl.get(0)}" class="card-img-top" style="height: 150px;">
+	                       	</div>
+						</c:if>
+	                      
+		                <div class="card-body" style="padding-top: 0px;">
+		                    <h6 class="card-title">
+		                    	${post.title}
+		                    </h6>
+		                    <a href="<c:url value='/post/postInfo'>
+		                        		<c:param name='postId' value='${post.id}'/>
+		                        		<c:param name='writerId' value ='${post.authorId}' />
+		                        		<c:param name='likeRequest' value = '-1' /> 
+		                    		</c:url>" class="btn btn-primary" style="height: 25px; padding-top: 0px;"> 상세보기
+		                    </a>
+		                </div>
+	                </div>
+	            </div>
+	            <div class="w-100"></div>
+	        </c:forEach>
+	    </div>
+	</div>
+	
+	 <div class="divider"></div>
+	    
     <div class="container mt-4">
         <div class="row">
             <c:forEach var="post" items="${postList}">

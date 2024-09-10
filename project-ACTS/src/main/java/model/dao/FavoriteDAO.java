@@ -18,7 +18,7 @@ public class FavoriteDAO {
 
 	public int create(Favorite favorite) throws SQLException {
 
-		String sql = "INSERT INTO FAVORITE VALUES (favorite_id_seq.nextval, ?, ?)";
+		String sql = "INSERT INTO FAVORITE VALUES (FAVORITE_ID_SEQ.nextval, ?, ?)";
 		Object[] param = new Object[] { favorite.getUserId(), favorite.getPostId() };
 		
 		jdbcUtil.setSqlAndParameters(sql, param);

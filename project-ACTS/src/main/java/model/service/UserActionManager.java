@@ -40,7 +40,7 @@ public class UserActionManager {
 
 	// 구현 필요
 	public int delete(UserActionRecord record) throws Exception {
-		return userActionDao.create(record);
+		return userActionDao.delete(record);
 	}
 
 	private static class CacheEntry {

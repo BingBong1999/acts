@@ -24,7 +24,7 @@ CREATE SEQUENCE USER_ACTION_ID_SEQ
 	NOCACHE;
 CREATE SEQUENCE FAVORITE_ID_SEQ
 	INCREMENT BY 1
-	START WITH 26
+	START WITH 29
 	NOCACHE;
 
 
@@ -349,7 +349,62 @@ Insert into C##KIMKYUNGWON.POST (ID,TITLE,BODY,CREATED_AT,CATEGORY_ID,VIEW_COUNT
 <br>텍스트, 이미지, 동영상 등 다양한 포맷을 지원하며, 트렌드에 맞춘 디자인과 전략으로 소셜 미디어에서의 성공을 돕습니다.
 <br>
 <br>가격: 50,000원',
+to_date('24/08/30','RR/MM/DD'),2,0,'available',50000,'davidBrown');
+
+
+Insert into C##KIMKYUNGWON.POST (ID,TITLE,BODY,CREATED_AT,CATEGORY_ID,VIEW_COUNT,STATUS,PRICE,AUTHOR_ID) values (26,
+'유튜브 채널 인트로 음악 작곡',
+'유튜브 채널의 인트로 음악을 맞춤 제작해드립니다! 전문 작곡가와 함께 채널의 메시지와 테마에 맞춘 배경음악을 만들어보세요.
+<br>
+<br>맞춤형 음악 작곡: 채널의 스타일에 맞는 독창적인 테마 음악 제작
+<br>
+<br>전문 작곡가와 협업: 경험 많은 작곡가와 함께하는 맞춤 작업
+<br>
+<br>가격:
+<br>
+<br>기본 패키지: 50000원 (30초 이내 인트로)
+<br>
+<br>맞춤 패키지: 100000원 (1분 이상)
+<br>
+<br>채널에 딱 맞는 인트로 음악으로 첫인상을 장식해보세요! 문의 환영합니다.',
 to_date('24/08/30','RR/MM/DD'),6,0,'available',50000,'davidBrown');
+
+
+Insert into C##KIMKYUNGWON.POST (ID,TITLE,BODY,CREATED_AT,CATEGORY_ID,VIEW_COUNT,STATUS,PRICE,AUTHOR_ID) values (27,
+'테마 음악 작곡 서비스',
+'특별한 메시지를 전달하는 테마 음악을 작곡해드립니다. 전문 작곡가와 함께하는 맞춤형 배경음악 제작!
+<br>
+<br>맞춤형 음악 작곡: 브랜드 메시지에 맞춘 독창적인 테마 음악 제작
+<br>
+<br>전문 작곡가와의 협업: 풍부한 경험을 가진 작곡가와 함께하는 작업
+<br>
+<br>다양한 파일 형식 제공: 추가 편집 가능한 형식으로 음악 파일 제공
+<br>
+<br>빠른 작업 시간: 신속한 피드백 반영과 수정
+<br>
+<br>가격: 기본 패키지 50000 원 (30초 이내), 맞춤 패키지 100000 원 (1분 이상)
+<br>
+<br>음악으로 여러분의 이야기를 더 특별하게 만드세요!',
+to_date('24/08/30','RR/MM/DD'),6,0,'available',50000,'davidBrown');
+
+
+Insert into C##KIMKYUNGWON.POST (ID,TITLE,BODY,CREATED_AT,CATEGORY_ID,VIEW_COUNT,STATUS,PRICE,AUTHOR_ID) values (28,
+'맞춤형 배경음악 제작',
+'개인의 메시지와 테마를 반영한 배경음악을 작곡합니다. 전문 작곡가와 함께하는 맞춤형 음악입니다.
+<br>
+<br>테마 음악 맞춤 제작: 고객의 요구에 맞는 고유한 배경음악 작곡
+<br>
+<br>전문 작곡가와 협업: 다양한 스타일에 능통한 작곡가와 함께하는 작업
+<br>
+<br>빠른 작업 속도: 신속한 피드백 반영 및 수정
+<br>
+<br>다양한 파일 제공: 추가 편집 가능한 포맷으로 음악 파일 제공
+<br>
+<br>가격: 기본 패키지 50000 원 (30초 이내), 맞춤 패키지 100000 원 (1분 이상)
+<br>
+<br>테마에 딱 맞는 음악으로 더 큰 감동을 전하세요!',
+to_date('24/08/30','RR/MM/DD'),6,0,'available',50000,'davidBrown');
+
 
 INSERT INTO IMAGE (POST_ID, IMAGE_URL) VALUES (14, 'paint.PNG');
 INSERT INTO IMAGE (POST_ID, IMAGE_URL) VALUES (15, '벽화 디자인.PNG');
@@ -360,6 +415,9 @@ INSERT INTO IMAGE (POST_ID, IMAGE_URL) VALUES (21, '웹사이트 제작.PNG');
 INSERT INTO IMAGE (POST_ID, IMAGE_URL) VALUES (25, '포스터 디자인.PNG');
 INSERT INTO IMAGE (POST_ID, IMAGE_URL) VALUES (23, '초상화 제작.PNG');
 INSERT INTO IMAGE (POST_ID, IMAGE_URL) VALUES (24, '소셜 미디어 콘텐츠 제작.PNG');
+INSERT INTO IMAGE (POST_ID, IMAGE_URL) VALUES (26, '유튜브 채널 인트로 음악 작곡.PNG');
+INSERT INTO IMAGE (POST_ID, IMAGE_URL) VALUES (27, '테마 음악 작곡 서비스.PNG');
+INSERT INTO IMAGE (POST_ID, IMAGE_URL) VALUES (28, '맞춤형 배경음악 제작.PNG');
 
 
 INSERT INTO MESSAGE (ID, SENDER_ID, RECEIVER_ID, CONTENT, CREATED_AT) 

@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import controller.user.*;
+import controller.userAction.*;
 import controller.post.*;
 import controller.chat.*;
 import controller.review.*;
@@ -62,6 +63,9 @@ public class RequestMapping {
 		mappings.put("/chat/list", new ReadChatListController());
 		mappings.put("/chat/history", new ReadChatHistoryController());
 		mappings.put("/chat/view", new ForwardChatListController());
+		
+		// 유사 게시글 추천
+		mappings.put("/userAction", new UserActionController());
 		
 		logger.info("Initialized Request Mapping!");
 	}

@@ -302,26 +302,119 @@ h4, h5 {
 	</div>
 
 	<!-- Bootstrap JS -->
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<script>
-        // 좋아요 버튼 클릭 이벤트
+        
         document.querySelector('.like-btn').addEventListener('click', function () {
             const icon = this.querySelector('i');
             if (icon.classList.contains('bi-heart')) {
                 icon.classList.remove('bi-heart');
-                icon.classList.add('bi-heart-fill'); // 꽉 찬 하트로 변경
-                icon.style.color = 'red'; // 하트 색상을 빨간색으로 변경
-                icon.style.fontWeight = 'bold'; // 하트 선 굵게
+                icon.classList.add('bi-heart-fill');
+                icon.style.color = 'red';
+                icon.style.fontWeight = 'bold';
+                
+                let data = {
+                    loginId: '<%= loginId %>',  
+                    postId: <%= post.getId() %>,
+                    actionType: 'liked',
+                    duration: 0
+                };
+                	
+                $.ajax({
+                	url: '/project-ACTS/userAction',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(data),
+                    success: function(response) {
+                    	console.log('서버 응답:', response);
+                    },
+                    error: function(error) {
+                    	console.error('오류 발생:', error);
+                    }
+                });
+                
             } else {
                 icon.classList.remove('bi-heart-fill');
-                icon.classList.add('bi-heart'); // 빈 하트로 변경
-                icon.style.color = '#007bff'; // 원래 색상으로 변경
-                icon.style.fontWeight = 'normal'; // 원래 선 굵기로 변경
+                icon.classList.add('bi-heart');
+                icon.style.color = '#007bff';
+                icon.style.fontWeight = 'normal';
+
+                let data = {
+                    loginId: '<%= loginId %>',  
+                    postId: <%= post.getId() %>,
+                    actionType: 'deleteLiked',
+                	duration: 0
+                };
+                
+                $.ajax({
+                	url: '/project-ACTS/userAction',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(data),
+                    success: function(response) {
+                    	console.log('서버 응답:', response);
+                    },
+                    error: function(error) {
+                    	console.error('오류 발생:', error);
+                    }
+                });
             }
+        });
+        
+        $(document).ready(function() {
+            let startTime = Date.now();
+
+            $(window).on('beforeunload', function() {
+                let timeSpent = Math.floor((Date.now() - startTime) / 1000);
+                
+                let data = {
+                    loginId: '<%= loginId %>',  
+                    postId: <%= post.getId() %>,
+                    actionType: 'view_duration',
+                    duration: timeSpent
+                };
+
+                $.ajax({
+                    url: '/project-ACTS/userAction',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(data),
+                    success: function(response) {
+                        console.log('서버 응답:', response);
+                    },
+                    error: function(error) {
+                        console.error('오류 발생:', error);
+                    }
+                });
+            });
+        });
+        
+        $(document).ready(function() {
+            
+            let data = {
+            	loginId: '<%= loginId %>',  
+            	postId: <%= post.getId() %>,
+                actionType: 'view_count',
+                duration: 0
+           	};
+        	
+        	$.ajax({
+                url: '/project-ACTS/userAction',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                success: function(response) {
+                    console.log('서버 응답:', response);
+                },
+                error: function(error) {
+                    console.error('오류 발생:', error);
+                }
+            });
+        	
         });
     </script>
 </body>

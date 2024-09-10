@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import model.UserAction.UserActionRecord;
+import model.Post;
 import model.UserAction.UserActionProcessed;
 
 import java.util.ArrayList;
@@ -34,6 +35,25 @@ public class UserActionDAO {
 
 			return result;
 
+		} catch (Exception ex) {
+			jdbcUtil.rollback();
+			ex.printStackTrace();
+		} finally {
+			jdbcUtil.commit();
+			jdbcUtil.close();
+		}
+
+		return 0;
+	}
+	
+	public int delete(Post post) throws SQLException {
+
+		String sql = "DELETE FROM USER_ACTION WHERE POST_ID=?";
+		jdbcUtil.setSqlAndParameters(sql, new Object[] { post.getId() });
+
+		try {
+			int result = jdbcUtil.executeUpdate();
+			return result;
 		} catch (Exception ex) {
 			jdbcUtil.rollback();
 			ex.printStackTrace();

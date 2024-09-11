@@ -381,6 +381,7 @@ h4, h5 {
                 $.ajax({
                     url: '/project-ACTS/userAction',
                     type: 'POST',
+                    async: false,
                     contentType: 'application/json',
                     data: JSON.stringify(data),
                     success: function(response) {
